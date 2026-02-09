@@ -17,9 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: gradle/actions/wrapper-validation@v5
       - name: Build Image
-        run: docker build . --build-arg GITHUB_ACTIONS=true --build-arg GITHUB_REF_TYPE=${{ github.ref_type }} --build-arg GITHUB_REF_NAME=${{ github.ref_name }} --build-arg GITHUB_SHA=${{ github.sha }} -f docker/Dockerfile -t ghcr.io/rainbowdashlabs/status-sim:${{ github.sha }}
+        run: docker build . -t ghcr.io/rainbowdashlabs/status-sim:${{ github.sha }}
       - name: Login to Registry
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login -u $ --password-stdin ghcr.io
       - name: Push image
