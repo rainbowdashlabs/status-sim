@@ -1,0 +1,15 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.venv
+venv
+pip-log.txt
+pip-delete-this-directory.txt
+.env
+.idea
+.junie
+tests
+test_all.txt
+.git
+.gitignore

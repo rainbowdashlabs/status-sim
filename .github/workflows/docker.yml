@@ -1,0 +1,36 @@
+name: Docker Build
+
+on:
+  release:
+    types:
+      - published
+  push:
+    tags:
+    branches:
+      - main
+      - dev
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    name: Deploy Docker Image
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: gradle/actions/wrapper-validation@v5
+      - name: Build Image
+        run: docker build . --build-arg GITHUB_ACTIONS=true --build-arg GITHUB_REF_TYPE=${{ github.ref_type }} --build-arg GITHUB_REF_NAME=${{ github.ref_name }} --build-arg GITHUB_SHA=${{ github.sha }} -f docker/Dockerfile -t ghcr.io/rainbowdashlabs/status-sim:${{ github.sha }}
+      - name: Login to Registry
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login -u $ --password-stdin ghcr.io
+      - name: Push image
+        run: |
+          docker push ghcr.io/rainbowdashlabs/status-sim:${{ github.sha }}
+      - name: Tag & Push branch image
+        run: |
+          docker image tag ghcr.io/rainbowdashlabs/status-sim:${{ github.sha }} ghcr.io/rainbowdashlabs/status-sim:${{ github.ref_name }}
+          docker push ghcr.io/rainbowdashlabs/status-sim:${{ github.ref_name }}
+      - name: Tag & Push latest image
+        if: github.ref_name == 'main'
+        run: |
+          docker image tag ghcr.io/rainbowdashlabs/status-sim:${{ github.sha }} ghcr.io/rainbowdashlabs/status-sim:latest
+          docker push ghcr.io/rainbowdashlabs/status-sim:latest

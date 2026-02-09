@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Status & Tastatur</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/status.js"></script>
+</head>
+<body>
+    <div class="status-container">
+        <div class="header-container">
+            <h1>Status: {{ name }}</h1>
+            <button id="sf-toggle-btn" onclick="toggleTalkingToSF()" style="display: none;">Mit SF sprechen</button>
+        </div>
+        <p class="leitstelle-info">Verbunden mit: {{ leitstelle_name }}</p>
+
+        <div id="notice-area">
+            <div id="notice-content">
+                <span id="notice-text">Staffelführer hat Sprechwunsch</span>
+                <button id="confirm-btn" onclick="confirmNotice()">Kanal gewechselt</button>
+            </div>
+        </div>
+
+        <div id="confirmed-notice-area" style="display: none;">
+            <div id="confirmed-notice-content">
+                <div class="confirmed-notice-main">
+                    <span class="pulse-dot"></span>
+                    <span id="confirmed-notice-text">Spricht mit Staffelführer</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="keypad">
+            <div class="key" id="key-1" onclick="press('1')">1</div>
+            <div class="key" id="key-2" onclick="press('2')">2</div>
+            <div class="key" id="key-3" onclick="press('3')">3</div>
+            <div class="key" id="key-4" onclick="press('4')">4</div>
+            <div class="key" id="key-5" onclick="press('5')">5</div>
+            <div class="key" id="key-6" onclick="press('6')">6</div>
+            <div class="key" id="key-7" onclick="press('7')">7</div>
+            <div class="key" id="key-8" onclick="press('8')">8</div>
+            <div class="key" id="key-9" onclick="">9</div>
+            <div class="key" id="key-*" onclick="">*</div>
+            <div class="key" id="key-0" onclick="press('0')">0</div>
+            <div class="key" id="key-#" onclick="">#</div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" id="tab-kurzstatus" onclick="openTab('kurzstatus')">Kurzstatus</button>
+            <button class="tab-btn" id="tab-nachrichten" onclick="openTab('nachrichten')">Nachrichten</button>
+        </div>
+
+        <div id="kurzstatus-panel" class="tab-content active">
+            <h3>Kurzstatusmeldung</h3>
+            <div class="kurzstatus-list">
+                <div class="kurzstatus-item" onclick="sendKurzstatus('Lage bestä., Maßn. eing.')">Lage bestä., Maßn. eing.</div>
+                <div class="kurzstatus-item" onclick="sendKurzstatus('Lage bestä., Gef-Abw. eing.')">Lage bestä., Gef-Abw. eing.</div>
+                <div class="kurzstatus-item" onclick="sendKurzstatus('Keine Feststellung, Erk. läuft')">Keine Feststellung, Erk. läuft</div>
+                <div class="kurzstatus-item" onclick="sendKurzstatus('Fehlalarm BMA')">Fehlalarm BMA</div>
+                <div class="kurzstatus-item" onclick="sendKurzstatus('Müco, 1 C-Rohr, EstuK')">Müco, 1 C-Rohr, EstuK</div>
+            </div>
+        </div>
+
+        <div id="nachrichten-panel" class="tab-content">
+            <h3>Nachrichten</h3>
+            <div id="messages"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with ❤️ and 🏳️‍🌈 | <a href="https://github.com/rainbowdashlabs/status-sim" target="_blank">GitHub</a></p>
+        <p>&copy; {{ current_year }} Rainbowdashlabs and Contributor GPL-3.0</p>
+    </footer>
+
+    <script>
+        initStatus("{{ name }}", "{{ code }}");
+    </script>
+</body>
+</html>
