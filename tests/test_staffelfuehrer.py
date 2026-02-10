@@ -103,6 +103,7 @@ class TestStaffelfuehrer(unittest.TestCase):
                 data = ws_ls.receive_json()
                 car = next(c for c in data["connections"] if c["name"] == "CarNote")
                 self.assertEqual(car["note"], "LS Note")
+                self.assertEqual(car["sf_note"], "")
 
                 # 6. Update Note from SF
                 resp = self.client.post(f"/api/leitstelle/{sf_code}/update_note", data={
@@ -111,10 +112,11 @@ class TestStaffelfuehrer(unittest.TestCase):
                 })
                 self.assertEqual(resp.status_code, 200)
 
-                # 7. LS should receive update with new note
+                # 7. LS should receive update with separate SF note
                 data = ws_ls.receive_json()
                 car = next(c for c in data["connections"] if c["name"] == "CarNote")
-                self.assertEqual(car["note"], "SF Overwrite")
+                self.assertEqual(car["note"], "LS Note")
+                self.assertEqual(car["sf_note"], "SF Overwrite")
 
 if __name__ == "__main__":
     unittest.main()

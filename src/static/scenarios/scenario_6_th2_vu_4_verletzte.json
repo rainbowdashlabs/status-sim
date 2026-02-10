@@ -1,0 +1,31 @@
+{
+  "name": "TH 2 Verkehrsunfall mit 4 Verletzten",
+  "beschreibung": "Alarmierung TH 2. Verkehrsunfall mit zwei PKW, 4 Verletzte.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 2",
+      "adresse": "Bundesallee 120",
+      "ortsteil": "Südost",
+      "einheiten": [{"typ": "FD", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Lage bestätigt, Gefahrenabwehr eingeleitet"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatzstelle unter Kontrolle (EstuK)",
+            "geraete": "Spreizer, Schere",
+            "beschreibung": "Verkehrsunfall mit zwei PKW.",
+            "verletzte": "4 verletzte Person(en) an RTW übergeben",
+            "uebergabe": "Einsatzstelle an Pol übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

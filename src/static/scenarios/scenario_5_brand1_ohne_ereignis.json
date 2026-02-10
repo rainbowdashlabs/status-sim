@@ -1,0 +1,31 @@
+{
+  "name": "Brand 1 ohne Ereignis mit Lagemeldung",
+  "beschreibung": "Du kommst ohne Ereignisse an zum Brand 1. Kurzlagemeldung Müco 1 C-Rohr etc mit abschließender Lagemeldung.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Friedrichstraße 88",
+      "ortsteil": "Ost",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Müco, 1 C-Rohr, EstuK"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatzstelle unter Kontrolle (EstuK)",
+            "geraete": "1 C-Rohr, 0 PA",
+            "beschreibung": "Müllcontainerbrand.",
+            "verletzte": "Keine Verletzten",
+            "uebergabe": "Einsatzstelle an Anwohner übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "TH 2 mit Eigenunfall mit Personenschaden",
+  "beschreibung": "Alarmierung TH 2. Auf dem Weg hast du einen Unfall mit Personenschaden.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 2",
+      "adresse": "Berliner Straße 45",
+      "ortsteil": "Mitte",
+      "einheiten": [{"typ": "FD"}],
+      "schritte": [
+        {
+          "typ": "eigenunfall",
+          "mit_personenschaden": true,
+          "verletzte": 1,
+          "adresse": "Berliner Straße 30",
+          "ortsteil": "Mitte"
+        }
+      ]
+    }
+  ]
+}

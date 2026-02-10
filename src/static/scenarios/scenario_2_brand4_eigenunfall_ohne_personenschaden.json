@@ -1,0 +1,20 @@
+{
+  "name": "Brand 4 mit Eigenunfall ohne Personenschaden",
+  "beschreibung": "Alarmierung Brand 4. Auf dem Weg hast du einen Unfall ohne Personenschaden.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 4",
+      "adresse": "Hauptstraße 12",
+      "ortsteil": "Süd",
+      "einheiten": [{"typ": "FD", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "eigenunfall",
+          "mit_personenschaden": false,
+          "adresse": "Hauptstraße 8",
+          "ortsteil": "Süd"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Neue Tätigkeit mit FZN - Bewusstlose Person",
+  "beschreibung": "Auf dem Weg triffst du auf eine bewusstlose Person. Neue Tätigkeit mit Fahrzeugnennung.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1",
+      "adresse": "Schillerstraße 22",
+      "ortsteil": "Nord",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "ereignis": "bewusstlose Person",
+          "adresse": "Goethestraße 8",
+          "ortsteil": "Nord"
+        }
+      ]
+    },
+    {
+      "einsatznummer": "6",
+      "stichwort": "RD2NC",
+      "adresse": "Goethestraße 8",
+      "ortsteil": "Nord",
+      "einheiten": [{"typ": "RTW"}],
+      "schritte": [
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Lage bestätigt, Maßnahmen eingeleitet"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
+    }
+  ]
+}

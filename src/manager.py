@@ -28,9 +28,10 @@ class ConnectionManager:
                 last_sprechwunsch_update=c.last_sprechwunsch_update,
                 is_staffelfuehrer=c.is_staffelfuehrer,
                 note=ls.notes.get(c.name, ""),
+                sf_note=ls.sf_notes.get(c.name, ""),
                 is_online=c.ws is not None,
                 talking_to_sf=c.talking_to_sf
-            ) for c in ls.connections
+            ) for c in ls.connections if not c.is_staffelfuehrer and not c.is_leitstelle
         ]
         
         status_update = StatusUpdate(

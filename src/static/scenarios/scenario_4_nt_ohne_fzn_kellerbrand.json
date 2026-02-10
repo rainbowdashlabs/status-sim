@@ -1,0 +1,37 @@
+{
+  "name": "Neue Tätigkeit ohne FZN - Baum auf Straße, Kellerbrand",
+  "beschreibung": "Auf dem Weg siehst du einen Baum auf der Straße liegen. Neue Tätigkeit ohne Fahrzeugnennung. Der Einsatz an sich ist ein Kellerbrand.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2 Keller",
+      "adresse": "Kastanienallee 55",
+      "ortsteil": "West",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_ohne_fzn",
+          "ereignis": "Baum auf Straße",
+          "adresse": "Lindenstraße 30",
+          "ortsteil": "West"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Lage bestätigt, Maßnahmen eingeleitet"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatzstelle unter Kontrolle (EstuK)",
+            "geraete": "1 C-Rohr, 4 PA",
+            "beschreibung": "Kellerbrand. Mehrfamilienhaus, Keller voll ausgebrannt.",
+            "verletzte": "Keine Verletzten",
+            "uebergabe": "Einsatzstelle an Anwohner übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

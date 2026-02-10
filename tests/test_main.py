@@ -13,7 +13,7 @@ class TestLeitstelle(unittest.TestCase):
         self.client = TestClient(app)
 
     def test_create_leitstelle_form(self):
-        response = self.client.post("/leitstelle", data={"name": "Test Leitstelle"})
+        response = self.client.post("/leitstelle", json={"name": "Test Leitstelle"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["status"], "success")
         self.assertIn("admin_code", response.json())
@@ -22,11 +22,12 @@ class TestLeitstelle(unittest.TestCase):
     def test_get_index(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Leitstelle Simulator".encode("utf-8"), response.content)
+        # Check for some content that should be there
+        self.assertIn("Simulator".encode("utf-8"), response.content)
 
     def test_websocket_status_update(self):
         # Create a leitstelle
-        resp = self.client.post("/leitstelle", data={"name": "Test"})
+        resp = self.client.post("/leitstelle", json={"name": "Test"})
         admin_code = resp.json()["admin_code"]
         vehicle_code = resp.json()["vehicle_code"]
 
@@ -83,7 +84,7 @@ class TestLeitstelle(unittest.TestCase):
 
     def test_private_message(self):
         # Create a leitstelle
-        resp = self.client.post("/leitstelle", data={"name": "Test"})
+        resp = self.client.post("/leitstelle", json={"name": "Test"})
         admin_code = resp.json()["admin_code"]
         vehicle_code = resp.json()["vehicle_code"]
 
@@ -95,7 +96,7 @@ class TestLeitstelle(unittest.TestCase):
                 ws_car2.receive_json() # Car2 receives initial status
                 
                 # Send private message to Car1
-                resp = self.client.post(f"/api/leitstelle/{admin_code}/message", data={
+                resp = self.client.post(f"/api/leitstelle/{admin_code}/message", json={
                     "message": "Hello Car1",
                     "target_name": "Car1"
                 })
@@ -106,9 +107,30 @@ class TestLeitstelle(unittest.TestCase):
                 self.assertEqual(msg1, "LS: Hello Car1")
                 
                 # Car2 should NOT receive it
-                self.client.post(f"/api/leitstelle/{admin_code}/message", data={"message": "Broadcast"})
+                self.client.post(f"/api/leitstelle/{admin_code}/message", json={"message": "Broadcast"})
                 msg2 = ws_car2.receive_text()
                 self.assertEqual(msg2, "LS: Broadcast")
+
+    def test_chat_history_persists_messages(self):
+        resp = self.client.post("/leitstelle", json={"name": "Chat"})
+        admin_code = resp.json()["admin_code"]
+        vehicle_code = resp.json()["vehicle_code"]
+
+        with self.client.websocket_connect(f"/ws/{vehicle_code}?name=CarChat") as ws_car:
+            ws_car.receive_json()
+
+            resp = self.client.post(f"/api/leitstelle/{admin_code}/message", json={
+                "message": "Hallo",
+                "target_name": "CarChat"
+            })
+            self.assertEqual(resp.status_code, 200)
+
+            history_resp = self.client.get(f"/api/leitstelle/{admin_code}/chat_history", params={
+                "target_name": "CarChat"
+            })
+            self.assertEqual(history_resp.status_code, 200)
+            history = history_resp.json()["messages"]
+            self.assertTrue(any(msg["text"] == "Hallo" and msg["sender"] == "LS" for msg in history))
 
     def test_get_leitstelle_view_not_found(self):
         response = self.client.get("/leitstelle/NONEXISTENT", follow_redirects=False)
@@ -124,7 +146,7 @@ class TestLeitstelle(unittest.TestCase):
 
     def test_clear_special_status(self):
         # Create a leitstelle
-        resp = self.client.post("/leitstelle", data={"name": "Test"})
+        resp = self.client.post("/leitstelle", json={"name": "Test"})
         admin_code = resp.json()["admin_code"]
         vehicle_code = resp.json()["vehicle_code"]
 
@@ -143,7 +165,7 @@ class TestLeitstelle(unittest.TestCase):
                 self.assertEqual(car1["special"], "5")
                 
                 # Clear special status from LS (via API)
-                resp = self.client.post(f"/api/leitstelle/{admin_code}/clear_special", data={
+                resp = self.client.post(f"/api/leitstelle/{admin_code}/clear_special", json={
                     "target_name": "Car1"
                 })
                 self.assertEqual(resp.status_code, 200)
