@@ -1,64 +1,15 @@
 function initStaffelfuehrer(sfCode) {
     const connectionsDiv = document.getElementById('connections');
-    let ws;
-    let reconnectTimeout;
-    let reconnectAttempts = 0;
-
-    function connect() {
-        const protocol = location.protocol.replace('http', 'ws');
-        const wsUrl = `${protocol}//${window.location.host}/ws/${sfCode}?name=STAFFELFUEHRER_${Math.random().toString(36).substring(2, 11)}`;
-        ws = new WebSocket(wsUrl);
-
-        const connectionTimeout = setTimeout(() => {
-            if (ws.readyState !== WebSocket.OPEN) {
-                console.log("WebSocket connection handshake timed out. Closing and retrying...");
-                ws.close();
-            }
-        }, 5000);
-
-        ws.onopen = function() {
-            console.log("WebSocket connected");
-            clearTimeout(connectionTimeout);
-            reconnectAttempts = 0;
-            hideConnectionError();
-        };
-
-        ws.onmessage = function(event) {
+    const protocol = location.protocol.replace('http', 'ws');
+    const wsUrl = `${protocol}//${window.location.host}/ws/${sfCode}?name=STAFFELFUEHRER_${Math.random().toString(36).substring(2, 11)}`;
+    
+    ws = new WebSocketManager(wsUrl, {
+        onMessage: (event) => {
             const data = JSON.parse(event.data);
             if (data.type === 'status_update') {
                 updateUI(data.connections, data.notices);
             }
-        };
-
-        ws.onerror = function(error) {
-            console.error("WebSocket error:", error);
-            clearTimeout(connectionTimeout);
-        };
-
-        ws.onclose = function() {
-            if (isUnloading) return;
-            showConnectionError();
-            
-            const delay = Math.min(500 * Math.pow(2, reconnectAttempts), 30000);
-            reconnectAttempts++;
-            console.log(`WebSocket closed. Reconnecting in ${delay}ms...`);
-            clearTimeout(reconnectTimeout);
-            reconnectTimeout = setTimeout(connect, delay);
-        };
-    }
-
-    connect();
-
-    function sendHeartbeat() {
-        if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
-            ws.send("heartbeat");
         }
-    }
-    setInterval(sendHeartbeat, 20000);
-
-    let isUnloading = false;
-    window.addEventListener('beforeunload', () => {
-        isUnloading = true;
     });
 
     function updateUI(connections, notices) {

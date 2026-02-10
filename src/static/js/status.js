@@ -121,45 +121,17 @@ function initStatus(name, code) {
         }
     }
 
-    function sendHeartbeat() {
-        if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
-            ws.send("heartbeat");
-        }
-    }
-    setInterval(sendHeartbeat, 20000);
-
     updateStatus("2");
 
-    let reconnectTimeout;
-    let reconnectAttempts = 0;
-
-    function connect() {
-        const protocol = location.protocol.replace('http', 'ws');
-        const encodedName = encodeURIComponent(name);
-        const wsUrl = `${protocol}//${window.location.host}/ws/${code}?name=${encodedName}`;
-        ws = new WebSocket(wsUrl);
-
-        const connectionTimeout = setTimeout(() => {
-            if (ws.readyState !== WebSocket.OPEN) {
-                console.log("WebSocket connection handshake timed out. Closing and retrying...");
-                ws.close();
-            }
-        }, 5000);
-
-        ws.onopen = function() {
-            console.log("WebSocket connected");
-            clearTimeout(connectionTimeout);
-            reconnectAttempts = 0;
-            hideConnectionError();
-            ws.send(`status:${currentStatus}`);
-        };
-
-        ws.onerror = function(error) {
-            console.error("WebSocket error:", error);
-            clearTimeout(connectionTimeout);
-        };
-
-        ws.onmessage = function(event) {
+    const protocol = location.protocol.replace('http', 'ws');
+    const encodedName = encodeURIComponent(name);
+    const wsUrl = `${protocol}//${window.location.host}/ws/${code}?name=${encodedName}`;
+    
+    ws = new WebSocketManager(wsUrl, {
+        onOpen: (socket) => {
+            socket.send(`status:${currentStatus}`);
+        },
+        onMessage: (event) => {
             try {
                 const data = JSON.parse(event.data);
                 if (data.type === 'status_update') {
@@ -249,21 +221,8 @@ function initStatus(name, code) {
             if (currentTab !== 'nachrichten') {
                 tabNachrichten.classList.add('flash');
             }
-        };
-
-        ws.onclose = function(event) {
-            if (isUnloading) return;
-            showConnectionError();
-            
-            const delay = Math.min(500 * Math.pow(2, reconnectAttempts), 30000);
-            reconnectAttempts++;
-            console.log(`WebSocket closed. Reconnecting in ${delay}ms...`);
-            clearTimeout(reconnectTimeout);
-            reconnectTimeout = setTimeout(connect, delay);
-        };
-    }
-
-    connect();
+        }
+    });
 
     function updateTimeAgo() {
         const rows = document.querySelectorAll('.message-row');
@@ -285,9 +244,4 @@ function initStatus(name, code) {
         });
     }
     setInterval(updateTimeAgo, 30000);
-
-    let isUnloading = false;
-    window.addEventListener('beforeunload', () => {
-        isUnloading = true;
-    });
 }
