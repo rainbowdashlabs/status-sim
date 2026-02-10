@@ -31,9 +31,6 @@ function initStaffelfuehrer(sfCode) {
     ws.onclose = function() {
         if (isUnloading) return;
         showConnectionError();
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 3000);
     };
 
     function updateUI(connections, notices) {

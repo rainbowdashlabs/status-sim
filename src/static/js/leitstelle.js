@@ -78,9 +78,6 @@ function initLeitstelle(adminCode) {
     ws.onclose = function() {
         if (isUnloading) return;
         showConnectionError();
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 3000);
     };
 
     function updateConnections(connections, notices) {

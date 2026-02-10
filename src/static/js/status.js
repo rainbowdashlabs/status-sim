@@ -265,12 +265,5 @@ function initStatus(name, code) {
     ws.onclose = function(event) {
         if (isUnloading) return;
         showConnectionError();
-        setTimeout(() => {
-            if (event.code === 1008) {
-                window.location.href = `/?error=name_taken&old_name=${encodedName}`;
-            } else {
-                window.location.href = '/';
-            }
-        }, 3000);
     };
 }
