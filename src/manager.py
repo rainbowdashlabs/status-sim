@@ -2,6 +2,9 @@ import json
 import time
 from typing import Dict, List, Optional
 from src.models import LeitstelleData, Connection, VehicleStatus, StatusUpdate, Notice
+from src.logging_conf import get_logger
+
+logger = get_logger("manager")
 
 class ConnectionManager:
     def __init__(self):
@@ -42,7 +45,7 @@ class ConnectionManager:
                 try:
                     await connection.ws.send_text(message)
                 except Exception as e:
-                    print(f"Error sending message to {connection.name}: {e}")
+                    logger.error(f"Error sending message to {connection.name}: {e}")
 
     async def cleanup_inactive(self):
         now = time.time()
@@ -64,7 +67,7 @@ class ConnectionManager:
             ls.connections = new_connections
             
             if len(ls.connections) < original_count:
-                # print(f"Cleaned up {original_count - len(ls.connections)} inactive connections in {admin_code}")
+                logger.info(f"Cleaned up {original_count - len(ls.connections)} inactive connections in {admin_code}")
                 active_names = {c.name for c in ls.connections}
                 ls.notices = {name: notice for name, notice in ls.notices.items() if name in active_names}
                 await self.broadcast_status(admin_code)

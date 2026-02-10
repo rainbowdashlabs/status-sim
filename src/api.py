@@ -7,6 +7,9 @@ import os
 from datetime import datetime
 from src.manager import manager
 from src.models import LeitstelleData, Connection, Notice
+from src.logging_conf import get_logger
+
+logger = get_logger("api")
 
 router = APIRouter()
 
@@ -114,12 +117,16 @@ async def websocket_endpoint(websocket: WebSocket, code: str, name: str = None):
             is_staffelfuehrer = True
     
     if admin_code is None:
+        await websocket.accept()
+        await websocket.send_json({"type": "error", "message": "Invalid code"})
         await websocket.close(code=1008)
         return
     
     # Check for duplicate vehicle names
     existing_connection = next((c for c in manager.leitstellen[admin_code].connections if c.name == name), None)
     if not is_staffelfuehrer and existing_connection and existing_connection.ws is not None:
+        await websocket.accept()
+        await websocket.send_json({"type": "error", "message": "Name already taken"})
         await websocket.close(code=1008, reason="Name already taken")
         return
 
@@ -140,7 +147,7 @@ async def websocket_endpoint(websocket: WebSocket, code: str, name: str = None):
         )
         manager.leitstellen[admin_code].connections.append(connection)
     
-    # print(f"New connection: {name} to {admin_code}")
+    logger.info(f"New connection: {name} to {admin_code}")
     await manager.broadcast_status(admin_code)
     
     try:
@@ -206,11 +213,9 @@ async def websocket_endpoint(websocket: WebSocket, code: str, name: str = None):
             elif data == "heartbeat":
                 connection.last_update = time.time()
     except WebSocketDisconnect:
-        # print(f"WebSocket disconnected: {name}")
-        pass
+        logger.debug(f"WebSocket disconnected: {name}")
     except Exception as e:
-        # print(f"Error in websocket_endpoint for {name}: {e}")
-        pass
+        logger.error(f"Error in websocket_endpoint for {name}: {e}")
     finally:
         if admin_code in manager.leitstellen:
             if connection.ws == websocket:

@@ -27,13 +27,18 @@ function showConnectionError() {
     errorDiv.style.top = '20px';
     errorDiv.style.left = '50%';
     errorDiv.style.transform = 'translateX(-50%)';
-    errorDiv.style.backgroundColor = 'var(--danger-color)';
-    errorDiv.style.color = 'white';
-    errorDiv.style.padding = '15px 25px';
+    errorDiv.style.backgroundColor = 'var(--warning-color, #ffc107)';
+    errorDiv.style.color = 'black';
+    errorDiv.style.padding = '10px 20px';
     errorDiv.style.borderRadius = 'var(--border-radius)';
     errorDiv.style.boxShadow = 'var(--shadow)';
     errorDiv.style.zIndex = '1000';
     errorDiv.style.fontWeight = 'bold';
-    errorDiv.textContent = 'Verbindung verloren. Bitte Seite neu laden.';
+    errorDiv.textContent = 'Verbindung unterbrochen. Verbinde neu...';
     document.body.appendChild(errorDiv);
+}
+
+function hideConnectionError() {
+    const errorMsg = document.getElementById('ws-error-msg');
+    if (errorMsg) errorMsg.remove();
 }

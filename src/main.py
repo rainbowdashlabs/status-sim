@@ -5,6 +5,9 @@ import os
 import asyncio
 from src.api import router
 from src.manager import manager
+from src.logging_conf import setup_logging
+
+setup_logging()
 
 from contextlib import asynccontextmanager
 
@@ -40,4 +43,4 @@ async def cleanup_task():
         await manager.cleanup_inactive()
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000, ws_ping_interval=20, ws_ping_timeout=20)

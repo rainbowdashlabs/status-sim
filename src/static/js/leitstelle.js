@@ -52,15 +52,23 @@ function initLeitstelle(adminCode) {
         const wsUrl = `${protocol}//${window.location.host}/ws/${adminCode}?name=LEITSTELLE_VIEW_${Math.random().toString(36).substring(2, 11)}`;
         ws = new WebSocket(wsUrl);
 
+        const connectionTimeout = setTimeout(() => {
+            if (ws.readyState !== WebSocket.OPEN) {
+                console.log("WebSocket connection handshake timed out. Closing and retrying...");
+                ws.close();
+            }
+        }, 5000);
+
         ws.onopen = function() {
             console.log("WebSocket connected");
+            clearTimeout(connectionTimeout);
             reconnectAttempts = 0;
-            const errorMsg = document.getElementById('ws-error-msg');
-            if (errorMsg) errorMsg.remove();
+            hideConnectionError();
         };
 
         ws.onerror = function(error) {
             console.log("WebSocket error:", error);
+            clearTimeout(connectionTimeout);
         };
 
         ws.onmessage = function(event) {
@@ -78,7 +86,7 @@ function initLeitstelle(adminCode) {
             if (isUnloading) return;
             showConnectionError();
             
-            const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000);
+            const delay = Math.min(500 * Math.pow(2, reconnectAttempts), 30000);
             reconnectAttempts++;
             console.log(`WebSocket closed. Reconnecting in ${delay}ms...`);
             clearTimeout(reconnectTimeout);
