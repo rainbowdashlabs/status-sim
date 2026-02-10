@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
   scenario: any;
@@ -14,14 +14,14 @@ const emit = defineEmits<{
   (e: 'update:state', state: any): void;
 }>();
 
-const expandedEinsaetze = computed(() => props.checklistState?.expanded_einsaetze || {});
-const expandedSchritte = computed(() => props.checklistState?.expanded_schritte || {});
+const expandedEinsaetze = ref<Record<string, boolean>>({});
+const expandedSchritte = ref<Record<string, boolean>>({});
 const checkedEntries = computed(() => props.checklistState?.checked_entries || {});
 
 const updateState = (newPartialState: any) => {
   const currentState = {
-    expanded_einsaetze: { ...expandedEinsaetze.value },
-    expanded_schritte: { ...expandedSchritte.value },
+    expanded_einsaetze: {}, // Do not sync
+    expanded_schritte: {},  // Do not sync
     checked_entries: { ...checkedEntries.value },
     ...newPartialState
   };
@@ -30,18 +30,14 @@ const updateState = (newPartialState: any) => {
 
 const toggleEinsatz = (index: any) => {
   const idx = typeof index === 'string' ? index : index.toString();
-  const next = { ...expandedEinsaetze.value };
-  next[idx] = !next[idx];
-  updateState({ expanded_einsaetze: next });
+  expandedEinsaetze.value[idx] = !expandedEinsaetze.value[idx];
 };
 
 const toggleSchritt = (eIdx: any, sIdx: any) => {
   const e = typeof eIdx === 'string' ? eIdx : eIdx.toString();
   const s = typeof sIdx === 'string' ? sIdx : sIdx.toString();
   const key = `${e}-${s}`;
-  const next = { ...expandedSchritte.value };
-  next[key] = !next[key];
-  updateState({ expanded_schritte: next });
+  expandedSchritte.value[key] = !expandedSchritte.value[key];
 };
 
 const toggleEntry = (eIdx: any, sIdx: any, fIdx: any) => {

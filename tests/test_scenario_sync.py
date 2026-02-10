@@ -38,10 +38,10 @@ class TestScenarioSync(unittest.TestCase):
             data = ws_car.receive_json()
             self.assertIsNotNone(data["connections"][0]["checklist_state"])
             
-            # 4. Update state from Leitstelle (mocked by API call)
+            # 4. Update state (mocked by API call - only checked_entries should matter now)
             new_state = {
-                "expanded_einsaetze": {"0": True},
-                "expanded_schritte": {"0-0": True},
+                "expanded_einsaetze": {},
+                "expanded_schritte": {},
                 "checked_entries": {"0-0-0": True}
             }
             
@@ -54,14 +54,13 @@ class TestScenarioSync(unittest.TestCase):
             # 5. Verify Car receives updated state via WebSocket
             data = ws_car.receive_json()
             synced_state = data["connections"][0]["checklist_state"]
-            self.assertEqual(synced_state["expanded_einsaetze"], {"0": True})
             self.assertEqual(synced_state["checked_entries"], {"0-0-0": True})
 
             # 6. Update state from Staffelführer (mocked by API call)
             # Staffelführer uses its own code, which should also work for this endpoint as it's an admin-like endpoint
             new_state_2 = {
-                "expanded_einsaetze": {"0": True},
-                "expanded_schritte": {"0-0": True},
+                "expanded_einsaetze": {},
+                "expanded_schritte": {},
                 "checked_entries": {"0-0-0": True, "0-0-1": True}
             }
             
@@ -75,6 +74,9 @@ class TestScenarioSync(unittest.TestCase):
             data = ws_car.receive_json()
             synced_state_2 = data["connections"][0]["checklist_state"]
             self.assertEqual(synced_state_2["checked_entries"]["0-0-1"], True)
+            # Expansion states should be empty as we don't sync them anymore
+            self.assertEqual(synced_state_2["expanded_einsaetze"], {})
+            self.assertEqual(synced_state_2["expanded_schritte"], {})
 
 if __name__ == "__main__":
     unittest.main()
