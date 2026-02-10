@@ -130,7 +130,7 @@ function initStatus(name, code) {
 
     updateStatus("2");
 
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const protocol = location.protocol.replace('http', 'ws');
     const encodedName = encodeURIComponent(name);
     const wsUrl = `${protocol}//${window.location.host}/ws/${code}?name=${encodedName}`;
     ws = new WebSocket(wsUrl);

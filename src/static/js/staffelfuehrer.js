@@ -1,6 +1,6 @@
 function initStaffelfuehrer(sfCode) {
     const connectionsDiv = document.getElementById('connections');
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const protocol = location.protocol.replace('http', 'ws');
     const wsUrl = `${protocol}//${window.location.host}/ws/${sfCode}?name=STAFFELFUEHRER`;
     const ws = new WebSocket(wsUrl);
 
@@ -63,7 +63,7 @@ function initStaffelfuehrer(sfCode) {
                 noticeHtml = `
                     <div class="notice-badge ${statusClass}">
                         ${notice.text} (${statusText})
-                        ${notice.status === 'confirmed' ? `<button class="ack-btn" onclick="acknowledgeNotice('${car.name}')">Fertig</button>` : ''}
+                        ${notice.status === 'confirmed' ? `<button class="ack-btn" onclick="event.stopPropagation(); acknowledgeNotice('${car.name}')">Fertig</button>` : ''}
                     </div>
                 `;
             } else if (car.talking_to_sf) {

@@ -43,7 +43,7 @@ function initLeitstelle(adminCode) {
         };
     });
 
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const protocol = location.protocol.replace('http', 'ws');
     const wsUrl = `${protocol}//${window.location.host}/ws/${adminCode}?name=LEITSTELLE_VIEW`;
     const ws = new WebSocket(wsUrl);
 
@@ -138,11 +138,11 @@ function initLeitstelle(adminCode) {
         if (car.special === '5') {
             const timeSince = formatTimeSince(car.last_sprechwunsch_update);
             specialBadge = `<span class="status-badge special">5 Sprechwunsch</span> <span onclick="event.stopPropagation()"><span class="timer" data-timestamp="${car.last_sprechwunsch_update}">${timeSince}</span></span>`;
-            clearButton = `<button class="clear-special-btn" onclick="clearSpecial('${car.name}')">Erledigt</button>`;
+            clearButton = `<button class="clear-special-btn" onclick="event.stopPropagation(); clearSpecial('${car.name}')">Erledigt</button>`;
         } else if (car.special === '0') {
             const timeSince = formatTimeSince(car.last_blitz_update);
             specialBadge = `<span class="status-badge special">0 Blitz</span> <span onclick="event.stopPropagation()"><span class="timer" data-timestamp="${car.last_blitz_update}">${timeSince}</span></span>`;
-            clearButton = `<button class="clear-special-btn" onclick="clearSpecial('${car.name}')">Erledigt</button>`;
+            clearButton = `<button class="clear-special-btn" onclick="event.stopPropagation(); clearSpecial('${car.name}')">Erledigt</button>`;
         }
 
         const isTalkingToSF = (notices && notices[car.name] && notices[car.name].status === 'confirmed') || car.talking_to_sf;
