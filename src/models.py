@@ -28,6 +28,15 @@ class ScenarioStartRequest(BaseModel):
     target_name: str
     scenario_name: str
 
+class ChecklistState(BaseModel):
+    expanded_einsaetze: Dict[str, bool] = Field(default_factory=dict)
+    expanded_schritte: Dict[str, bool] = Field(default_factory=dict)
+    checked_entries: Dict[str, bool] = Field(default_factory=dict)
+
+class ChecklistUpdateRequest(BaseModel):
+    target_name: str
+    state: ChecklistState
+
 class Notice(BaseModel):
     text: str
     status: str  # 'pending'|'confirmed'
@@ -71,6 +80,7 @@ class VehicleStatus(BaseModel):
     is_online: bool = True
     talking_to_sf: bool = False
     active_scenario: Optional[dict] = None
+    checklist_state: Optional[ChecklistState] = None
 
 class StatusUpdate(BaseModel):
     type: str = "status_update"
@@ -88,6 +98,7 @@ class LeitstelleData(BaseModel):
     sf_notes: Dict[str, str] = Field(default_factory=dict)
     chat_history: Dict[str, List[ChatMessage]] = Field(default_factory=dict)
     active_scenarios: Dict[str, dict] = Field(default_factory=dict) # vehicle_name -> scenario_data
+    checklist_states: Dict[str, ChecklistState] = Field(default_factory=dict) # vehicle_name -> checklist_state
     # Map of scenario name -> raw Scenario JSON path or object cache (lazy loaded in API)
     scenarios: Dict[str, dict] = Field(default_factory=dict)
     # Track which scenarios have been used per vehicle (vehicle name -> list of scenario names)

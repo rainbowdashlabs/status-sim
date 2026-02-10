@@ -44,6 +44,13 @@ const toggleCar = (carName: string) => {
   openCar.value = openCar.value === carName ? null : carName;
 };
 
+const updateChecklistState = async (carName: string, state: any) => {
+  await axios.post(`/api/leitstelle/${props.sfCode}/scenario/update_state`, {
+    target_name: carName,
+    state: state
+  });
+};
+
 const getNotice = (name: string) => status.value?.notices[name];
 </script>
 
@@ -102,7 +109,13 @@ const getNotice = (name: string) => status.value?.notices[name];
             </div>
           </div>
             <div v-if="openCar === car.name" class="mt-2.5 pt-2.5 border-t border-gray-800" @click.stop>
-            <ScenarioChecklist v-if="car.active_scenario" :scenario="car.active_scenario" class="mb-3" />
+            <ScenarioChecklist 
+               v-if="car.active_scenario" 
+               :scenario="car.active_scenario" 
+               :checklist-state="car.checklist_state"
+               @update:state="(state) => updateChecklistState(car.name, state)"
+               class="mb-3" 
+            />
             <VehicleChatPanel
                 :code="sfCode"
                 :target-name="car.name"

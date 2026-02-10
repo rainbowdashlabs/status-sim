@@ -17,6 +17,11 @@ export interface VehicleStatus {
   is_online: boolean;
   talking_to_sf: boolean;
   active_scenario: any | null;
+  checklist_state: {
+    expanded_einsaetze: Record<string, boolean>;
+    expanded_schritte: Record<string, boolean>;
+    checked_entries: Record<string, boolean>;
+  } | null;
 }
 
 export interface Notice {

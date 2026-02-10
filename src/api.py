@@ -11,7 +11,7 @@ from models import (
     LeitstelleData, Connection, Notice,
     MessageRequest, TargetRequest, NoticeRequest,
     NoteRequest, StatusRequest, LeitstelleCreateRequest, ChatMessage,
-    ScenarioStartRequest
+    ScenarioStartRequest, ChecklistUpdateRequest, ChecklistState
 )  # type: ignore
 from logging_conf import get_logger  # type: ignore
 from scenario_models import Scenario, FunkEntry  # type: ignore
@@ -557,6 +557,7 @@ async def start_scenario(code: str, request: ScenarioStartRequest):
     scenario_data["generated_entries"] = [f.model_dump() if isinstance(f, FunkEntry) else f for f in funksprueche]
 
     ls.active_scenarios[request.target_name] = scenario_data
+    ls.checklist_states[request.target_name] = ChecklistState() # Reset state on start
     await manager.broadcast_status(admin_code)
     return {"status": "success"}
 
@@ -570,8 +571,22 @@ async def discard_scenario(code: str, request: TargetRequest):
     ls = manager.leitstellen[admin_code]
     if request.target_name in ls.active_scenarios:
         del ls.active_scenarios[request.target_name]
+        if request.target_name in ls.checklist_states:
+            del ls.checklist_states[request.target_name]
         await manager.broadcast_status(admin_code)
         
+    return {"status": "success"}
+
+
+@router.post("/api/leitstelle/{code}/scenario/update_state")
+async def update_checklist_state(code: str, request: ChecklistUpdateRequest):
+    admin_code = code.upper()
+    if admin_code not in manager.leitstellen:
+        return {"status": "error", "message": "Leitstelle nicht gefunden"}
+    
+    ls = manager.leitstellen[admin_code]
+    ls.checklist_states[request.target_name] = request.state
+    await manager.broadcast_status(admin_code)
     return {"status": "success"}
 
 

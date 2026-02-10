@@ -31,7 +31,8 @@ class ConnectionManager:
                 sf_note=ls.sf_notes.get(c.name, ""),
                 is_online=c.ws is not None,
                 talking_to_sf=c.talking_to_sf,
-                active_scenario=ls.active_scenarios.get(c.name)
+                active_scenario=ls.active_scenarios.get(c.name),
+                checklist_state=ls.checklist_states.get(c.name)
             ) for c in ls.connections if not c.is_staffelfuehrer and not c.is_leitstelle
         ]
         

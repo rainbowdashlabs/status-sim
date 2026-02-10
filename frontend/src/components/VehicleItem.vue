@@ -94,6 +94,13 @@ const borderClass = computed(() => {
         default: return 'border-l-gray-600';
     }
 });
+
+const updateChecklistState = async (state: any) => {
+  await axios.post(`/api/leitstelle/${props.adminCode}/scenario/update_state`, {
+    target_name: props.car.name,
+    state: state
+  });
+};
 </script>
 
 <template>
@@ -143,7 +150,13 @@ const borderClass = computed(() => {
            <button @click="newEinsatz" class="flex-1 p-2 bg-secondary text-white rounded font-bold hover:brightness-110">Neuer Einsatz</button>
         </div>
 
-        <ScenarioChecklist v-if="car.active_scenario" :scenario="car.active_scenario" class="w-full" />
+        <ScenarioChecklist 
+           v-if="car.active_scenario" 
+           :scenario="car.active_scenario" 
+           :checklist-state="car.checklist_state"
+           @update:state="updateChecklistState"
+           class="w-full" 
+        />
 
         <VehicleChatPanel
           :code="adminCode"

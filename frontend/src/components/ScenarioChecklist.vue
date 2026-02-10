@@ -1,30 +1,63 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
   scenario: any;
+  checklistState?: {
+    expanded_einsaetze: Record<string, boolean>;
+    expanded_schritte: Record<string, boolean>;
+    checked_entries: Record<string, boolean>;
+  } | null;
 }>();
 
-const expandedEinsaetze = ref<Record<number, boolean>>({});
-const expandedSchritte = ref<Record<string, boolean>>({}); // Key: "eIdx-sIdx"
-const checkedEntries = ref<Record<string, boolean>>({}); // Key: "eIdx-sIdx-fIdx"
+const emit = defineEmits<{
+  (e: 'update:state', state: any): void;
+}>();
 
-const toggleEinsatz = (index: number) => {
-  expandedEinsaetze.value[index] = !expandedEinsaetze.value[index];
+const expandedEinsaetze = computed(() => props.checklistState?.expanded_einsaetze || {});
+const expandedSchritte = computed(() => props.checklistState?.expanded_schritte || {});
+const checkedEntries = computed(() => props.checklistState?.checked_entries || {});
+
+const updateState = (newPartialState: any) => {
+  const currentState = {
+    expanded_einsaetze: { ...expandedEinsaetze.value },
+    expanded_schritte: { ...expandedSchritte.value },
+    checked_entries: { ...checkedEntries.value },
+    ...newPartialState
+  };
+  emit('update:state', currentState);
 };
 
-const toggleSchritt = (eIdx: number, sIdx: number) => {
-  const key = `${eIdx}-${sIdx}`;
-  expandedSchritte.value[key] = !expandedSchritte.value[key];
+const toggleEinsatz = (index: any) => {
+  const idx = typeof index === 'string' ? index : index.toString();
+  const next = { ...expandedEinsaetze.value };
+  next[idx] = !next[idx];
+  updateState({ expanded_einsaetze: next });
 };
 
-const toggleEntry = (eIdx: number, sIdx: number, fIdx: number) => {
-  const key = `${eIdx}-${sIdx}-${fIdx}`;
-  checkedEntries.value[key] = !checkedEntries.value[key];
+const toggleSchritt = (eIdx: any, sIdx: any) => {
+  const e = typeof eIdx === 'string' ? eIdx : eIdx.toString();
+  const s = typeof sIdx === 'string' ? sIdx : sIdx.toString();
+  const key = `${e}-${s}`;
+  const next = { ...expandedSchritte.value };
+  next[key] = !next[key];
+  updateState({ expanded_schritte: next });
 };
 
-const getFunkspruecheForSchritt = (einsatzIndex: number, schrittIndex: number) => {
-  const prefix = `[[E${einsatzIndex}]][[S${schrittIndex}]]`;
+const toggleEntry = (eIdx: any, sIdx: any, fIdx: any) => {
+  const e = typeof eIdx === 'string' ? eIdx : eIdx.toString();
+  const s = typeof sIdx === 'string' ? sIdx : sIdx.toString();
+  const f = typeof fIdx === 'string' ? fIdx : fIdx.toString();
+  const key = `${e}-${s}-${f}`;
+  const next = { ...checkedEntries.value };
+  next[key] = !next[key];
+  updateState({ checked_entries: next });
+};
+
+const getFunkspruecheForSchritt = (einsatzIndex: any, schrittIndex: any) => {
+  const e = typeof einsatzIndex === 'string' ? parseInt(einsatzIndex) : einsatzIndex;
+  const s = typeof schrittIndex === 'string' ? parseInt(schrittIndex) : schrittIndex;
+  const prefix = `[[E${e}]][[S${s}]]`;
   return (props.scenario.generated_entries || [])
     .filter((entry: any) => entry.message.startsWith(prefix))
     .map((entry: any) => ({
@@ -81,11 +114,11 @@ const getActorColor = (actor: string) => {
             <span class="font-bold text-sm text-primary">{{ einsatz.stichwort }}</span>
             <span class="text-xs text-gray-300">{{ einsatz.adresse }}, {{ einsatz.ortsteil }}</span>
           </div>
-          <span class="text-xs">{{ expandedEinsaetze[eIdx] ? '▲' : '▼' }}</span>
+          <span class="text-xs">{{ expandedEinsaetze[eIdx.toString()] ? '▲' : '▼' }}</span>
         </div>
         
         <!-- Einsatz Content (Schritte) -->
-        <div v-if="expandedEinsaetze[eIdx]" class="mt-2 ml-3 pl-3 border-l-2 border-gray-700 flex flex-col gap-2">
+        <div v-if="expandedEinsaetze[eIdx.toString()]" class="mt-2 ml-3 pl-3 border-l-2 border-gray-700 flex flex-col gap-2">
           <div v-for="sIdx in (einsatz.schritte.length + 1)" :key="sIdx-1" class="flex flex-col">
             <!-- Schritt Header -->
             <div 
