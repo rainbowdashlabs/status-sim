@@ -1,0 +1,31 @@
+{
+  "name": "TH 2 - Sturm",
+  "beschreibung": "Großer Ast auf PKW gestürzt, Person im Fahrzeug eingeschlossen.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 2 - P-klemmt",
+      "adresse": "Waldstraße 50",
+      "ortsteil": "Außenbezirk",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Lage bestätigt, Ast auf PKW, Person nicht eingeklemmt aber eingeschlossen. Befreiung läuft."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Motorkettensäge, Glasmanagement",
+            "beschreibung": "Ast entfernt, Person befreit und an RD übergeben.",
+            "verletzte": "1 leichtverletzte Person an RTW",
+            "uebergabe": "Einsatzstelle an Fahrzeughalter übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

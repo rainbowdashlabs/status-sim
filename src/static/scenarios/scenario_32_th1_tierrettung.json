@@ -1,0 +1,30 @@
+{
+  "name": "TH 1 - Tierrettung",
+  "beschreibung": "Katze sitzt seit zwei Tagen auf einem hohen Baum und traut sich nicht mehr herunter.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1 - Tier",
+      "adresse": "Am Park 3",
+      "ortsteil": "Südost",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Rettung über DLK wird vorbereitet"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatz beendet",
+            "geraete": "DLK, Tiertransportbox",
+            "beschreibung": "Katze mittels Drehleiter vom Baum gerettet und wohlbehalten an Besitzer übergeben.",
+            "uebergabe": "Einsatzstelle an Besitzer übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

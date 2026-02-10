@@ -1,0 +1,35 @@
+{
+  "name": "Brand 2 - Garagenbrand",
+  "beschreibung": "Brand in einer Doppelgarage, droht auf Wohnhaus überzugreifen.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Gartenstraße 12",
+      "ortsteil": "Süd",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}, {"typ": "LHF", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Feuer in Garage, Riegelstellung zum Wohnhaus"
+        },
+        {
+          "typ": "nachalarmierung_fahrzeuge",
+          "fahrzeuge": [{"typ": "LHF", "anzahl": 1}],
+          "begruendung": "Erhöhter Bedarf an Atemschutzgeräteträgern"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "2 C-Rohre, 6 PA",
+            "beschreibung": "Garagenbrand, Übergreifen auf Wohnhaus verhindert.",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Brand 2 - Wohnungsbrand",
+  "beschreibung": "Alarmierung Brand 2 in einem Mehrfamilienhaus. Wohnungsbrand im 2. OG.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Hauptstraße 15",
+      "ortsteil": "West",
+      "einheiten": [{"typ": "FD", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Lage Übersichtlich, Feuer im 2. OG, 1 C-Rohr im Einsatz"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatzstelle unter Kontrolle (EstuK)",
+            "geraete": "1 C-Rohr, 4 PA, Drucklüfter",
+            "beschreibung": "Wohnungsbrand, eine Wohnung vollständig ausgebrannt, keine Ausbreitung.",
+            "verletzte": "Keine Verletzten",
+            "uebergabe": "Einsatzstelle an Polizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

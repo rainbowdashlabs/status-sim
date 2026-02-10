@@ -10,8 +10,8 @@ import random
 
 
 class Einheit(BaseModel):
-    """Eine Einheit (z.B. C-Dienst, NEF, RTW)."""
-    typ: Literal["FD", "NEF", "RTW"]
+    """Eine Einheit (z.B. C-Dienst, NEF, RTW, DLK, LHF)."""
+    typ: Literal["FD", "NEF", "RTW", "DLK", "LHF"]
     anzahl: int = 1
     kennung: Optional[str] = None # Optional, falls eine spezifische Kennung gewünscht ist
 
@@ -20,13 +20,17 @@ class Einheit(BaseModel):
             return self.kennung
         num = random.choice([n for n in range(11, 66) if n % 10 != 0])
         if self.typ == "FD":
-            return f"C-Dienst {num}17"
+            return f"ELW {num}17"
         elif self.typ == "NEF":
             return f"NEF {num}05"
         elif self.typ == "RTW":
             x = random.randint(1, 6)
             return f"RTW {num}00/{x}"
-        return "Unbekannte Einheit"
+        elif self.typ == "DLK":
+            return f"DLK {num}00/1"
+        elif self.typ == "LHF":
+            return f"LHF {num}00/1"
+        return f"{self.typ} {num}00/1"
 
     def generate_names(self) -> List[str]:
         # Wenn eine spezifische Kennung angegeben ist und anzahl==1, diese verwenden
@@ -60,11 +64,11 @@ class FunkContext(BaseModel):
 
 class Lagemeldung(BaseModel):
     """Lagemeldung in der richtigen Reihenfolge (wird für SF geshuffled)."""
-    lage: str = "Einsatzstelle unter Kontrolle (EstuK)"
+    lage: Optional[str] = "Einsatzstelle unter Kontrolle (EstuK)"
     geraete: Optional[str] = None  # z.B. "1 C-Rohr, 2 PA"
-    beschreibung: str  # z.B. "Kellerbrand, Mehrfamilienhaus, Keller voll ausgebrannt"
-    verletzte: str = "Keine Verletzten"  # z.B. "4 verletzte Person(en) an RTW übergeben"
-    uebergabe: str  # z.B. "Einsatzstelle an Anwohner übergeben" oder "Einsatzstelle an Pol übergeben"
+    beschreibung: Optional[str] = None  # z.B. "Kellerbrand, Mehrfamilienhaus, Keller voll ausgebrannt"
+    verletzte: Optional[str] = "Keine Verletzten"  # z.B. "4 verletzte Person(en) an RTW übergeben"
+    uebergabe: Optional[str] = None  # z.B. "Einsatzstelle an Anwohner übergeben" oder "Einsatzstelle an Pol übergeben"
 
 
 class EigenunfallSchritt(BaseModel):
@@ -94,7 +98,7 @@ class EigenunfallSchritt(BaseModel):
                 FunkEntry(actor="FZ", message="So richtig, kommen."),
                 FunkEntry(actor="LS", message="Wie viele Verletzte, kommen."),
                 FunkEntry(actor="FZ", message=f"Verletzte: {self.verletzte}, kommen."),
-                FunkEntry(actor="LS", message=f"Verstanden, sie dann in Status 4, {rtw_liste} und {cd_name} sind auf dem Weg, {ctx.ls} Ende.", status="4"),
+                FunkEntry(actor="LS", message=f"Verstanden, sie dann in Status 4, {rtw_liste} und {cd_name} sind auf dem Weg, {ctx.ls} <time> Ende.", status="4"),
             ]
         else:
             cd_name = Einheit(typ="FD").generate_names()[0]
@@ -110,7 +114,7 @@ class EigenunfallSchritt(BaseModel):
                 FunkEntry(actor="FZ", message=f"{self.adresse} {self.ortsteil}, kommen."),
                 FunkEntry(actor="LS", message=f"{self.adresse} {self.ortsteil} so recht? Kommen."),
                 FunkEntry(actor="FZ", message="So richtig, kommen."),
-                FunkEntry(actor="LS", message=f"Verstanden, sie dann in Status 4, {cd_name} ist auf dem Weg, {ctx.ls} Ende.", status="4"),
+                FunkEntry(actor="LS", message=f"Verstanden, sie dann in Status 4, {cd_name} ist auf dem Weg, {ctx.ls} <time> Ende.", status="4"),
             ]
         return e
 
@@ -129,13 +133,15 @@ class NeueTaetigkeitMitFznSchritt(BaseModel):
             FunkEntry(actor="SF", message=f"Wir haben eine neue Tätigkeit mit Fahrzeugnennung in der {self.adresse} {self.ortsteil}, {self.ereignis}, kommen."),
             FunkEntry(actor="FZ", message=f"Verstanden, neue Tätigkeit mit Fahrzeugnennung in der {self.adresse} {self.ortsteil}, {self.ereignis}, kommen."),
             FunkEntry(actor="SF", message="So richtig, Ende."),
+            FunkEntry(actor="FZ", status="0"),
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} Sprechwunsch, kommen."),
             FunkEntry(actor="FZ", message=f"Hier Florian {ctx.fk} mit neuer Tätigkeit ohne Fahrzeugnennung, kommen."),
             FunkEntry(actor="LS", message="Wo befinden sie sich und das Ereignis, kommen."),
             FunkEntry(actor="FZ", message=f"{self.adresse} {self.ortsteil}, {self.ereignis}, kommen."),
             FunkEntry(actor="LS", message=f"{self.adresse} {self.ortsteil}, {self.ereignis} so recht, kommen."),
             FunkEntry(actor="FZ", message="So richtig, kommen."),
-            FunkEntry(actor="LS", message=f"Verstanden, Einsatz unter Nummer {ctx.next_enr()} angelegt. Sie dann weiter mit Status 4, {ctx.ls} Ende.", status="4"),
+            FunkEntry(actor="LS", message=f"Verstanden, Einsatz unter Nummer {ctx.next_enr()} angelegt. Sie dann weiter mit Status 4, {ctx.ls} <time> Ende.", status="4"),
+            FunkEntry(actor="FZ", status="4"),
         ]
         # Update Einsatzkontext auf neue Adresse? Das überlässt man dem Aufrufer, hier nur Funksprüche.
         return e
@@ -155,13 +161,14 @@ class NeueTaetigkeitOhneFznSchritt(BaseModel):
             FunkEntry(actor="SF", message=f"Wir haben eine neue Tätigkeit ohne Fahrzeugnennung in der {self.adresse} {self.ortsteil}, {self.ereignis}, kommen."),
             FunkEntry(actor="FZ", message=f"Verstanden, neue Tätigkeit ohne Fahrzeugnennung in der {self.adresse} {self.ortsteil}, {self.ereignis}, kommen."),
             FunkEntry(actor="SF", message="So richtig, Ende."),
+            FunkEntry(actor="FZ", status="0"),
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} Sprechwunsch, kommen."),
             FunkEntry(actor="FZ", message=f"Hier Florian {ctx.fk} mit neuer Tätigkeit ohne Fahrzeugnennung, kommen."),
             FunkEntry(actor="LS", message="Wo befinden sie sich und das Ereignis, kommen."),
             FunkEntry(actor="FZ", message=f"{self.adresse} {self.ortsteil}, {self.ereignis}, kommen."),
             FunkEntry(actor="LS", message=f"{self.adresse} {self.ortsteil}, {self.ereignis} so recht, kommen."),
-            FunkEntry(actor="FZ", message="So richtig, kommen."),
-            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} Ende."),
+            FunkEntry(actor="FZ", message="So recht, kommen."),
+            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} <time> Ende."),
         ]
 
 
@@ -179,10 +186,10 @@ class EinsatzstellenkorrekturSchritt(BaseModel):
             FunkEntry(actor="FZ", message="Anfangen, kommen."),
             FunkEntry(actor="LS", message=f"{self.adresse} {self.ortsteil}, kommen."),
             FunkEntry(actor="FZ", message=f"{self.adresse} {self.ortsteil}, kommen."),
-            FunkEntry(actor="LS", message=f"So richtig, {ctx.ls} Ende."),
+            FunkEntry(actor="LS", message=f"So richtig, {ctx.ls} <time> Ende."),
             FunkEntry(actor="FZ", message=f"Staffelführer {ctx.fk} von Melder {ctx.fk} kommen."),
             FunkEntry(actor="SF", message=f"Hier Staffelführer {ctx.fk}, kommen."),
-            FunkEntry(actor="FZ", message=f"Einsatzstellenkorrektur auf {self.adresse} {self.ortsteil}, kommen."),
+            FunkEntry(actor="FZ", message=f"Einsatzstellenkorrektur auf {self.adresse} {self.ortsteil}, Quittung kommen."),
             FunkEntry(actor="SF", message=f"Einsatzstellenkorrektur auf {self.adresse} {self.ortsteil} verstanden, kommen."),
             FunkEntry(actor="FZ", message="So richtig, Ende."),
         ]
@@ -196,24 +203,47 @@ class AnkommenSchritt(BaseModel):
         return [
             FunkEntry(actor="SF", message=f"Melder {ctx.fk} von Staffelführer {ctx.fk}, kommen."),
             FunkEntry(actor="FZ", message=f"Hier Melder {ctx.fk}, kommen."),
-            FunkEntry(actor="SF", message="Wir sind an der Einsatzstelle eingetroffen, kommen."),
+            FunkEntry(actor="SF", message="Wir sind an der Einsatzstelle eingetroffen, Quittung kommen."),
             FunkEntry(actor="FZ", message="Wir sind an der Einsatzstelle eingetroffen, kommen."),
             FunkEntry(actor="SF", message="So richtig, Ende.", status="4"),
+            FunkEntry(actor="FZ", status="4"),
         ]
 
 
-class KurzlagemeldungSchritt(BaseModel):
+class KurzlagemeldungFMSSchritt(BaseModel):
     """Kurzlagemeldung über FMS an der Einsatzstelle."""
-    typ: Literal["kurzlagemeldung"]
+    typ: Literal["kurzlagemeldung_fms"]
     text: str  # z.B. "Müco, 1 C-Rohr, EstuK" oder "Fehlalarm BMA"
 
     def generate_entries(self, ctx: FunkContext) -> List[FunkEntry]:
         return [
             FunkEntry(actor="SF", message=f"Melder {ctx.fk} von Staffelführer {ctx.fk}, kommen."),
             FunkEntry(actor="FZ", message=f"Hier Melder {ctx.fk}, kommen."),
-            FunkEntry(actor="SF", message=f"Kurzlagemeldung über FMS {self.text}, kommen."),
-            FunkEntry(actor="FZ", message=f"Kurzlagemeldung über FMS {self.text}, kommen."),
+            FunkEntry(actor="SF", message=f"Kurzlagemeldung {self.text}, Quittung kommen."),
+            FunkEntry(actor="FZ", message=f"Kurzlagemeldung {self.text}, kommen."),
             FunkEntry(actor="SF", message="So richtig, Ende."),
+            FunkEntry(actor="FZ", message="Kurzlagemeldung erteilt"),
+        ]
+
+
+class KurzlagemeldungSchritt(BaseModel):
+    """Kurzlagemeldung mündlich über Status 5."""
+    typ: Literal["kurzlagemeldung"]
+    text: str
+
+    def generate_entries(self, ctx: FunkContext) -> List[FunkEntry]:
+        return [
+            FunkEntry(actor="SF", message=f"Melder {ctx.fk} von Staffelführer {ctx.fk}, kommen."),
+            FunkEntry(actor="FZ", message=f"Hier Melder {ctx.fk}, kommen."),
+            FunkEntry(actor="SF", message=f"Kurzlagemeldung, {self.text}, Quittung kommen."),
+            FunkEntry(actor="FZ", message=f"Kurzlagemeldung, {self.text}, kommen."),
+            FunkEntry(actor="SF", message="So richtig, Ende."),
+            FunkEntry(actor="SF", status="5"),
+            FunkEntry(actor="LS", message=f"Florian {ctx.fk} Sprechwunsch, kommen."),
+            FunkEntry(actor="FZ", message=f"Florian {ctx.fk} mit Kurzlage, kommen."),
+            FunkEntry(actor="FZ", message=f"Lage ist, kommen."),
+            FunkEntry(actor="FZ", message=f"{self.text}, kommen."),
+            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} <time> Ende."),
         ]
 
 
@@ -224,8 +254,39 @@ class LagemeldungSchritt(BaseModel):
 
     def generate_entries(self, ctx: FunkContext) -> List[FunkEntry]:
         lm = self.lagemeldung
-        teile_sf = [t for t in [lm.lage, lm.geraete or "", lm.beschreibung, lm.verletzte, lm.uebergabe] if t]
+        
+        def filter_lm_parts(lm_obj: Lagemeldung) -> List[str]:
+            parts = []
+            if lm_obj.lage:
+                parts.append(lm_obj.lage)
+            if lm_obj.geraete:
+                parts.append(lm_obj.geraete)
+            if lm_obj.beschreibung:
+                parts.append(lm_obj.beschreibung)
+            if lm_obj.verletzte and lm_obj.verletzte.lower() != "keine verletzten":
+                parts.append(lm_obj.verletzte)
+            if lm_obj.uebergabe:
+                parts.append(lm_obj.uebergabe)
+            return parts
+
+        teile_sf = filter_lm_parts(lm)
         random.shuffle(teile_sf)
+        
+        # LS Meldung fixiert
+        ls_parts = []
+        if lm.lage:
+            ls_parts.append(lm.lage)
+        if lm.geraete:
+            ls_parts.append(lm.geraete)
+        if lm.beschreibung:
+            ls_parts.append(lm.beschreibung)
+        if lm.verletzte and lm.verletzte.lower() != "keine verletzten":
+            ls_parts.append(lm.verletzte)
+        if lm.uebergabe:
+            ls_parts.append(lm.uebergabe)
+            
+        ls_msg = f"{ctx.einsatz_adresse} {ctx.einsatz_ortsteil}, {', '.join(ls_parts)}, Staffelführer {ctx.fk}, kommen."
+
         return [
             FunkEntry(actor="SF", message=f"Melder {ctx.fk} von Staffelführer {ctx.fk}, kommen."),
             FunkEntry(actor="FZ", message=f"Hier Melder {ctx.fk}, kommen."),
@@ -237,13 +298,14 @@ class LagemeldungSchritt(BaseModel):
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} Sprechwunsch, kommen."),
             FunkEntry(actor="FZ", message="Mit Lagemeldung, kommen."),
             FunkEntry(actor="LS", message="Lage ist, kommen."),
-            FunkEntry(actor="FZ", message=f"{ctx.einsatz_adresse} {ctx.einsatz_ortsteil}, {lm.lage}{', ' + lm.geraete if lm.geraete else ''}, {lm.beschreibung}, {lm.verletzte}, {lm.uebergabe}, kommen."),
-            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} Ende."),
+            FunkEntry(actor="FZ", message=ls_msg),
+            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} <time> Ende."),
             FunkEntry(actor="FZ", message=f"Staffelführer {ctx.fk} von Melder {ctx.fk} kommen."),
             FunkEntry(actor="SF", message=f"Hier Staffelführer {ctx.fk}, kommen."),
             FunkEntry(actor="FZ", message="Lagemeldung abgegeben, kommen."),
             FunkEntry(actor="SF", message="Verstanden, wir wieder status 1 kommen..", status="1"),
             FunkEntry(actor="FZ", message="Status 1 verstanden, Ende.", status="1"),
+            FunkEntry(actor="FZ", status="1"),
         ]
 
 
@@ -258,6 +320,7 @@ class OhneLagemeldungSchritt(BaseModel):
             FunkEntry(actor="SF", message="Einsatz beendet, wir wieder Status 1, kommen.", status="1"),
             FunkEntry(actor="FZ", message="Status 1 verstanden, kommen.", status="1"),
             FunkEntry(actor="SF", message="So richtig, Ende."),
+            FunkEntry(actor="FZ", status="1"),
         ]
 
 
@@ -274,11 +337,39 @@ class NachalarmierungSchritt(BaseModel):
             FunkEntry(actor="SF", message=f"Nachalarmierung auf {self.stichwort} {self.begruendung}, kommen."),
             FunkEntry(actor="FZ", message=f"Nachalarmierung auf {self.stichwort} {self.begruendung}, kommen."),
             FunkEntry(actor="SF", message="So richtig, Ende."),
+            FunkEntry(actor="FZ", status="0"),
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} Blitz, kommen."),
             FunkEntry(actor="FZ", message=f"Hier Florian {ctx.fk} mit Nachalarmierung auf {self.stichwort}, kommen."),
             FunkEntry(actor="LS", message=f"Begründung für {self.stichwort}, kommen."),
             FunkEntry(actor="FZ", message=f"{self.begruendung}, kommen."),
-            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} Ende."),
+            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} <time> Ende."),
+        ]
+
+
+class NachalarmierungFahrzeugeSchritt(BaseModel):
+    """Nachalarmierung von spezifischen Fahrzeugen an der Einsatzstelle."""
+    typ: Literal["nachalarmierung_fahrzeuge"]
+    fahrzeuge: List[Einheit]
+    begruendung: str
+
+    def generate_entries(self, ctx: FunkContext) -> List[FunkEntry]:
+        einheiten_namen: List[str] = []
+        for e in self.fahrzeuge:
+            einheiten_namen.extend(e.generate_names())
+        fz_liste = ", ".join(einheiten_namen)
+        
+        return [
+            FunkEntry(actor="SF", message=f"Melder {ctx.fk} von Staffelführer {ctx.fk}, kommen."),
+            FunkEntry(actor="FZ", message=f"Hier Melder {ctx.fk}, kommen."),
+            FunkEntry(actor="SF", message=f"Nachalarmierung von {fz_liste}, {self.begruendung}, kommen."),
+            FunkEntry(actor="FZ", message=f"Nachalarmierung von {fz_liste}, {self.begruendung}, kommen."),
+            FunkEntry(actor="SF", message="So richtig, Ende."),
+            FunkEntry(actor="FZ", status="0"),
+            FunkEntry(actor="LS", message=f"Florian {ctx.fk} Blitz, kommen."),
+            FunkEntry(actor="FZ", message=f"Hier Florian {ctx.fk} mit Nachalarmierung von {fz_liste}, kommen."),
+            FunkEntry(actor="LS", message=f"Begründung für {fz_liste}, kommen."),
+            FunkEntry(actor="FZ", message=f"{self.begruendung}, kommen."),
+            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} <time> Ende."),
         ]
 
 
@@ -295,16 +386,18 @@ class FehlalarmLagemeldungSchritt(BaseModel):
             FunkEntry(actor="SF", message="Fehlalarm BMA, kommen."),
             FunkEntry(actor="FZ", message="Fehlalarm BMA, kommen."),
             FunkEntry(actor="SF", message="So richtig, Ende.", status="5"),
+            FunkEntry(actor="FZ", status="5"),
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} Sprechwunsch, kommen."),
             FunkEntry(actor="FZ", message="Mit Lagemeldung, kommen."),
             FunkEntry(actor="LS", message="Lage ist, kommen."),
             FunkEntry(actor="FZ", message=f"{ctx.einsatz_adresse}, {ctx.einsatz_ortsteil}, Fehlalarm BMA, Staffelführer {ctx.fk}, kommen."),
-            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} Ende."),
+            FunkEntry(actor="LS", message=f"Verstanden, {ctx.ls} <time> Ende."),
             FunkEntry(actor="FZ", message=f"Staffelführer {ctx.fk} von Melder {ctx.fk} kommen."),
             FunkEntry(actor="SF", message=f"Hier Staffelführer {ctx.fk} von Melder {ctx.fk}, kommen."),
             FunkEntry(actor="FZ", message="Lagemeldung abgegeben, kommen."),
-            FunkEntry(actor="SF", message="Verstanden, wir wieder status 1 kommen..", status="1"),
+            FunkEntry(actor="SF", message="Verstanden, wir wieder status 1 kommen.", status="1"),
             FunkEntry(actor="FZ", message="Status 1 verstanden, Ende.", status="1"),
+            FunkEntry(actor="FZ", status="1"),
         ]
 
 
@@ -317,10 +410,12 @@ Schritt = Union[
     "NeueTaetigkeitOhneFznSchritt",
     "EinsatzstellenkorrekturSchritt",
     "AnkommenSchritt",
+    "KurzlagemeldungFMSSchritt",
     "KurzlagemeldungSchritt",
     "LagemeldungSchritt",
     "OhneLagemeldungSchritt",
     "NachalarmierungSchritt",
+    "NachalarmierungFahrzeugeSchritt",
     "FehlalarmLagemeldungSchritt",
 ]
 
@@ -347,7 +442,8 @@ class Einsatz(BaseModel):
             FunkEntry(actor="FZ", message=f"Hier Florian {ctx.fk}, kommen."),
             FunkEntry(actor="LS", message=f"Neuer Alarm, Nummer {enr_str} {self.stichwort} in der {self.adresse} in {self.ortsteil}{zusatz}, kommen."),
             FunkEntry(actor="FZ", message=f"Einsatznummer {enr_str} {self.stichwort} in der {self.adresse} in {self.ortsteil}{zusatz}, kommen."),
-            FunkEntry(actor="LS", message=f"So richtig, {ctx.ls} Ende.", status="3"),
+            FunkEntry(actor="LS", message=f"So richtig, {ctx.ls} <time> Ende.", status="3"),
+            FunkEntry(actor="FZ", status="3"),
             FunkEntry(actor="FZ", message=f"Staffelführer {ctx.fk} von Melder {ctx.fk} kommen."),
             FunkEntry(actor="SF", message=f"Hier Staffelführer {ctx.fk}, kommen."),
             FunkEntry(actor="FZ", message=f"Neuer Alarm, {self.stichwort} in der {self.adresse} in {self.ortsteil}{zusatz}, Quittung kommen."),
@@ -378,7 +474,8 @@ class Scenario(BaseModel):
             # Alarmierung als Schritt 0 behandeln
             alarm_entries = einsatz.generate_alarmierung(ctx)
             for entry in alarm_entries:
-                entry.message = f"[[E{i}]][[S0]]" + entry.message
+                prefix = f"[[E{i}]][[S0]]"
+                entry.message = prefix + (entry.message or "")
                 result.append(entry)
 
             # Schritte delegiert generieren
@@ -388,7 +485,8 @@ class Scenario(BaseModel):
                     s_entries = gen(ctx)
                     for entry in s_entries:
                         # Schritte fangen bei 1 an, da 0 die Alarmierung ist
-                        entry.message = f"[[E{i}]][[S{j+1}]]" + entry.message
+                        prefix = f"[[E{i}]][[S{j+1}]]"
+                        entry.message = prefix + (entry.message or "")
                         result.append(entry)
             
         return result

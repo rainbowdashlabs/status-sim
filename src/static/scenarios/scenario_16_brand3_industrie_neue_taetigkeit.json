@@ -1,0 +1,41 @@
+{
+  "name": "Brand 3 - Industriebrand",
+  "beschreibung": "Brand in einer Lagerhalle. Während der Anfahrt Entdeckung eines weiteren Brandes.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Gewerbestraße 10",
+      "ortsteil": "Ost",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}, {"typ": "LHF", "anzahl": 2}],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "ereignis": "Vollbrand einer Gartenlaube",
+          "adresse": "Waldweg 2",
+          "ortsteil": "Ost"
+        }
+      ]
+    },
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Waldweg 2",
+      "ortsteil": "Ost",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Lage übersichtlich, Gartenlaube in Vollbrand, 2 C-Rohr"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "2 C-Rohre, 4 PA",
+            "beschreibung": "Gartenlaube vollständig ausgebrannt.",
+            "uebergabe": "Einsatzstelle an Pol übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -12,13 +12,18 @@
           "typ": "ankommen"
         },
         {
-          "typ": "kurzlagemeldung",
+          "typ": "kurzlagemeldung_fms",
           "text": "Lage bestätigt, Gefahrenabwehr eingeleitet"
+        },
+        {
+          "typ": "nachalarmierung_fahrzeuge",
+          "fahrzeuge": [{"typ": "RTW", "anzahl": 3}],
+          "begruendung": "4 Verletzte an der Einsatzstelle"
         },
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Einsatzstelle unter Kontrolle (EstuK)",
+            "lage": "EstuK",
             "geraete": "Spreizer, Schere",
             "beschreibung": "Verkehrsunfall mit zwei PKW.",
             "verletzte": "4 verletzte Person(en) an RTW übergeben",

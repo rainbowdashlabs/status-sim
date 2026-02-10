@@ -1,0 +1,31 @@
+{
+  "name": "TH 1 - Wasserschaden",
+  "beschreibung": "Wasserrohrbruch im 1. OG eines Wohnhauses.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1",
+      "adresse": "Luisenstraße 10",
+      "ortsteil": "Süd",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung_fms",
+          "text": "Wasser läuft durch Decke ins EG, Haupthahn wird gesucht"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatz beendet",
+            "geraete": "Wassersauger",
+            "beschreibung": "Haupthahn geschlossen, Wasser im EG mit Sauger aufgenommen.",
+            "verletzte": "Keine Verletzten",
+            "uebergabe": "Einsatzstelle an Hauseigentümer übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

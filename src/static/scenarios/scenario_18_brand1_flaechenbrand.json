@@ -1,0 +1,30 @@
+{
+  "name": "Brand 1 - Flächenbrand klein",
+  "beschreibung": "Brennendes Gebüsch am Waldrand.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Waldrandweg 1",
+      "ortsteil": "Nord",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Ca. 20qm Gebüsch brennen, 1 C-Rohr im Einsatz"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, Feuerpatsche",
+            "beschreibung": "Kleiner Flächenbrand gelöscht.",
+            "uebergabe": "Einsatzstelle an Forstamt übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

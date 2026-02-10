@@ -1,0 +1,27 @@
+{
+  "name": "TH 1 - Baum auf Straße",
+  "beschreibung": "Technische Hilfeleistung klein: Baum auf Fahrbahn nach Sturm.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1",
+      "adresse": "Waldstraße 50",
+      "ortsteil": "Nord",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Gefahr beseitigt",
+            "geraete": "Motorkettensäge",
+            "beschreibung": "Baum zerkleinert und von der Fahrbahn geräumt.",
+            "verletzte": "Keine Verletzten",
+            "uebergabe": "Einsatzstelle an Bauhof übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

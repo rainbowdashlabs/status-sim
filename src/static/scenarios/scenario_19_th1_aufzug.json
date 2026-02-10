@@ -1,0 +1,26 @@
+{
+  "name": "TH 1 - Person in Aufzug",
+  "beschreibung": "Person steckt in Aufzug fest. Keine medizinische Notlage.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1",
+      "adresse": "Bahnhofstraße 2",
+      "ortsteil": "Mitte",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatz beendet",
+            "geraete": "Aufzugsschlüssel",
+            "beschreibung": "Aufzug manuell ins Erdgeschoss gefahren, Person befreit.",
+            "uebergabe": "Aufzug außer Betrieb genommen, Techniker informiert"
+          }
+        }
+      ]
+    }
+  ]
+}

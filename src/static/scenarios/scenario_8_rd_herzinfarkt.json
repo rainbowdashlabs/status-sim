@@ -1,0 +1,20 @@
+{
+  "name": "RD - Herzinfarkt",
+  "beschreibung": "Rettungsdienst-Einsatz mit Verdacht auf Herzinfarkt.",
+  "einsaetze": [
+    {
+      "stichwort": "RD2NC FR",
+      "adresse": "Lindenweg 4",
+      "ortsteil": "Süd",
+      "einheiten": [{"typ": "NEF", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
+    }
+  ]
+}

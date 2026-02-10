@@ -1,0 +1,31 @@
+{
+  "name": "Brand 1 - Brennt Mülltonne",
+  "beschreibung": "Kleinerer Brand: Brennende Mülltonne an einer Hauswand.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Kurze Gasse 2",
+      "ortsteil": "Mitte",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Müco, 1 C-Rohr, EstuK"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr",
+            "beschreibung": "Eine 240l Mülltonne ausgebrannt, Fassade leicht verrußt.",
+            "verletzte": "Keine Verletzten",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

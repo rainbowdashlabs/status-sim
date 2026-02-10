@@ -73,10 +73,12 @@ const getSchrittLabel = (einsatz: any, sIdx: number) => {
     case 'neue_taetigkeit_ohne_fzn': return 'Neue Tätigkeit';
     case 'einsatzstellenkorrektur': return 'Einsatzstellenkorrektur';
     case 'ankommen': return 'Ankunft am Einsatzort';
+    case 'kurzlagemeldung_fms': return 'Kurzlagemeldung FMS';
     case 'kurzlagemeldung': return 'Kurzlagemeldung';
     case 'lagemeldung': return 'Lagemeldung';
     case 'ohne_lagemeldung': return 'Abschluss ohne Lagemeldung';
     case 'nachalarmierung': return 'Nachalarmierung';
+    case 'nachalarmierung_fahrzeuge': return 'Nachalarmierung Fahrzeuge';
     case 'fehlalarm_lagemeldung': return 'Fehlalarm BMA';
     default: return schritt.typ;
   }

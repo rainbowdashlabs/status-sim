@@ -13,6 +13,9 @@
           "mit_personenschaden": false,
           "adresse": "Hauptstraße 8",
           "ortsteil": "Süd"
+        },
+        {
+          "typ": "ohne_lagemeldung"
         }
       ]
     }

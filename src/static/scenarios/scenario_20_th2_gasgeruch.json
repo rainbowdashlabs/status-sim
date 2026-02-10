@@ -1,0 +1,30 @@
+{
+  "name": "TH 2 - Gasgeruch",
+  "beschreibung": "Gasgeruch in einem Mehrfamilienhaus gemeldet.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 2",
+      "adresse": "Bachstraße 22",
+      "ortsteil": "West",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 1}, {"typ": "GW-Mess", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Gasgeruch im Keller wahrnehmbar, Räumung eingeleitet"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Gasspürgerät, Belüftungsgerät",
+            "beschreibung": "Defekte Gasleitung im Keller, Schieber geschlossen, Bereich belüftet.",
+            "uebergabe": "Einsatzstelle an Gasversorger übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

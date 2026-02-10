@@ -1,0 +1,35 @@
+{
+  "name": "Brand 3 - Lagerhallenbrand",
+  "beschreibung": "Vollbrand einer Lagerhalle im Industriegebiet. Massive Rauschentwicklung.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 3",
+      "adresse": "Industriestraße 100",
+      "ortsteil": "Industrie",
+      "einheiten": [{"typ": "FD", "anzahl": 2}, {"typ": "LHF", "anzahl": 4}, {"typ": "DLK", "anzahl": 2}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Lage bestätigt, Lagerhalle ca. 50x20m in Vollbrand, massive Rauchentwicklung, Riegelstellung aufgebaut."
+        },
+        {
+          "typ": "nachalarmierung_fahrzeuge",
+          "fahrzeuge": [{"typ": "LHF", "anzahl": 2}, {"typ": "RTW", "anzahl": 1}],
+          "begruendung": "Erhöhter Bedarf an Atemschutzgeräteträgern und zur Absicherung der Einsatzkräfte."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "4 C-Rohre, 2 Wenderohre über DLK, 12 PA",
+            "beschreibung": "Brand unter Kontrolle, Nachlöscharbeiten dauern an.",
+            "uebergabe": "Einsatzstelle an Firmeninhaber übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

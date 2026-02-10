@@ -1,0 +1,30 @@
+{
+  "name": "TH 1 - Ölaustritt",
+  "beschreibung": "Nach einem Verkehrsunfall tritt Motoröl aus einem PKW aus und droht in die Kanalisation zu fließen.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1 - Öl",
+      "adresse": "Berliner Allee 200",
+      "ortsteil": "Nord",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Ölspur ca. 10m, Bindemittel ausgebracht"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatz beendet",
+            "geraete": "Ölbindemittel, Besen",
+            "beschreibung": "Ölaustritt abgestumpft, Kanaleinlauf gesichert.",
+            "uebergabe": "Einsatzstelle an Reinigungsfirma übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

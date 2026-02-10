@@ -1,0 +1,25 @@
+{
+  "name": "RD - Schlaganfall",
+  "beschreibung": "Verdacht auf Schlaganfall bei älterer Person in häuslicher Umgebung.",
+  "einsaetze": [
+    {
+      "stichwort": "RD 1 - Stroke",
+      "adresse": "Goethestraße 5",
+      "ortsteil": "West",
+      "einheiten": [{"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "nachalarmierung_fahrzeuge",
+          "fahrzeuge": [{"typ": "NEF", "anzahl": 1}],
+          "begruendung": "Verdacht auf Schlaganfall."
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
+    }
+  ]
+}

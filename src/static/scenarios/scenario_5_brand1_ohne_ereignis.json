@@ -12,14 +12,14 @@
           "typ": "ankommen"
         },
         {
-          "typ": "kurzlagemeldung",
+          "typ": "kurzlagemeldung_fms",
           "text": "Müco, 1 C-Rohr, EstuK"
         },
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Einsatzstelle unter Kontrolle (EstuK)",
-            "geraete": "1 C-Rohr, 0 PA",
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, 2 PA",
             "beschreibung": "Müllcontainerbrand.",
             "verletzte": "Keine Verletzten",
             "uebergabe": "Einsatzstelle an Anwohner übergeben"

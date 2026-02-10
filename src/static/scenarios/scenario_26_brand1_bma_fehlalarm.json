@@ -1,0 +1,24 @@
+{
+  "name": "Brand 1 - BMA Fehlalarm",
+  "beschreibung": "Brandmeldeanlage im Krankenhaus hat ausgelöst. Erkundung ergibt Fehlalarm.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1 - BMA",
+      "adresse": "Klinikweg 1",
+      "ortsteil": "Nordost",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung_fms",
+          "text": "Erkundung läuft"
+        },
+        {
+          "typ": "fehlalarm_lagemeldung"
+        }
+      ]
+    }
+  ]
+}

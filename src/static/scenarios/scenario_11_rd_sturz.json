@@ -1,0 +1,24 @@
+{
+  "name": "RD - Sturz aus Höhe",
+  "beschreibung": "Rettungsdienst-Einsatz: Person von Leiter gestürzt.",
+  "einsaetze": [
+    {
+      "stichwort": "RD 1",
+      "adresse": "Gartenweg 12",
+      "ortsteil": "Südost",
+      "einheiten": [{"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung_fms",
+          "text": "Sturz aus ca. 3m Höhe, Patient ansprechbar"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "RD - Atemnot",
+  "beschreibung": "Person mit akuter Atemnot in einer Arztpraxis.",
+  "einsaetze": [
+    {
+      "stichwort": "RD 2 NC",
+      "adresse": "Marktplatz 5",
+      "ortsteil": "Mitte",
+      "einheiten": [{"typ": "NEF", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung_fms",
+          "text": "Person ansprechbar, Sauerstoffgabe eingeleitet"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
+    }
+  ]
+}

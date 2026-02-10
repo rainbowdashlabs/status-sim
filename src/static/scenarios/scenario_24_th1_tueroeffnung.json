@@ -1,0 +1,26 @@
+{
+  "name": "TH 1 - Türöffnung",
+  "beschreibung": "Hilflose Person hinter verschlossener Tür vermutet. Unterstützung für den Rettungsdienst.",
+  "einsaetze": [
+    {
+      "stichwort": "TH M + RD2B",
+      "adresse": "Kastanienallee 12",
+      "ortsteil": "Nordwest",
+      "einheiten": [{"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatz beendet",
+            "geraete": "Ziehfix",
+            "beschreibung": "Wohnungstür schadenfrei geöffnet, Patient an RD übergeben.",
+            "uebergabe": "Einsatzstelle an Polizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Brand 2 - Dachstuhlbrand",
+  "beschreibung": "Dachstuhlbrand nach Blitzeinschlag.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Birkenallee 5",
+      "ortsteil": "West",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}, {"typ": "LHF", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Dachstuhlbrand, Flammen sichtbar, 1 Wenderohr im Einsatz"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 Wenderohr, 2 C-Rohre, 8 PA",
+            "beschreibung": "Dachstuhlbrand, Brand auf Dachstuhl begrenzt.",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

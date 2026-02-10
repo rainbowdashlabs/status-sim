@@ -1,0 +1,30 @@
+{
+  "name": "Brand 1 - Brennender PKW",
+  "beschreibung": "Ein brennender PKW auf einem Parkplatz. Keine Gefahr für Gebäude.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Parkweg 4",
+      "ortsteil": "Nord",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "EstuK, PKW-Brand, 1 C-Rohr unter PA"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, 2 PA",
+            "beschreibung": "Ein PKW im Motorraum ausgebrannt.",
+            "uebergabe": "Einsatzstelle an Pol übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

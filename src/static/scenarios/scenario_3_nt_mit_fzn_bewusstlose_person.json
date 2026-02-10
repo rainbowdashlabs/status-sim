@@ -24,10 +24,6 @@
       "einheiten": [{"typ": "RTW"}],
       "schritte": [
         {
-          "typ": "kurzlagemeldung",
-          "text": "Lage bestätigt, Maßnahmen eingeleitet"
-        },
-        {
           "typ": "ohne_lagemeldung"
         }
       ]

@@ -1,0 +1,31 @@
+{
+  "name": "Brand 2 - Zimmerbrand",
+  "beschreibung": "Zimmerbrand im 1. OG eines Wohngebäudes. Eine Person vermisst.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Lindenweg 4",
+      "ortsteil": "Süd",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 2}, {"typ": "DLK", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Bestätigter Zimmerbrand im 1. OG, 1 Person vermisst, 1 C-Rohr zur Menschenrettung vor."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "2 C-Rohre, 6 PA",
+            "beschreibung": "Zimmerbrand gelöscht, Person durch Trupp unter PA gerettet und an RD übergeben.",
+            "verletzte": "1 Person mit Rauchgasintoxikation an RTW übergeben",
+            "uebergabe": "Einsatzstelle an Polizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -18,13 +18,13 @@
           "typ": "ankommen"
         },
         {
-          "typ": "kurzlagemeldung",
+          "typ": "kurzlagemeldung_fms",
           "text": "Lage bestätigt, Maßnahmen eingeleitet"
         },
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Einsatzstelle unter Kontrolle (EstuK)",
+            "lage": "(EstuK)",
             "geraete": "1 C-Rohr, 4 PA",
             "beschreibung": "Kellerbrand. Mehrfamilienhaus, Keller voll ausgebrannt.",
             "verletzte": "Keine Verletzten",

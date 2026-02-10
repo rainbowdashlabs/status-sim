@@ -1,0 +1,30 @@
+{
+  "name": "Brand 2 - Kellerbrand",
+  "beschreibung": "Rauchentwicklung aus dem Keller eines Mehrfamilienhauses.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Schillerstraße 15",
+      "ortsteil": "Ost",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 2}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Starke Verrauchung im Treppenraum, Kellerbrand bestätigt, 1 C-Rohr zur Brandbekämpfung im Einsatz."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, 4 PA, Drucklüfter",
+            "beschreibung": "Brand in Kellerverschlag gelöscht, Treppenraum belüftet.",
+            "uebergabe": "Einsatzstelle an Hausmeister übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

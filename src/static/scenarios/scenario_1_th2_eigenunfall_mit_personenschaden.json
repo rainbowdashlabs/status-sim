@@ -11,9 +11,12 @@
         {
           "typ": "eigenunfall",
           "mit_personenschaden": true,
-          "verletzte": 1,
+          "verletzte": 2,
           "adresse": "Berliner Straße 30",
           "ortsteil": "Mitte"
+        },
+        {
+          "typ": "ohne_lagemeldung"
         }
       ]
     }

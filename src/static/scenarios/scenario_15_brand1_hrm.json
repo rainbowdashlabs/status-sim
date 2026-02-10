@@ -1,0 +1,30 @@
+{
+  "name": "Brand 1 - Heimrauchmelder",
+  "beschreibung": "Auslösen eines Heimrauchmelders ohne sichtbaren Rauch von außen.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Goethestraße 45",
+      "ortsteil": "Mitte",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung_fms",
+          "text": "Keine Feststellung, Erkundung läuft"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatz beendet",
+            "geraete": "Keine",
+            "beschreibung": "Angebranntes Essen auf Herd, Wohnung quergelüftet.",
+            "uebergabe": "Wohnung an Mieter übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}
