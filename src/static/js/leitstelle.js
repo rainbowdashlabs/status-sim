@@ -113,7 +113,7 @@ function initLeitstelle(adminCode) {
             if (name) msgDrafts[name] = i.value;
         });
 
-        const cars = connections.filter(c => c.name !== 'LEITSTELLE_VIEW' && !c.is_staffelfuehrer);
+        const cars = connections.filter(c => !c.name.startsWith('LEITSTELLE_VIEW') && !c.is_staffelfuehrer);
         
         const blitzCars = cars.filter(c => c.special === '0');
         const sprechwunschCars = cars.filter(c => c.special === '5');

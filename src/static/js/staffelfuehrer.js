@@ -54,7 +54,7 @@ function initStaffelfuehrer(sfCode) {
     });
 
     function updateUI(connections, notices) {
-        const cars = connections.filter(c => c.name !== 'LEITSTELLE_VIEW' && !c.is_staffelfuehrer);
+        const cars = connections.filter(c => !c.name.startsWith('LEITSTELLE_VIEW') && !c.is_staffelfuehrer);
 
         const expandedSet = new Set(Array.from(document.querySelectorAll('#connections .car-details.active')).map(d => d.id.replace('details-','')));
         const noteDrafts = {};
