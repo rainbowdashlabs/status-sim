@@ -58,7 +58,7 @@ const loadChatHistory = async () => {
   }
 };
 
-const statusSound = new Audio(`${backendBaseUrl}/static/assets/fns_status_1.mp3`);
+const statusSound = new Audio(`/assets/fns_status_1.mp3`);
 statusSound.volume = 0.5;
 
 const onMessage = (data: any) => {
