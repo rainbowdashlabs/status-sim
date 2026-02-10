@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Request, Form, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse
 import json
 import uuid
 import time
@@ -29,23 +28,18 @@ _frontend_dist_primary = os.path.join(current_dir, "frontend_dist")
 _frontend_dist_legacy = os.path.join(project_root, "frontend", "dist")
 frontend_dist = _frontend_dist_primary if os.path.exists(_frontend_dist_primary) else _frontend_dist_legacy
 
-templates_dir = os.path.join(current_dir, "templates")
-templates = Jinja2Templates(directory=templates_dir)
-templates.env.globals['current_year'] = datetime.now().year
-
 # Serve Vue static files if dist exists
 # Handled in main.py for better reliability with absolute paths and app mounting
 
 async def serve_vue_index(request: Request):
     index_path = os.path.join(frontend_dist, "index.html")
     if os.path.exists(index_path):
-        with open(index_path, "r") as f:
-            return HTMLResponse(content=f.read())
-    return None
+        return FileResponse(index_path)
+    return HTMLResponse(content="Frontend not found", status_code=404)
 
 @router.get("/", response_class=HTMLResponse)
 async def get_index(request: Request):
-    return templates.TemplateResponse(request, "index.html")
+    return await serve_vue_index(request)
 
 @router.post("/leitstelle")
 async def create_leitstelle(request: LeitstelleCreateRequest):
@@ -74,13 +68,7 @@ async def get_leitstelle_view(request: Request, code: str):
     admin_code = code.upper()
     if admin_code not in manager.leitstellen:
         return RedirectResponse(url="/", status_code=307)
-    ls = manager.leitstellen[admin_code]
-    return templates.TemplateResponse(request, "leitstelle_view.html", {
-        "admin_code": admin_code,
-        "vehicle_code": ls.vehicle_code,
-        "staffelfuehrer_code": ls.staffelfuehrer_code,
-        "name": ls.name
-    })
+    return await serve_vue_index(request)
 
 @router.get("/staffelfuehrer/{code}", response_class=HTMLResponse)
 async def get_staffelfuehrer_view(request: Request, code: str):
@@ -92,10 +80,7 @@ async def get_staffelfuehrer_view(request: Request, code: str):
     if manager.leitstellen[admin_code].staffelfuehrer_code != sf_code:
         return RedirectResponse(url="/", status_code=307)
 
-    return templates.TemplateResponse(request, "staffelfuehrer_view.html", {
-        "sf_code": sf_code,
-        "name": manager.leitstellen[admin_code].name
-    })
+    return await serve_vue_index(request)
 
 @router.get("/status", response_class=HTMLResponse)
 async def get_status_page(request: Request, code: str, name: str):
@@ -116,11 +101,7 @@ async def get_status_page(request: Request, code: str, name: str):
             if time.time() - existing.last_update < 5:
                 return RedirectResponse(url=f"/?error=name_taken&old_name={name}&code={code}", status_code=307)
             
-        return templates.TemplateResponse(request, "status.html", {
-            "code": code,
-            "name": name,
-            "leitstelle_name": manager.leitstellen[admin_code].name
-        })
+        return await serve_vue_index(request)
     elif manager.leitstellen[admin_code].staffelfuehrer_code == code:
         return RedirectResponse(url=f"/staffelfuehrer/{code}", status_code=307)
     
