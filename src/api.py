@@ -580,8 +580,13 @@ async def discard_scenario(code: str, request: TargetRequest):
 
 @router.post("/api/leitstelle/{code}/scenario/update_state")
 async def update_checklist_state(code: str, request: ChecklistUpdateRequest):
-    admin_code = code.upper()
-    if admin_code not in manager.leitstellen:
+    incoming = code.upper()
+    # Allow both admin code and mapped codes (vehicle/staffelfuehrer)
+    if incoming in manager.leitstellen:
+        admin_code = incoming
+    else:
+        admin_code = manager.code_to_admin.get(incoming, "")
+    if not admin_code or admin_code not in manager.leitstellen:
         return {"status": "error", "message": "Leitstelle nicht gefunden"}
     
     ls = manager.leitstellen[admin_code]
@@ -589,6 +594,18 @@ async def update_checklist_state(code: str, request: ChecklistUpdateRequest):
     await manager.broadcast_status(admin_code)
     return {"status": "success"}
 
+
+@router.post("/api/staffelfuehrer/{code}/scenario/update_state")
+async def update_checklist_state_sf(code: str, request: ChecklistUpdateRequest):
+    # Delegate to leitstelle endpoint logic by resolving code
+    incoming = code.upper()
+    admin_code = incoming if incoming in manager.leitstellen else manager.code_to_admin.get(incoming, "")
+    if not admin_code or admin_code not in manager.leitstellen:
+        return {"status": "error", "message": "Leitstelle nicht gefunden"}
+    ls = manager.leitstellen[admin_code]
+    ls.checklist_states[request.target_name] = request.state
+    await manager.broadcast_status(admin_code)
+    return {"status": "success"}
 
 @router.post("/api/leitstelle/{code}/scenario/next")
 async def next_scenario(code: str, request: TargetRequest):
