@@ -6,14 +6,15 @@ import uuid
 import time
 import os
 from datetime import datetime
-from src.manager import manager
-from src.models import (
-    LeitstelleData, Connection, Notice, 
-    MessageRequest, TargetRequest, NoticeRequest, 
-    NoteRequest, StatusRequest, LeitstelleCreateRequest, ChatMessage
-)
-from src.logging_conf import get_logger
-from src.scenario_models import Scenario, FunkEntry
+from manager import manager  # type: ignore
+from models import (
+    LeitstelleData, Connection, Notice,
+    MessageRequest, TargetRequest, NoticeRequest,
+    NoteRequest, StatusRequest, LeitstelleCreateRequest, ChatMessage,
+    ScenarioStartRequest
+)  # type: ignore
+from logging_conf import get_logger  # type: ignore
+from scenario_models import Scenario, FunkEntry  # type: ignore
 
 logger = get_logger("api")
 
@@ -44,8 +45,6 @@ async def serve_vue_index(request: Request):
 
 @router.get("/", response_class=HTMLResponse)
 async def get_index(request: Request):
-    vue_resp = await serve_vue_index(request)
-    if vue_resp: return vue_resp
     return templates.TemplateResponse(request, "index.html")
 
 @router.post("/leitstelle")
@@ -72,9 +71,6 @@ async def create_leitstelle(request: LeitstelleCreateRequest):
 
 @router.get("/leitstelle/{code}", response_class=HTMLResponse)
 async def get_leitstelle_view(request: Request, code: str):
-    vue_resp = await serve_vue_index(request)
-    if vue_resp: return vue_resp
-    
     admin_code = code.upper()
     if admin_code not in manager.leitstellen:
         return RedirectResponse(url="/", status_code=307)
@@ -88,9 +84,6 @@ async def get_leitstelle_view(request: Request, code: str):
 
 @router.get("/staffelfuehrer/{code}", response_class=HTMLResponse)
 async def get_staffelfuehrer_view(request: Request, code: str):
-    vue_resp = await serve_vue_index(request)
-    if vue_resp: return vue_resp
-    
     sf_code = code.upper()
     if sf_code not in manager.code_to_admin:
         return RedirectResponse(url="/", status_code=307)
@@ -533,6 +526,53 @@ async def list_scenarios(code: str):
             "beschreibung": raw.get("beschreibung", "")
         })
     return {"status": "success", "scenarios": items}
+
+
+@router.post("/api/leitstelle/{code}/scenario/start")
+async def start_scenario(code: str, request: ScenarioStartRequest):
+    admin_code = code.upper()
+    if admin_code not in manager.leitstellen:
+        return {"status": "error", "message": "Leitstelle nicht gefunden"}
+    
+    _ensure_scenarios_loaded(admin_code)
+    ls = manager.leitstellen[admin_code]
+    
+    if request.scenario_name not in ls.scenarios:
+        return {"status": "error", "message": "Szenario nicht gefunden"}
+    
+    raw = ls.scenarios[request.scenario_name]
+    try:
+        scenario_obj = Scenario.model_validate(raw)
+    except Exception as e:
+        logger.error(f"Fehler beim Validieren des Szenarios {request.scenario_name}: {e}")
+        return {"status": "error", "message": "Szenario fehlerhaft"}
+
+    # Wir generieren die Funksprüche und speichern sie im aktiven Szenario
+    # Wir übergeben ls="Leitstelle" und fk=target_name
+    funksprueche = scenario_obj.generate_funksprueche(fk=request.target_name, ls="Leitstelle", start_enr=1)
+    
+    scenario_data = scenario_obj.model_dump()
+    # Wir fügen die generierten Funksprüche hinzu, damit das Frontend sie anzeigen kann
+    # FunkEntry Objekte in dicts umwandeln
+    scenario_data["generated_entries"] = [f.model_dump() if isinstance(f, FunkEntry) else f for f in funksprueche]
+
+    ls.active_scenarios[request.target_name] = scenario_data
+    await manager.broadcast_status(admin_code)
+    return {"status": "success"}
+
+
+@router.post("/api/leitstelle/{code}/scenario/discard")
+async def discard_scenario(code: str, request: TargetRequest):
+    admin_code = code.upper()
+    if admin_code not in manager.leitstellen:
+        return {"status": "error", "message": "Leitstelle nicht gefunden"}
+    
+    ls = manager.leitstellen[admin_code]
+    if request.target_name in ls.active_scenarios:
+        del ls.active_scenarios[request.target_name]
+        await manager.broadcast_status(admin_code)
+        
+    return {"status": "success"}
 
 
 @router.post("/api/leitstelle/{code}/scenario/next")

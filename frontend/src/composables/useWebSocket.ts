@@ -16,6 +16,7 @@ export interface VehicleStatus {
   sf_note: string;
   is_online: boolean;
   talking_to_sf: boolean;
+  active_scenario: any | null;
 }
 
 export interface Notice {

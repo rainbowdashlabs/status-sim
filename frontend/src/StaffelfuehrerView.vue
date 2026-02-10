@@ -7,6 +7,7 @@ import Footer from './components/Footer.vue';
 import Timer from './components/Timer.vue';
 import VehicleChatPanel from './components/VehicleChatPanel.vue';
 import StatusBadge from './components/StatusBadge.vue';
+import ScenarioChecklist from './components/ScenarioChecklist.vue';
 
 const props = defineProps<{
   name: string;
@@ -100,7 +101,8 @@ const getNotice = (name: string) => status.value?.notices[name];
               </button>
             </div>
           </div>
-          <div v-if="openCar === car.name" class="mt-2.5 pt-2.5 border-t border-gray-800" @click.stop>
+            <div v-if="openCar === car.name" class="mt-2.5 pt-2.5 border-t border-gray-800" @click.stop>
+            <ScenarioChecklist v-if="car.active_scenario" :scenario="car.active_scenario" class="mb-3" />
             <VehicleChatPanel
                 :code="sfCode"
                 :target-name="car.name"

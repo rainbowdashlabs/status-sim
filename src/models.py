@@ -24,6 +24,10 @@ class StatusRequest(BaseModel):
 class LeitstelleCreateRequest(BaseModel):
     name: str
 
+class ScenarioStartRequest(BaseModel):
+    target_name: str
+    scenario_name: str
+
 class Notice(BaseModel):
     text: str
     status: str  # 'pending'|'confirmed'
@@ -66,6 +70,7 @@ class VehicleStatus(BaseModel):
     sf_note: str = ""
     is_online: bool = True
     talking_to_sf: bool = False
+    active_scenario: Optional[dict] = None
 
 class StatusUpdate(BaseModel):
     type: str = "status_update"
@@ -82,6 +87,7 @@ class LeitstelleData(BaseModel):
     notes: Dict[str, str] = Field(default_factory=dict)
     sf_notes: Dict[str, str] = Field(default_factory=dict)
     chat_history: Dict[str, List[ChatMessage]] = Field(default_factory=dict)
+    active_scenarios: Dict[str, dict] = Field(default_factory=dict) # vehicle_name -> scenario_data
     # Map of scenario name -> raw Scenario JSON path or object cache (lazy loaded in API)
     scenarios: Dict[str, dict] = Field(default_factory=dict)
     # Track which scenarios have been used per vehicle (vehicle name -> list of scenario names)

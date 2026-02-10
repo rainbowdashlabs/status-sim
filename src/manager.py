@@ -1,8 +1,8 @@
 import json
 import time
 from typing import Dict, List, Optional
-from src.models import LeitstelleData, Connection, VehicleStatus, StatusUpdate, Notice
-from src.logging_conf import get_logger
+from models import LeitstelleData, Connection, VehicleStatus, StatusUpdate, Notice  # type: ignore
+from logging_conf import get_logger  # type: ignore
 
 logger = get_logger("manager")
 
@@ -30,7 +30,8 @@ class ConnectionManager:
                 note=ls.notes.get(c.name, ""),
                 sf_note=ls.sf_notes.get(c.name, ""),
                 is_online=c.ws is not None,
-                talking_to_sf=c.talking_to_sf
+                talking_to_sf=c.talking_to_sf,
+                active_scenario=ls.active_scenarios.get(c.name)
             ) for c in ls.connections if not c.is_staffelfuehrer and not c.is_leitstelle
         ]
         

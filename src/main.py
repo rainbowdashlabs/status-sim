@@ -4,10 +4,9 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 import os
 import asyncio
-from src.api import router, frontend_dist
-import os
-from src.manager import manager
-from src.logging_conf import setup_logging
+from api import router, frontend_dist
+from manager import manager
+from logging_conf import setup_logging
 
 setup_logging()
 

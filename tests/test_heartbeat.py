@@ -9,7 +9,11 @@ import asyncio
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 from main import app
-from src.manager import manager
+try:
+    from src.manager import manager
+except ImportError:
+    # Fallback when sys.path points directly to src directory
+    from manager import manager  # type: ignore
 
 class TestHeartbeat(unittest.TestCase):
     def setUp(self):

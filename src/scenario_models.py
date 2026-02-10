@@ -369,16 +369,26 @@ class Scenario(BaseModel):
             enr_counter=start_enr,
         )
         result: List[FunkEntry] = []
-        for einsatz in self.einsaetze:
+        for i, einsatz in enumerate(self.einsaetze):
             # Einsatzkontext aktualisieren
             ctx.einsatz_adresse = einsatz.adresse
             ctx.einsatz_ortsteil = einsatz.ortsteil
             ctx.einsatz_stichwort = einsatz.stichwort
-            # Alarmierung
-            result.extend(einsatz.generate_alarmierung(ctx))
+            
+            # Alarmierung als Schritt 0 behandeln
+            alarm_entries = einsatz.generate_alarmierung(ctx)
+            for entry in alarm_entries:
+                entry.message = f"[[E{i}]][[S0]]" + entry.message
+                result.append(entry)
+
             # Schritte delegiert generieren
-            for schritt in einsatz.schritte:
+            for j, schritt in enumerate(einsatz.schritte):
                 gen = getattr(schritt, "generate_entries", None)
                 if callable(gen):
-                    result.extend(gen(ctx))
+                    s_entries = gen(ctx)
+                    for entry in s_entries:
+                        # Schritte fangen bei 1 an, da 0 die Alarmierung ist
+                        entry.message = f"[[E{i}]][[S{j+1}]]" + entry.message
+                        result.append(entry)
+            
         return result
