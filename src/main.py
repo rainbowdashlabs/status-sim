@@ -4,7 +4,8 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 import os
 import asyncio
-from src.api import router
+from src.api import router, frontend_dist
+import os
 from src.manager import manager
 from src.logging_conf import setup_logging
 
@@ -45,6 +46,12 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # Include the API router
 app.include_router(router)
+
+# Mount frontend assets if dist exists
+if os.path.exists(frontend_dist):
+    assets_dir = os.path.join(frontend_dist, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
 async def cleanup_task():
     while True:

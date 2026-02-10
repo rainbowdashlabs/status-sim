@@ -23,7 +23,7 @@ router = APIRouter()
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(current_dir)
-# Prefer built frontend inside Python source; fallback to legacy frontend/dist for local dev
+# Prefer built frontend inside Python source; fallback to frontend/dist for local dev
 _frontend_dist_primary = os.path.join(current_dir, "frontend_dist")
 _frontend_dist_legacy = os.path.join(project_root, "frontend", "dist")
 frontend_dist = _frontend_dist_primary if os.path.exists(_frontend_dist_primary) else _frontend_dist_legacy
@@ -33,8 +33,7 @@ templates = Jinja2Templates(directory=templates_dir)
 templates.env.globals['current_year'] = datetime.now().year
 
 # Serve Vue static files if dist exists
-if os.path.exists(frontend_dist):
-    router.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
+# Handled in main.py for better reliability with absolute paths and app mounting
 
 async def serve_vue_index(request: Request):
     index_path = os.path.join(frontend_dist, "index.html")

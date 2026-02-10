@@ -4,7 +4,7 @@ Die JSON-Dateien enthalten nur Metainformationen. Die Funksprüche werden
 daraus generiert.
 """
 
-from typing import Dict, List, Literal, Optional
+from typing import Dict, List, Literal, Optional, Union, Annotated
 from pydantic import BaseModel, Field
 import random
 
@@ -312,16 +312,16 @@ class FehlalarmLagemeldungSchritt(BaseModel):
 from typing import Union
 
 Schritt = Union[
-    EigenunfallSchritt,
-    NeueTaetigkeitMitFznSchritt,
-    NeueTaetigkeitOhneFznSchritt,
-    EinsatzstellenkorrekturSchritt,
-    AnkommenSchritt,
-    KurzlagemeldungSchritt,
-    LagemeldungSchritt,
-    OhneLagemeldungSchritt,
-    NachalarmierungSchritt,
-    FehlalarmLagemeldungSchritt,
+    "EigenunfallSchritt",
+    "NeueTaetigkeitMitFznSchritt",
+    "NeueTaetigkeitOhneFznSchritt",
+    "EinsatzstellenkorrekturSchritt",
+    "AnkommenSchritt",
+    "KurzlagemeldungSchritt",
+    "LagemeldungSchritt",
+    "OhneLagemeldungSchritt",
+    "NachalarmierungSchritt",
+    "FehlalarmLagemeldungSchritt",
 ]
 
 
@@ -331,7 +331,7 @@ class Einsatz(BaseModel):
     adresse: str
     ortsteil: str
     einheiten: List[Einheit] = Field(default_factory=list)
-    schritte: List[Schritt] = Field(discriminator="typ")
+    schritte: List[Annotated[Schritt, Field(discriminator="typ")]]
     einsatznummer: Optional[str] = None
 
     def generate_alarmierung(self, ctx: FunkContext) -> List[FunkEntry]:
