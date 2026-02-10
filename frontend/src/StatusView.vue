@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from 'vue';
 import axios from 'axios';
+import statusSoundUrl from './assets/fns_status_1.mp3';
 import type {StatusUpdate} from './composables/useWebSocket';
 import {useWebSocket} from './composables/useWebSocket';
-import {backendBaseUrl} from './config/backend';
 import Footer from './components/Footer.vue';
 import StatusKeypad from './components/StatusKeypad.vue';
 import ChatLog from './components/ChatLog.vue';
@@ -58,7 +58,7 @@ const loadChatHistory = async () => {
   }
 };
 
-const statusSound = new Audio(`/assets/fns_status_1.mp3`);
+const statusSound = new Audio(statusSoundUrl);
 statusSound.volume = 0.5;
 
 const onMessage = (data: any) => {
