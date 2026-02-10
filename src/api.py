@@ -140,7 +140,7 @@ async def websocket_endpoint(websocket: WebSocket, code: str, name: str = None):
         )
         manager.leitstellen[admin_code].connections.append(connection)
     
-    print(f"New connection: {name} to {admin_code}")
+    # print(f"New connection: {name} to {admin_code}")
     await manager.broadcast_status(admin_code)
     
     try:
@@ -206,9 +206,11 @@ async def websocket_endpoint(websocket: WebSocket, code: str, name: str = None):
             elif data == "heartbeat":
                 connection.last_update = time.time()
     except WebSocketDisconnect:
-        print(f"WebSocket disconnected: {name}")
+        # print(f"WebSocket disconnected: {name}")
+        pass
     except Exception as e:
-        print(f"Error in websocket_endpoint for {name}: {e}")
+        # print(f"Error in websocket_endpoint for {name}: {e}")
+        pass
     finally:
         if admin_code in manager.leitstellen:
             if connection.ws == websocket:

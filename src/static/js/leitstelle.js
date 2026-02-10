@@ -63,6 +63,13 @@ function initLeitstelle(adminCode) {
         }
     };
 
+    function sendHeartbeat() {
+        if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
+            ws.send("heartbeat");
+        }
+    }
+    setInterval(sendHeartbeat, 20000);
+
     let isUnloading = false;
     window.addEventListener('beforeunload', () => {
         isUnloading = true;

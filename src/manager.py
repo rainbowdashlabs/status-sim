@@ -64,7 +64,7 @@ class ConnectionManager:
             ls.connections = new_connections
             
             if len(ls.connections) < original_count:
-                print(f"Cleaned up {original_count - len(ls.connections)} inactive connections in {admin_code}")
+                # print(f"Cleaned up {original_count - len(ls.connections)} inactive connections in {admin_code}")
                 active_names = {c.name for c in ls.connections}
                 ls.notices = {name: notice for name, notice in ls.notices.items() if name in active_names}
                 await self.broadcast_status(admin_code)

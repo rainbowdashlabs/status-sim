@@ -11,6 +11,13 @@ function initStaffelfuehrer(sfCode) {
         }
     };
 
+    function sendHeartbeat() {
+        if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
+            ws.send("heartbeat");
+        }
+    }
+    setInterval(sendHeartbeat, 20000);
+
     ws.onerror = function(error) {
         console.error("WebSocket error:", error);
         showConnectionError();

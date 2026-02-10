@@ -126,7 +126,7 @@ function initStatus(name, code) {
             ws.send("heartbeat");
         }
     }
-    setInterval(sendHeartbeat, 60000);
+    setInterval(sendHeartbeat, 20000);
 
     updateStatus("2");
 
