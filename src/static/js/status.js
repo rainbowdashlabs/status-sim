@@ -74,8 +74,8 @@ function initStatus(name, code) {
 
     function isTransitionAllowed(newStatus) {
         if (newStatus === "0" || newStatus === "5") return true;
-        if (newStatus === "1") return ["2", "3", "4", "8"].includes(currentStatus);
-        if (newStatus === "2") return currentStatus === "1";
+        if (newStatus === "1") return ["6","2", "3", "4", "8"].includes(currentStatus);
+        if (newStatus === "2") return ["1","6"].includes(currentStatus);
         if (newStatus === "3") return ["1", "2"].includes(currentStatus);
         if (newStatus === "4") return currentStatus === "3";
         if (newStatus === "7") return currentStatus === "4";
