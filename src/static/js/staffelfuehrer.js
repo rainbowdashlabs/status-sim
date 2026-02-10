@@ -11,6 +11,11 @@ function initStaffelfuehrer(sfCode) {
         }
     };
 
+    ws.onerror = function(error) {
+        console.error("WebSocket error:", error);
+        showConnectionError();
+    };
+
     let isUnloading = false;
     window.addEventListener('beforeunload', () => {
         isUnloading = true;
@@ -18,7 +23,10 @@ function initStaffelfuehrer(sfCode) {
 
     ws.onclose = function() {
         if (isUnloading) return;
-        window.location.href = '/';
+        showConnectionError();
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 3000);
     };
 
     function updateUI(connections, notices) {

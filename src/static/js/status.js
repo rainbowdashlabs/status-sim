@@ -141,6 +141,7 @@ function initStatus(name, code) {
 
     ws.onerror = function(error) {
         console.error("WebSocket error:", error);
+        showConnectionError();
     };
 
     ws.onmessage = function(event) {
@@ -263,10 +264,13 @@ function initStatus(name, code) {
 
     ws.onclose = function(event) {
         if (isUnloading) return;
-        if (event.code === 1008) {
-            window.location.href = `/?error=name_taken&old_name=${encodedName}`;
-        } else {
-            window.location.href = '/';
-        }
+        showConnectionError();
+        setTimeout(() => {
+            if (event.code === 1008) {
+                window.location.href = `/?error=name_taken&old_name=${encodedName}`;
+            } else {
+                window.location.href = '/';
+            }
+        }, 3000);
     };
 }

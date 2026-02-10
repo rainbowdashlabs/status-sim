@@ -47,6 +47,11 @@ function initLeitstelle(adminCode) {
     const wsUrl = `${protocol}//${window.location.host}/ws/${adminCode}?name=LEITSTELLE_VIEW`;
     const ws = new WebSocket(wsUrl);
 
+    ws.onerror = function(error) {
+        console.log("WebSocket error:", error);
+        showConnectionError();
+    };
+
     ws.onmessage = function(event) {
         try {
             const data = JSON.parse(event.data);
@@ -65,7 +70,10 @@ function initLeitstelle(adminCode) {
 
     ws.onclose = function() {
         if (isUnloading) return;
-        window.location.href = '/';
+        showConnectionError();
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 3000);
     };
 
     function updateConnections(connections, notices) {
@@ -122,12 +130,12 @@ function initLeitstelle(adminCode) {
                 return timeB - timeA;
             });
             sortedCars.forEach(car => {
-                listDiv.appendChild(createCarElement(car, true, notices, expandedSet, noteDrafts, msgDrafts));
+                listDiv.appendChild(createCarElement(car, true, notices, expandedSet, noteDrafts, msgDrafts, false));
             });
         }
     }
 
-    function createCarElement(car, isSpecialSection = false, notices = {}, expandedSet = new Set(), noteDrafts = {}, msgDrafts = {}) {
+    function createCarElement(car, isSpecialSection = false, notices = {}, expandedSet = new Set(), noteDrafts = {}, msgDrafts = {}, isExpandable = true) {
         const div = document.createElement('div');
         div.className = 'connection';
         div.dataset.status = car.status;
@@ -166,15 +174,18 @@ function initLeitstelle(adminCode) {
         ` : '';
 
         const timeSinceStatus = formatTimeSince(car.last_status_update);
-        const isExpanded = expandedSet.has(car.name);
+        const isExpanded = isExpandable && expandedSet.has(car.name);
         const detailsClass = isExpanded ? 'car-details active' : 'car-details';
 
         const msgValue = msgDrafts[car.name] || '';
         const noteValue = (noteDrafts[car.name] !== undefined) ? noteDrafts[car.name] : (car.note || '');
 
+        const onclickAttr = isExpandable ? `onclick="toggleDetails('${car.name}')"` : '';
+        const rowStyle = isExpandable ? '' : 'style="cursor: default;"';
+
         div.setAttribute('data-car-name', car.name);
         div.innerHTML = `
-            <div class="car-main-row" onclick="toggleDetails('${car.name}')">
+            <div class="car-main-row" ${onclickAttr} ${rowStyle}>
                 <div class="car-info-left">
                     <span class="car-name">${car.name}</span>
                     <span class="status-badge status-${car.status}">${car.status}</span>
@@ -191,6 +202,7 @@ function initLeitstelle(adminCode) {
                     ${isSpecialSection ? clearButton : ''}
                 </div>
             </div>
+            ${isExpandable ? `
             <div class="${detailsClass}" id="details-${car.name}">
                 <div class="notes-area">
                     <label>Notizen:</label>
@@ -207,7 +219,7 @@ function initLeitstelle(adminCode) {
                         <button class="status-btn status-8" onclick="setStatus('${car.name}', '8')">8</button>
                     </div>
                 </div>
-            </div>
+            </div>` : ''}
         `;
         return div;
     }
