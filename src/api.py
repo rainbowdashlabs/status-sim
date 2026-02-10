@@ -166,10 +166,10 @@ async def websocket_endpoint(websocket: WebSocket, code: str, name: str = None):
                     allowed = True
                     current = connection.status
                     if new_status == "1":
-                        if current not in ["2", "3", "4", "8"]:
+                        if current not in ["2", "3", "4","6", "8"]:
                             allowed = False
                     elif new_status == "2":
-                        if current != "1":
+                        if current not in ["1", "6"]:
                             allowed = False
                     elif new_status == "3":
                         if current not in ["1", "2"]:

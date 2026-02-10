@@ -43,25 +43,50 @@ function initLeitstelle(adminCode) {
         };
     });
 
-    const protocol = location.protocol.replace('http', 'ws');
-    const wsUrl = `${protocol}//${window.location.host}/ws/${adminCode}?name=LEITSTELLE_VIEW`;
-    const ws = new WebSocket(wsUrl);
+    let ws;
+    let reconnectTimeout;
+    let reconnectAttempts = 0;
 
-    ws.onerror = function(error) {
-        console.log("WebSocket error:", error);
-        showConnectionError();
-    };
+    function connect() {
+        const protocol = location.protocol.replace('http', 'ws');
+        const wsUrl = `${protocol}//${window.location.host}/ws/${adminCode}?name=LEITSTELLE_VIEW_${Math.random().toString(36).substring(2, 11)}`;
+        ws = new WebSocket(wsUrl);
 
-    ws.onmessage = function(event) {
-        try {
-            const data = JSON.parse(event.data);
-            if (data.type === 'status_update') {
-                updateConnections(data.connections, data.notices);
+        ws.onopen = function() {
+            console.log("WebSocket connected");
+            reconnectAttempts = 0;
+            const errorMsg = document.getElementById('ws-error-msg');
+            if (errorMsg) errorMsg.remove();
+        };
+
+        ws.onerror = function(error) {
+            console.log("WebSocket error:", error);
+        };
+
+        ws.onmessage = function(event) {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.type === 'status_update') {
+                    updateConnections(data.connections, data.notices);
+                }
+            } catch (e) {
+                console.log("Error processing WS message:", e);
             }
-        } catch (e) {
-            console.log("Error processing WS message:", e);
-        }
-    };
+        };
+
+        ws.onclose = function() {
+            if (isUnloading) return;
+            showConnectionError();
+            
+            const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000);
+            reconnectAttempts++;
+            console.log(`WebSocket closed. Reconnecting in ${delay}ms...`);
+            clearTimeout(reconnectTimeout);
+            reconnectTimeout = setTimeout(connect, delay);
+        };
+    }
+
+    connect();
 
     function sendHeartbeat() {
         if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
@@ -74,11 +99,6 @@ function initLeitstelle(adminCode) {
     window.addEventListener('beforeunload', () => {
         isUnloading = true;
     });
-
-    ws.onclose = function() {
-        if (isUnloading) return;
-        showConnectionError();
-    };
 
     function updateConnections(connections, notices) {
         const expandedSet = new Set(Array.from(document.querySelectorAll('#connections .car-details.active')).map(d => d.id.replace('details-','')));

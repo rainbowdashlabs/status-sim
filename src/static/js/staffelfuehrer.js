@@ -1,15 +1,45 @@
 function initStaffelfuehrer(sfCode) {
     const connectionsDiv = document.getElementById('connections');
-    const protocol = location.protocol.replace('http', 'ws');
-    const wsUrl = `${protocol}//${window.location.host}/ws/${sfCode}?name=STAFFELFUEHRER`;
-    const ws = new WebSocket(wsUrl);
+    let ws;
+    let reconnectTimeout;
+    let reconnectAttempts = 0;
 
-    ws.onmessage = function(event) {
-        const data = JSON.parse(event.data);
-        if (data.type === 'status_update') {
-            updateUI(data.connections, data.notices);
-        }
-    };
+    function connect() {
+        const protocol = location.protocol.replace('http', 'ws');
+        const wsUrl = `${protocol}//${window.location.host}/ws/${sfCode}?name=STAFFELFUEHRER_${Math.random().toString(36).substring(2, 11)}`;
+        ws = new WebSocket(wsUrl);
+
+        ws.onopen = function() {
+            console.log("WebSocket connected");
+            reconnectAttempts = 0;
+            const errorMsg = document.getElementById('ws-error-msg');
+            if (errorMsg) errorMsg.remove();
+        };
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            if (data.type === 'status_update') {
+                updateUI(data.connections, data.notices);
+            }
+        };
+
+        ws.onerror = function(error) {
+            console.error("WebSocket error:", error);
+        };
+
+        ws.onclose = function() {
+            if (isUnloading) return;
+            showConnectionError();
+            
+            const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000);
+            reconnectAttempts++;
+            console.log(`WebSocket closed. Reconnecting in ${delay}ms...`);
+            clearTimeout(reconnectTimeout);
+            reconnectTimeout = setTimeout(connect, delay);
+        };
+    }
+
+    connect();
 
     function sendHeartbeat() {
         if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
@@ -18,20 +48,10 @@ function initStaffelfuehrer(sfCode) {
     }
     setInterval(sendHeartbeat, 20000);
 
-    ws.onerror = function(error) {
-        console.error("WebSocket error:", error);
-        showConnectionError();
-    };
-
     let isUnloading = false;
     window.addEventListener('beforeunload', () => {
         isUnloading = true;
     });
-
-    ws.onclose = function() {
-        if (isUnloading) return;
-        showConnectionError();
-    };
 
     function updateUI(connections, notices) {
         const cars = connections.filter(c => c.name !== 'LEITSTELLE_VIEW' && !c.is_staffelfuehrer);
