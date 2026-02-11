@@ -1,0 +1,30 @@
+{
+  "name": "Brand 1 - Laubeneinbruch/Brand",
+  "beschreibung": "Rauchentwicklung aus Gartenlaube.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Kolonie Sonnenschein, Weg 4",
+      "ortsteil": "Ost",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Laube ca. 20qm in Vollbrand, Brandbekämpfung eingeleitet."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "2 C-Rohre, 4 PA",
+            "beschreibung": "Gartenlaube ausgebrannt, eine Gasflasche geborgen und gekühlt.",
+            "uebergabe": "Einsatzstelle an Polizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -11,7 +11,7 @@ import random
 
 class Einheit(BaseModel):
     """Eine Einheit (z.B. C-Dienst, NEF, RTW, DLK, LHF)."""
-    typ: Literal["FD", "NEF", "RTW", "DLK", "LHF"]
+    typ: str
     anzahl: int = 1
     kennung: Optional[str] = None # Optional, falls eine spezifische Kennung gewünscht ist
 
@@ -205,7 +205,7 @@ class AnkommenSchritt(BaseModel):
             FunkEntry(actor="FZ", message=f"Hier Melder {ctx.fk}, kommen."),
             FunkEntry(actor="SF", message="Wir sind an der Einsatzstelle eingetroffen, Quittung kommen."),
             FunkEntry(actor="FZ", message="Wir sind an der Einsatzstelle eingetroffen, kommen."),
-            FunkEntry(actor="SF", message="So richtig, Ende.", status="4"),
+            FunkEntry(actor="SF", message="So richtig, Ende."),
             FunkEntry(actor="FZ", status="4"),
         ]
 
@@ -434,15 +434,16 @@ class Einsatz(BaseModel):
         einheiten_namen: List[str] = []
         for e in self.einheiten:
             einheiten_namen.extend(e.generate_names())
-        relevant = [n for n in einheiten_namen if n.startswith("C-Dienst") or n.startswith("NEF")]
-        zusatz = f" (zusammen mit {', '.join(relevant)})" if relevant else ""
+        relevant = [n for n in einheiten_namen if n.startswith("ELW") or n.startswith("NEF")]
+        zusatz = f" zusammen mit {', '.join(relevant)}" if relevant else ""
+        zusatz_voll = f" zusammen mit {', '.join(einheiten_namen)}"
         enr_str = self.einsatznummer or ctx.next_enr()
         return [
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} mit Blitz, kommen."),
             FunkEntry(actor="FZ", message=f"Hier Florian {ctx.fk}, kommen."),
-            FunkEntry(actor="LS", message=f"Neuer Alarm, Nummer {enr_str} {self.stichwort} in der {self.adresse} in {self.ortsteil}{zusatz}, kommen."),
+            FunkEntry(actor="LS", message=f"Neuer Alarm, Nummer {enr_str} {self.stichwort} in der {self.adresse} in {self.ortsteil}{zusatz_voll}, kommen."),
             FunkEntry(actor="FZ", message=f"Einsatznummer {enr_str} {self.stichwort} in der {self.adresse} in {self.ortsteil}{zusatz}, kommen."),
-            FunkEntry(actor="LS", message=f"So richtig, {ctx.ls} <time> Ende.", status="3"),
+            FunkEntry(actor="LS", message=f"So richtig, {ctx.ls} <time> Ende."),
             FunkEntry(actor="FZ", status="3"),
             FunkEntry(actor="FZ", message=f"Staffelführer {ctx.fk} von Melder {ctx.fk} kommen."),
             FunkEntry(actor="SF", message=f"Hier Staffelführer {ctx.fk}, kommen."),

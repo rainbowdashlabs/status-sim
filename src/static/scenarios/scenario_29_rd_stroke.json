@@ -3,7 +3,7 @@
   "beschreibung": "Verdacht auf Schlaganfall bei älterer Person in häuslicher Umgebung.",
   "einsaetze": [
     {
-      "stichwort": "RD 1 - Stroke",
+      "stichwort": "RD1C",
       "adresse": "Goethestraße 5",
       "ortsteil": "West",
       "einheiten": [{"typ": "RTW", "anzahl": 1}],

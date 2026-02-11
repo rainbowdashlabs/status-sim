@@ -16,6 +16,8 @@ export interface VehicleStatus {
   sf_note: string;
   is_online: boolean;
   talking_to_sf: boolean;
+  radio_channel: string | null;
+  claimed_by: string | null;
   active_scenario: any | null;
   checklist_state: {
     expanded_einsaetze: Record<string, boolean>;

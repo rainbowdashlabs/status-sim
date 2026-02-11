@@ -1,0 +1,24 @@
+{
+  "name": "TH - Eigenunfall mit 2 Verletzten",
+  "beschreibung": "Eigenunfall während der Anfahrt zu einer TH 1.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1",
+      "adresse": "Waldstraße 15",
+      "ortsteil": "Nord",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "eigenunfall",
+          "mit_personenschaden": true,
+          "verletzte": 2,
+          "adresse": "Hauptstraße / Kreuzweg",
+          "ortsteil": "Nord"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
+    }
+  ]
+}

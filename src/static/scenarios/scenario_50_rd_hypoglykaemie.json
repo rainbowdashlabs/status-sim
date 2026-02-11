@@ -1,0 +1,20 @@
+{
+  "name": "RD - Unterzuckerung",
+  "beschreibung": "Männliche Person, V.a. Hypoglykämie.",
+  "einsaetze": [
+    {
+      "stichwort": "RD1B",
+      "adresse": "Bäckerei Kanzler",
+      "ortsteil": "Ost",
+      "einheiten": [{"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
+    }
+  ]
+}

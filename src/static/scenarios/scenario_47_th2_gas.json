@@ -1,0 +1,35 @@
+{
+  "name": "TH 2 - Gasaustritt",
+  "beschreibung": "Gasgeruch im Keller eines Wohnhauses nach Bauarbeiten.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 2",
+      "adresse": "Bachstraße 12",
+      "ortsteil": "West",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}, {"typ": "FD", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Erhöhte Gaskonzentration im Keller gemessen, Gebäude geräumt."
+        },
+        {
+          "typ": "nachalarmierung",
+          "stichwort": "TH 3",
+          "begruendung": "Großräumige Absperrung und Bereitstellung erforderlich"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Gasspürgerät, Drucklüfter",
+            "beschreibung": "Gasleitung durch Versorger abgeschiebert, Keller belüftet.",
+            "uebergabe": "Einsatzstelle an Gasversorger übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "TH 2 - Verkehrsunfall eingeklemmte Person",
+  "beschreibung": "Verkehrsunfall mit zwei beteiligten Pkw, eine Person eingeklemmt.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 2",
+      "adresse": "B96, km 12.5",
+      "ortsteil": "Süd",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}, {"typ": "RW", "anzahl": 1}, {"typ": "FD", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}, {"typ": "NEF", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "VU 2 Pkw, 1 Person eingeklemmt, techn. Rettung läuft."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Spreizer, Schere, Stabilisierungssystem",
+            "beschreibung": "Person befreit und an RD übergeben.",
+            "verletzte": "1 verletzte Person an RTW übergeben",
+            "uebergabe": "Einsatzstelle an Polizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

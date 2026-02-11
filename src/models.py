@@ -2,6 +2,13 @@ from pydantic import BaseModel, Field
 from typing import List, Dict, Optional
 from fastapi import WebSocket
 
+class ClaimRequest(BaseModel):
+    target_name: str
+    sf_name: str
+
+class ChannelRequest(BaseModel):
+    channel: str
+
 class MessageRequest(BaseModel):
     message: str
     target_name: Optional[str] = None
@@ -12,6 +19,7 @@ class TargetRequest(BaseModel):
 class NoticeRequest(BaseModel):
     target_name: str
     text: str
+    sf_name: Optional[str] = None
 
 class NoteRequest(BaseModel):
     target_name: str
@@ -61,6 +69,8 @@ class Connection(BaseModel):
     is_leitstelle: bool = False
     disconnected_at: Optional[float] = None
     talking_to_sf: bool = False
+    radio_channel: Optional[str] = None
+    claimed_by: Optional[str] = None
 
     class Config:
         arbitrary_types_allowed = True
@@ -79,6 +89,8 @@ class VehicleStatus(BaseModel):
     sf_note: str = ""
     is_online: bool = True
     talking_to_sf: bool = False
+    radio_channel: Optional[str] = None
+    claimed_by: Optional[str] = None
     active_scenario: Optional[dict] = None
     checklist_state: Optional[ChecklistState] = None
 

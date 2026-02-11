@@ -1,0 +1,30 @@
+{
+  "name": "Brand 2 - Küchenbrand",
+  "beschreibung": "Küchenbrand im 3. OG eines Mehrfamilienhauses.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Kantstraße 15",
+      "ortsteil": "West",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "FD", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Küchenbrand bestätigt, Mieter hat Wohnung verlassen, 1 C-Rohr zur Brandbekämpfung vor."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, 2 PA",
+            "beschreibung": "Brand in Einbauküche gelöscht, Belüftungsmaßnahmen durchgeführt.",
+            "uebergabe": "Einsatzstelle an Mieter übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

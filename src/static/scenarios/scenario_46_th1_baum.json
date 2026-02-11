@@ -1,0 +1,25 @@
+{
+  "name": "TH 1 - Baum auf Fahrbahn",
+  "beschreibung": "Umgestürzter Baum blockiert Straße.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1",
+      "adresse": "Forstweg",
+      "ortsteil": "Nord",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "beschreibung": "Baum zerteilt und beiseite geräumt.",
+            "uebergabe": "Einsatzstelle an Grünflächenamt übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

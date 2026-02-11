@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, ref} from 'vue';
+import {computed, ref, onMounted} from 'vue';
 import axios from 'axios';
 import type {StatusUpdate} from './composables/useWebSocket';
 import {useWebSocket} from './composables/useWebSocket';
@@ -14,15 +14,59 @@ const props = defineProps<{
   sfCode: string;
 }>();
 
+const sfName = ref(new URLSearchParams(window.location.search).get('name') || localStorage.getItem(`sf_name_${props.sfCode}`) || props.name);
+const radioChannel = ref(new URLSearchParams(window.location.search).get('channel') || localStorage.getItem(`radio_channel_${props.sfCode}`) || '');
 const status = ref<StatusUpdate | null>(null);
 
 const onMessage = (data: any) => {
-  if (data.connections) {
+  if (data.type === 'status_update') {
     status.value = data;
   }
 };
 
-const {isConnected} = useWebSocket(`/ws/${props.sfCode}`, onMessage);
+const {isConnected, send} = useWebSocket(`/ws/${props.sfCode}?name=${encodeURIComponent(sfName.value)}`, onMessage);
+
+onMounted(() => {
+  if (radioChannel.value) {
+    send(JSON.stringify({type: 'set_channel', value: radioChannel.value}));
+  }
+});
+
+const updateUrlParams = () => {
+  const url = new URL(window.location.href);
+  url.searchParams.set('name', sfName.value);
+  if (radioChannel.value) {
+    url.searchParams.set('channel', radioChannel.value);
+  } else {
+    url.searchParams.delete('channel');
+  }
+  window.history.replaceState({}, '', url.toString());
+};
+
+const updateSfName = () => {
+  localStorage.setItem(`sf_name_${props.sfCode}`, sfName.value);
+  updateUrlParams();
+  window.location.reload(); // Reload to reconnect with new name
+};
+
+const updateRadioChannel = () => {
+  localStorage.setItem(`radio_channel_${props.sfCode}`, radioChannel.value);
+  updateUrlParams();
+  send(JSON.stringify({type: 'set_channel', value: radioChannel.value}));
+};
+
+const claimVehicle = async (carName: string) => {
+  await axios.post(`/api/staffelfuehrer/${props.sfCode}/claim`, {
+    target_name: carName,
+    sf_name: sfName.value
+  });
+};
+
+const unclaimVehicle = async (carName: string) => {
+  await axios.post(`/api/staffelfuehrer/${props.sfCode}/unclaim`, {
+    target_name: carName
+  });
+};
 
 const connections = computed(() => status.value?.connections || []);
 const openCar = ref<string | null>(null);
@@ -30,7 +74,8 @@ const openCar = ref<string | null>(null);
 const sendNotice = async (carName: string) => {
   await axios.post(`/api/staffelfuehrer/${props.sfCode}/notice`, {
     target_name: carName,
-    text: 'Sprechwunsch Staffelführer'
+    text: 'Sprechwunsch Staffelführer',
+    sf_name: sfName.value
   });
 };
 
@@ -58,8 +103,31 @@ const getNotice = (name: string) => status.value?.notices[name];
   <div class="max-w-[1200px] min-w-[320px] mx-auto p-5 flex flex-col min-h-screen">
     <div class="flex-1">
       <div class="bg-card rounded-lg p-5 mb-5 shadow-lg border border-gray-800">
-        <h1 class="text-primary uppercase tracking-widest text-2xl font-bold m-0">Staffelführer: {{ name }}</h1>
-        <p class="mt-2">Code: <span
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h1 class="text-primary uppercase tracking-widest text-2xl font-bold m-0">Staffelführer: {{ sfName }}</h1>
+            <p class="mt-2 text-sm text-gray-400">Standardname: {{ name }}</p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-2 items-center">
+              <input 
+                v-model="sfName" 
+                class="bg-black border border-gray-700 rounded px-2 py-1 text-sm text-white focus:outline-none focus:border-primary w-40"
+                placeholder="Eigener Name"
+              >
+              <button @click="updateSfName" class="bg-primary text-white px-3 py-1 rounded text-sm font-bold hover:brightness-110">Speichern</button>
+            </div>
+            <div class="flex gap-2 items-center">
+              <input 
+                v-model="radioChannel" 
+                class="bg-black border border-gray-700 rounded px-2 py-1 text-sm text-white focus:outline-none focus:border-primary w-40"
+                placeholder="Funkkanal (z.B. 401)"
+              >
+              <button @click="updateRadioChannel" class="bg-info text-white px-3 py-1 rounded text-sm font-bold hover:brightness-110">Kanal setzen</button>
+            </div>
+          </div>
+        </div>
+        <p>Code: <span
             class="bg-black p-1.5 px-3 rounded font-mono font-bold text-xl text-primary border border-gray-800">{{
             sfCode
           }}</span></p>
@@ -78,10 +146,19 @@ const getNotice = (name: string) => status.value?.notices[name];
         >
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
-              <span class="font-bold text-lg min-w-[120px]">{{ car.name }}</span>
+              <div class="flex flex-col">
+                <span class="font-bold text-lg min-w-[120px]">{{ car.name }}</span>
+                <div v-if="car.claimed_by" class="text-[10px] text-primary-light uppercase tracking-tighter">
+                  Übernommen von: {{ car.claimed_by }}
+                </div>
+              </div>
               <div class="flex items-center gap-2">
                 <StatusBadge :status="car.status"/>
                 <Timer :timestamp="car.last_status_update" :active="car.is_online"/>
+              </div>
+
+              <div v-if="car.radio_channel" class="bg-info/20 border border-info/50 text-info px-2 py-0.5 rounded text-xs font-mono font-bold">
+                CH: {{ car.radio_channel }}
               </div>
 
               <div v-if="getNotice(car.name)" class="p-1 px-3 rounded flex items-center gap-2 font-bold text-[0.85rem]"
@@ -100,9 +177,23 @@ const getNotice = (name: string) => status.value?.notices[name];
             </div>
             <div class="flex gap-2">
               <button
-                  v-if="!car.talking_to_sf"
+                  v-if="!car.claimed_by"
+                  @click.stop="claimVehicle(car.name)"
+                  class="bg-success/80 text-white p-1.5 px-3 rounded text-sm font-bold hover:brightness-110"
+              >
+                Übernehmen
+              </button>
+              <button
+                  v-else-if="car.claimed_by === sfName"
+                  @click.stop="unclaimVehicle(car.name)"
+                  class="bg-danger/80 text-white p-1.5 px-3 rounded text-sm font-bold hover:brightness-110"
+              >
+                Freigeben
+              </button>
+              <button
+                  v-if="!car.talking_to_sf && car.claimed_by === sfName"
                   @click.stop="sendNotice(car.name)"
-                  class="bg-primary text-white p-2 px-4 rounded font-bold hover:brightness-110"
+                  class="bg-primary text-white p-1.5 px-3 rounded text-sm font-bold hover:brightness-110"
               >
                 Anfrage
               </button>

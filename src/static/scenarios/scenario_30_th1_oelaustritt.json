@@ -19,9 +19,8 @@
           "typ": "lagemeldung",
           "lagemeldung": {
             "lage": "Einsatz beendet",
-            "geraete": "Ölbindemittel, Besen",
             "beschreibung": "Ölaustritt abgestumpft, Kanaleinlauf gesichert.",
-            "uebergabe": "Einsatzstelle an Reinigungsfirma übergeben"
+            "uebergabe": "Einsatzstelle an Stadtreinigung übergeben"
           }
         }
       ]

@@ -158,11 +158,17 @@ onMounted(() => {
 
       <div v-if="myNotice || myStatus?.talking_to_sf" class="w-full mb-5 overflow-hidden rounded-lg">
         <div v-if="myNotice?.status === 'pending'"
-             class="bg-danger text-white p-4 flex justify-between items-center animate-pulse">
-          <span class="font-bold uppercase tracking-widest">{{ myNotice.text }}</span>
-          <button @click="confirmNotice" class="bg-success text-white p-2 px-4 rounded font-bold hover:brightness-110">
-            Kanal gewechselt
-          </button>
+             class="bg-danger text-white p-4 flex flex-col gap-3 rounded-lg animate-pulse border-2 border-white shadow-lg">
+          <div class="flex justify-between items-center">
+            <span class="font-bold uppercase tracking-widest text-lg">{{ myNotice.text }}</span>
+            <button @click="confirmNotice" class="bg-success text-white p-2 px-6 rounded-full font-bold hover:brightness-110 shadow-md border border-white/30 transition-transform active:scale-95">
+              Kanal gewechselt
+            </button>
+          </div>
+          <div v-if="myStatus?.radio_channel" class="bg-black/30 p-2 rounded flex items-center justify-center gap-2 border border-white/20">
+            <span class="text-sm font-medium">NEUER FUNKKANAL:</span>
+            <span class="text-xl font-black font-mono tracking-wider">{{ myStatus.radio_channel }}</span>
+          </div>
         </div>
 
         <div v-else

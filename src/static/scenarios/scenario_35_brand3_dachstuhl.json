@@ -1,0 +1,35 @@
+{
+  "name": "Brand 3 - Dachstuhlbrand",
+  "beschreibung": "Dachstuhlbrand nach Blitzeinschlag.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 3",
+      "adresse": "Eichenweg 5",
+      "ortsteil": "West",
+      "einheiten": [{"typ": "LHF", "anzahl": 2}, {"typ": "DLK", "anzahl": 1}, {"typ": "FD", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Dachstuhlbrand in voller Ausdehnung, Brandbekämpfung eingeleitet."
+        },
+        {
+          "typ": "nachalarmierung_fahrzeuge",
+          "fahrzeuge": [{"typ": "LHF", "anzahl": 1}],
+          "begruendung": "Erhöhter Bedarf an Atemschutzgeräteträgern"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "2 C-Rohre, 1 Wenderohr, 8 PA",
+            "beschreibung": "Dachstuhlbrand gelöscht, Nachlöscharbeiten laufen.",
+            "uebergabe": "Einsatzstelle an Kriminalpolizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -19,7 +19,7 @@
           "typ": "lagemeldung",
           "lagemeldung": {
             "lage": "EstuK",
-            "geraete": "Gasspürgerät, Belüftungsgerät",
+            "geraete": "Gasspürgerät, Drucklüfter",
             "beschreibung": "Defekte Gasleitung im Keller, Schieber geschlossen, Bereich belüftet.",
             "uebergabe": "Einsatzstelle an Gasversorger übergeben"
           }

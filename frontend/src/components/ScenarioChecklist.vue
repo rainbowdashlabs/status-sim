@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps<{
   scenario: any;
@@ -14,14 +14,65 @@ const emit = defineEmits<{
   (e: 'update:state', state: any): void;
 }>();
 
-const expandedEinsaetze = ref<Record<string, boolean>>({});
-const expandedSchritte = ref<Record<string, boolean>>({});
+const expandedEinsaetze = ref<Record<string, boolean>>(props.checklistState?.expanded_einsaetze || {});
+const expandedSchritte = ref<Record<string, boolean>>(props.checklistState?.expanded_schritte || {});
 const checkedEntries = computed(() => props.checklistState?.checked_entries || {});
+
+// Watch for external state changes to keep expansion in sync if needed
+import { watch } from 'vue';
+watch(() => props.checklistState, (newVal) => {
+  if (newVal) {
+    // We only update if they aren't already set to avoid overwriting local toggles
+    // or we can just always sync them. Let's sync them so multiple viewers see the same.
+    expandedEinsaetze.value = { ...newVal.expanded_einsaetze };
+    expandedSchritte.value = { ...newVal.expanded_schritte };
+  }
+}, { deep: true });
+
+const displayTime = ref('');
+
+const updateDisplayTime = () => {
+  const now = new Date();
+  displayTime.value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+};
+
+let timeInterval: any = null;
+
+onMounted(() => {
+  updateDisplayTime();
+  timeInterval = setInterval(updateDisplayTime, 10000); // Alle 10 Sekunden aktualisieren
+});
+
+onUnmounted(() => {
+  if (timeInterval) clearInterval(timeInterval);
+});
+
+const progress = computed(() => {
+  const entries = props.scenario.generated_entries || [];
+  if (entries.length === 0) return { done: 0, total: 0, percent: 0 };
+  
+  let done = 0;
+  entries.forEach((entry: any, idx: number) => {
+    // We need to reconstruct the key used in checkedEntries
+    // The keys are `${eIdx}-${sIdx}-${fIdx}`
+    // But we don't easily have eIdx, sIdx, fIdx here from the flat list.
+    // Wait, let's look at how getFunkspruecheForSchritt works.
+  });
+  
+  // Re-calculating based on checkedEntries keys is easier
+  const doneCount = Object.values(checkedEntries.value).filter(v => v).length;
+  const totalCount = entries.length;
+  return {
+    done: doneCount,
+    total: totalCount,
+    percent: totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0
+  };
+});
 
 const updateState = (newPartialState: any) => {
   const currentState = {
-    expanded_einsaetze: {}, // Do not sync
-    expanded_schritte: {},  // Do not sync
+    expanded_einsaetze: { ...expandedEinsaetze.value },
+    expanded_schritte: { ...expandedSchritte.value },
     checked_entries: { ...checkedEntries.value },
     ...newPartialState
   };
@@ -31,6 +82,7 @@ const updateState = (newPartialState: any) => {
 const toggleEinsatz = (index: any) => {
   const idx = typeof index === 'string' ? index : index.toString();
   expandedEinsaetze.value[idx] = !expandedEinsaetze.value[idx];
+  updateState({ expanded_einsaetze: { ...expandedEinsaetze.value } });
 };
 
 const toggleSchritt = (eIdx: any, sIdx: any) => {
@@ -38,6 +90,7 @@ const toggleSchritt = (eIdx: any, sIdx: any) => {
   const s = typeof sIdx === 'string' ? sIdx : sIdx.toString();
   const key = `${e}-${s}`;
   expandedSchritte.value[key] = !expandedSchritte.value[key];
+  updateState({ expanded_schritte: { ...expandedSchritte.value } });
 };
 
 const toggleEntry = (eIdx: any, sIdx: any, fIdx: any) => {
@@ -50,15 +103,29 @@ const toggleEntry = (eIdx: any, sIdx: any, fIdx: any) => {
   updateState({ checked_entries: next });
 };
 
+const markAllAsDone = (eIdx: any, sIdx: any) => {
+  const e = typeof eIdx === 'string' ? eIdx : eIdx.toString();
+  const s = typeof sIdx === 'string' ? sIdx : sIdx.toString();
+  const funksprueche = getFunkspruecheForSchritt(eIdx, sIdx);
+  const next = { ...checkedEntries.value };
+  
+  funksprueche.forEach((_, fIdx) => {
+    const key = `${e}-${s}-${fIdx}`;
+    next[key] = true;
+  });
+  
+  updateState({ checked_entries: next });
+};
+
 const getFunkspruecheForSchritt = (einsatzIndex: any, schrittIndex: any) => {
   const e = typeof einsatzIndex === 'string' ? parseInt(einsatzIndex) : einsatzIndex;
   const s = typeof schrittIndex === 'string' ? parseInt(schrittIndex) : schrittIndex;
   const prefix = `[[E${e}]][[S${s}]]`;
-  return (props.scenario.generated_entries || [])
+      return (props.scenario.generated_entries || [])
     .filter((entry: any) => entry.message.startsWith(prefix))
     .map((entry: any) => ({
       ...entry,
-      message: entry.message.replace(prefix, '')
+      message: entry.message.replace(prefix, '').replace('<time>', displayTime.value)
     }));
 };
 
@@ -92,15 +159,34 @@ const getActorColor = (actor: string) => {
     default: return 'text-white';
   }
 };
+
+const getSchrittProgress = (eIdx: any, sIdx: any) => {
+  const e = eIdx.toString();
+  const s = sIdx.toString();
+  const funksprueche = getFunkspruecheForSchritt(eIdx, sIdx);
+  if (funksprueche.length === 0) return { done: 0, total: 0 };
+  
+  let done = 0;
+  funksprueche.forEach((_, fIdx) => {
+    if (checkedEntries.value[`${e}-${s}-${fIdx}`]) {
+      done++;
+    }
+  });
+  
+  return { done, total: funksprueche.length };
+};
 </script>
 
 <template>
   <div class="mt-4 border border-gray-700 rounded overflow-hidden bg-gray-900/50">
-    <div class="bg-gray-800 p-2 px-3 font-bold text-sm uppercase tracking-wider border-b border-gray-700 flex justify-between items-center">
+    <div class="bg-gray-800 p-2 px-3 font-bold text-base uppercase tracking-wider border-b border-gray-700 flex justify-between items-center">
       <span>Szenario: {{ scenario.name }}</span>
+      <span class="text-xs font-mono bg-gray-900 px-2 py-0.5 rounded border border-gray-700">
+        {{ progress.done }}/{{ progress.total }} ({{ progress.percent }}%)
+      </span>
     </div>
     <div class="p-3">
-      <p class="text-xs text-gray-400 mb-3 italic">{{ scenario.beschreibung }}</p>
+      <p class="text-sm text-gray-400 mb-3 italic">{{ scenario.beschreibung }}</p>
       
       <div v-for="(einsatz, eIdx) in scenario.einsaetze" :key="eIdx" class="mb-4 last:mb-0">
         <!-- Einsatz Header -->
@@ -109,8 +195,8 @@ const getActorColor = (actor: string) => {
           class="bg-gray-800 p-2 rounded cursor-pointer hover:bg-gray-700 transition-colors flex justify-between items-center border border-gray-600 shadow-sm"
         >
           <div class="flex flex-col">
-            <span class="font-bold text-sm text-primary">{{ einsatz.stichwort }}</span>
-            <span class="text-xs text-gray-300">{{ einsatz.adresse }}, {{ einsatz.ortsteil }}</span>
+            <span class="font-bold text-base text-primary">{{ einsatz.stichwort }}</span>
+            <span class="text-sm text-gray-300">{{ einsatz.adresse }}, {{ einsatz.ortsteil }}</span>
           </div>
           <span class="text-xs">{{ expandedEinsaetze[eIdx.toString()] ? '▲' : '▼' }}</span>
         </div>
@@ -120,11 +206,23 @@ const getActorColor = (actor: string) => {
           <div v-for="sIdx in (einsatz.schritte.length + 1)" :key="sIdx-1" class="flex flex-col">
             <!-- Schritt Header -->
             <div 
-              @click="toggleSchritt(eIdx, sIdx-1)"
-              class="bg-gray-800/60 p-2 rounded cursor-pointer hover:bg-gray-700/60 flex justify-between items-center border border-gray-700/50"
+              class="bg-gray-800/60 p-2 rounded flex justify-between items-center border border-gray-700/50"
             >
-              <span class="text-xs font-bold text-gray-200">{{ getSchrittLabel(einsatz, sIdx-1) }}</span>
-              <span class="text-[10px]">{{ expandedSchritte[`${eIdx}-${sIdx-1}`] ? '▲' : '▼' }}</span>
+              <div class="flex-1 cursor-pointer flex justify-between items-center mr-2" @click="toggleSchritt(eIdx, sIdx-1)">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-bold text-gray-200">{{ getSchrittLabel(einsatz, sIdx-1) }}</span>
+                  <span class="text-[10px] font-mono bg-gray-900/80 px-1.5 py-0.5 rounded text-gray-400 border border-gray-700">
+                    {{ getSchrittProgress(eIdx, sIdx-1).done }}/{{ getSchrittProgress(eIdx, sIdx-1).total }}
+                  </span>
+                </div>
+                <span class="text-xs ml-2">{{ expandedSchritte[`${eIdx}-${sIdx-1}`] ? '▲' : '▼' }}</span>
+              </div>
+              <button 
+                @click.stop="markAllAsDone(eIdx, sIdx-1)"
+                class="text-[10px] bg-primary/20 hover:bg-primary/40 text-primary-light px-2 py-0.5 rounded border border-primary/30 transition-colors"
+              >
+                Alle erledigt
+              </button>
             </div>
 
             <!-- Schritt Content (Funksprüche) -->
@@ -145,11 +243,12 @@ const getActorColor = (actor: string) => {
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 mb-0.5">
-                    <span class="text-[10px] font-mono text-gray-500">#{{ entry.enr }}</span>
-                    <span class="text-xs font-bold" :class="getActorColor(entry.actor)">{{ entry.actor }}</span>
+                    <span class="text-xs font-mono text-gray-500">#{{ entry.enr }}</span>
+                    <span class="text-sm font-bold" :class="getActorColor(entry.actor)">{{ entry.actor }}</span>
+                    <span v-if="entry.status" class="text-[10px] bg-gray-700 px-1 rounded text-white border border-gray-600">Status {{ entry.status }}</span>
                   </div>
                   <div
-                    class="text-xs leading-relaxed transition-all" 
+                    class="text-sm leading-relaxed transition-all" 
                     :class="checkedEntries[`${eIdx}-${sIdx-1}-${fIdx}`] ? 'line-through text-gray-600' : 'text-gray-200'"
                   >
                     {{ entry.message }}

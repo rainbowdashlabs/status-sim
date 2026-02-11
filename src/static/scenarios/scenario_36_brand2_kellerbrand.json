@@ -1,0 +1,35 @@
+{
+  "name": "Brand 2 - Kellerbrand",
+  "beschreibung": "Rauchentwicklung aus Keller eines Hochhauses.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Berliner Straße 100",
+      "ortsteil": "Mitte",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "FD", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Starke Verrauchung im Treppenraum, Kellerbrand bestätigt."
+        },
+        {
+          "typ": "nachalarmierung",
+          "stichwort": "Brand 3",
+          "begruendung": "Massive Rauchausbreitung im Wohngebäude"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, 6 PA, Drucklüfter",
+            "beschreibung": "Kellerbrand gelöscht, Entrauchungsmaßnahmen abgeschlossen.",
+            "uebergabe": "Einsatzstelle an Hausverwaltung übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

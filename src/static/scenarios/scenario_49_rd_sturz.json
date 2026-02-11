@@ -1,0 +1,20 @@
+{
+  "name": "RD - Sturz in Wohnung",
+  "beschreibung": "Ältere Person nach Sturz in Wohnung, V.a. Oberschenkelhalsfraktur.",
+  "einsaetze": [
+    {
+      "stichwort": "RD1B",
+      "adresse": "Mozartstraße 2",
+      "ortsteil": "Nord",
+      "einheiten": [{"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
+    }
+  ]
+}

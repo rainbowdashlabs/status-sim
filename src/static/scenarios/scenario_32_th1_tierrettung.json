@@ -19,7 +19,6 @@
           "typ": "lagemeldung",
           "lagemeldung": {
             "lage": "Einsatz beendet",
-            "geraete": "DLK, Tiertransportbox",
             "beschreibung": "Katze mittels Drehleiter vom Baum gerettet und wohlbehalten an Besitzer übergeben.",
             "uebergabe": "Einsatzstelle an Besitzer übergeben"
           }

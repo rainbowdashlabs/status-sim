@@ -1,0 +1,26 @@
+{
+  "name": "TH 1 - Wasserschaden",
+  "beschreibung": "Wasserrohrbruch im 2. OG, Wasser läuft in darunterliegende Wohnung.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1",
+      "adresse": "Luisenstraße 8",
+      "ortsteil": "Mitte",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Wassersauger",
+            "beschreibung": "Haupthahn geschlossen, Wasser mittels Wassersauger aufgenommen.",
+            "uebergabe": "Einsatzstelle an Mieter übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

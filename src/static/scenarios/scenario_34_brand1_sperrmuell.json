@@ -1,0 +1,30 @@
+{
+  "name": "Brand 1 - Sperrmüllbrand",
+  "beschreibung": "Brennender Sperrmüllhaufen auf Gehweg.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Sonnenallee 200",
+      "ortsteil": "Neukölln",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung_fms",
+          "text": "Sperrmüllbrand, 1 C-Rohr zur Brandbekämpfung"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr",
+            "beschreibung": "Ca. 5 Kubikmeter Sperrmüll gelöscht.",
+            "uebergabe": "Einsatzstelle an Polizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

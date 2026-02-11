@@ -41,7 +41,7 @@ const handleJoined = async (code: string, name: string) => {
         const sfCode = url.pathname.split('/').pop()!;
         const info = await axios.get(`/api/staffelfuehrer_info/${sfCode}`);
         currentView.value = {type: 'staffelfuehrer', sfCode, name: info.data.name};
-        window.history.pushState({}, '', `/staffelfuehrer/${sfCode}`);
+        window.history.pushState({}, '', `/staffelfuehrer/${sfCode}?name=${encodeURIComponent(name)}`);
       } else if (url.pathname === '/status') {
         const info = await axios.get(`/api/status_info?code=${code}&name=${name}`);
         currentView.value = {

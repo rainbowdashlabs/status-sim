@@ -10,7 +10,8 @@ from models import (
     LeitstelleData, Connection, Notice,
     MessageRequest, TargetRequest, NoticeRequest,
     NoteRequest, StatusRequest, LeitstelleCreateRequest, ChatMessage,
-    ScenarioStartRequest, ChecklistUpdateRequest, ChecklistState
+    ScenarioStartRequest, ChecklistUpdateRequest, ChecklistState,
+    ClaimRequest, ChannelRequest
 )  # type: ignore
 from logging_conf import get_logger  # type: ignore
 from scenario_models import Scenario, FunkEntry  # type: ignore
@@ -232,6 +233,12 @@ async def websocket_endpoint(websocket: WebSocket, code: str, name: str = None):
                         await manager.broadcast_status(admin_code)
                     elif msg_type == "toggle_talking_to_sf":
                         connection.talking_to_sf = not connection.talking_to_sf
+                        if not connection.talking_to_sf:
+                            connection.radio_channel = None
+                        await manager.broadcast_status(admin_code)
+                    elif msg_type == "set_channel":
+                        channel = json_data.get("value")
+                        connection.radio_channel = channel if channel != "" else None
                         await manager.broadcast_status(admin_code)
             except json.JSONDecodeError:
                 if data.startswith("status:"):
@@ -249,6 +256,12 @@ async def websocket_endpoint(websocket: WebSocket, code: str, name: str = None):
                     await manager.broadcast_status(admin_code)
                 elif data == "toggle_talking_to_sf":
                     connection.talking_to_sf = not connection.talking_to_sf
+                    if not connection.talking_to_sf:
+                        connection.radio_channel = None
+                    await manager.broadcast_status(admin_code)
+                elif data.startswith("set_channel:"):
+                    channel = data.split(":", 1)[1]
+                    connection.radio_channel = channel if channel != "" else None
                     await manager.broadcast_status(admin_code)
                 elif data == "heartbeat":
                     connection.last_update = time.time()
@@ -392,7 +405,23 @@ async def send_notice(code: str, request: NoticeRequest):
     if manager.leitstellen[admin_code].staffelfuehrer_code != sf_code:
         return {"status": "error", "message": "Unauthorized"}
     
-    manager.leitstellen[admin_code].notices[request.target_name] = Notice(text=request.text, status="pending")
+    ls = manager.leitstellen[admin_code]
+    
+    # Verify that the vehicle is claimed by this SF
+    target_conn = next((c for c in ls.connections if c.name == request.target_name), None)
+    if not target_conn:
+        return {"status": "error", "message": "Vehicle not found"}
+    
+    if target_conn.claimed_by != request.sf_name:
+        return {"status": "error", "message": "You must claim the vehicle before requesting it"}
+
+    # If sf_name is provided, find their channel and set it on the target connection
+    if request.sf_name:
+        sf_conn = next((c for c in ls.connections if c.name == request.sf_name and c.is_staffelfuehrer), None)
+        if sf_conn:
+            target_conn.radio_channel = sf_conn.radio_channel
+
+    ls.notices[request.target_name] = Notice(text=request.text, status="pending")
     await manager.broadcast_status(admin_code)
     return {"status": "success"}
 
@@ -448,6 +477,36 @@ async def update_note(code: str, request: NoteRequest):
         manager.leitstellen[admin_code].notes[request.target_name] = request.note
     await manager.broadcast_status(admin_code)
     return {"status": "success"}
+
+@router.post("/api/staffelfuehrer/{code}/claim")
+async def claim_vehicle(code: str, request: ClaimRequest):
+    sf_code = code.upper()
+    if sf_code not in manager.code_to_admin:
+        return {"status": "error", "message": "Invalid code"}
+    admin_code = manager.code_to_admin[sf_code]
+    ls = manager.leitstellen[admin_code]
+    for c in ls.connections:
+        if c.name == request.target_name:
+            if c.claimed_by and c.claimed_by != request.sf_name:
+                return {"status": "error", "message": "Vehicle already claimed by someone else"}
+            c.claimed_by = request.sf_name
+            await manager.broadcast_status(admin_code)
+            return {"status": "success"}
+    return {"status": "error", "message": "Vehicle not found"}
+
+@router.post("/api/staffelfuehrer/{code}/unclaim")
+async def unclaim_vehicle(code: str, request: TargetRequest):
+    sf_code = code.upper()
+    if sf_code not in manager.code_to_admin:
+        return {"status": "error", "message": "Invalid code"}
+    admin_code = manager.code_to_admin[sf_code]
+    ls = manager.leitstellen[admin_code]
+    for c in ls.connections:
+        if c.name == request.target_name:
+            c.claimed_by = None
+            await manager.broadcast_status(admin_code)
+            return {"status": "success"}
+    return {"status": "error", "message": "Vehicle not found"}
 
 @router.post("/api/leitstelle/{code}/set_status")
 async def set_status(code: str, request: StatusRequest):
@@ -529,8 +588,8 @@ async def start_scenario(code: str, request: ScenarioStartRequest):
         return {"status": "error", "message": "Szenario fehlerhaft"}
 
     # Wir generieren die Funksprüche und speichern sie im aktiven Szenario
-    # Wir übergeben ls="Leitstelle" und fk=target_name
-    funksprueche = scenario_obj.generate_funksprueche(fk=request.target_name, ls="Leitstelle", start_enr=1)
+    # Wir übergeben ls=ls.name und fk=target_name
+    funksprueche = scenario_obj.generate_funksprueche(fk=request.target_name, ls=ls.name, start_enr=1)
     
     scenario_data = scenario_obj.model_dump()
     # Wir fügen die generierten Funksprüche hinzu, damit das Frontend sie anzeigen kann
@@ -623,8 +682,8 @@ async def next_scenario(code: str, request: TargetRequest):
         logger.error(f"Fehler beim Laden des Szenarios {chosen_name}: {e}")
         return {"status": "error", "message": f"Szenario fehlerhaft: {chosen_name}"}
 
-    # Kontext: Fahrzeugkennung = angefragtes Fahrzeug, LS Name deutsch
-    funke = scenario.generate_funksprueche(fk=vehicle_name, ls="Leitstelle", start_enr=1)
+    # Kontext: Fahrzeugkennung = angefragtes Fahrzeug, LS Name aus Leitstellen-Daten
+    funke = scenario.generate_funksprueche(fk=vehicle_name, ls=ls.name, start_enr=1)
 
     # Als benutzt markieren
     ls.used_scenarios.setdefault(vehicle_name, []).append(chosen_name)

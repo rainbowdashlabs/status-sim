@@ -3,7 +3,7 @@
   "beschreibung": "Großer Ast auf PKW gestürzt, Person im Fahrzeug eingeschlossen.",
   "einsaetze": [
     {
-      "stichwort": "TH 2 - P-klemmt",
+      "stichwort": "TH 2",
       "adresse": "Waldstraße 50",
       "ortsteil": "Außenbezirk",
       "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}],

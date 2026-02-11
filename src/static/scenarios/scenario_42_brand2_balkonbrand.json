@@ -1,0 +1,30 @@
+{
+  "name": "Brand 2 - Balkonbrand",
+  "beschreibung": "Brand auf Balkon im 4. OG, droht auf Wohnung überzugreifen.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Turmstraße 20",
+      "ortsteil": "Mitte",
+      "einheiten": [{"typ": "LHF", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "FD", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Balkonbrand im 4. OG, 1 C-Rohr über Drehleiter im Einsatz."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, 2 PA",
+            "beschreibung": "Balkonmöbel und Markise gelöscht, kein Brandüberschlag ins Gebäude.",
+            "uebergabe": "Einsatzstelle an Polizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

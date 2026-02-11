@@ -1,0 +1,35 @@
+{
+  "name": "Brand 3 - Lagerhallenbrand Groß",
+  "beschreibung": "Vollbrand einer Lagerhalle in einem Industriegebiet.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 3",
+      "adresse": "Industriestraße 80",
+      "ortsteil": "Südost",
+      "einheiten": [{"typ": "LHF", "anzahl": 2}, {"typ": "DLK", "anzahl": 1}, {"typ": "FD", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Lagerhalle ca. 50x20m in Vollbrand, massive Riegelstellung eingeleitet."
+        },
+        {
+          "typ": "nachalarmierung",
+          "stichwort": "Brand 4",
+          "begruendung": "Umfangreiche Wasserförderung über lange Wegstrecke erforderlich"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "4 C-Rohre, 2 B-Rohre, 18 PA",
+            "beschreibung": "Brand unter Kontrolle, Einsturzgefahr der Stahlkonstruktion.",
+            "uebergabe": "Einsatzstelle an Werkleiter übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

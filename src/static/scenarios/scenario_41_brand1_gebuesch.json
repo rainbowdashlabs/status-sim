@@ -1,0 +1,30 @@
+{
+  "name": "Brand 1 - Brennendes Gebüsch",
+  "beschreibung": "Kleinerer Flächenbrand an Bahndamm.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Gleisdreieck",
+      "ortsteil": "Ost",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Ca. 10qm Gebüsch brennen, 1 C-Rohr vorgenommen."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr",
+            "beschreibung": "Böschungsbrand gelöscht.",
+            "uebergabe": "Einsatzstelle an Notfallmanager Bahn übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

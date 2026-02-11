@@ -1,0 +1,30 @@
+{
+  "name": "Brand 1 - Pkw-Brand",
+  "beschreibung": "Brennender Pkw am Straßenrand.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Kurfürstendamm 50",
+      "ortsteil": "Süd",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Pkw im Frontbereich in Vollbrand, 1 C-Rohr vorgenommen."
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, 2 PA",
+            "beschreibung": "Brand im Motorraum gelöscht.",
+            "uebergabe": "Einsatzstelle an Polizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

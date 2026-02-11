@@ -1,0 +1,25 @@
+{
+  "name": "TH 1 - Türöffnung",
+  "beschreibung": "Hilflose Person hinter verschlossener Wohnungstür.",
+  "einsaetze": [
+    {
+      "stichwort": "TH 1",
+      "adresse": "Goethestraße 4",
+      "ortsteil": "Mitte",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "Einsatz beendet",
+            "beschreibung": "Tür mit Schaden geöffnet, Person wohlauf.",
+            "uebergabe": "Einsatzstelle an Mieter und Polizei übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}
