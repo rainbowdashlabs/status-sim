@@ -68,7 +68,7 @@ const unclaimVehicle = async (carName: string) => {
   });
 };
 
-const connections = computed(() => status.value?.connections || []);
+const connections = computed(() => [...(status.value?.connections || [])].sort((a, b) => a.last_activity - b.last_activity));
 const openCar = ref<string | null>(null);
 
 const sendNotice = async (carName: string) => {
@@ -97,6 +97,10 @@ const updateChecklistState = async (carName: string, state: any) => {
 };
 
 const getNotice = (name: string) => status.value?.notices[name];
+
+const cleanNextTodo = (todo: string) => {
+  return todo.replace(/<time>/g, '');
+};
 </script>
 
 <template>
@@ -148,6 +152,9 @@ const getNotice = (name: string) => status.value?.notices[name];
             <div class="flex items-center gap-4">
               <div class="flex flex-col">
                 <span class="font-bold text-lg min-w-[120px]">{{ car.name }}</span>
+                <div v-if="car.next_todo" class="bg-gray-800 border border-gray-700 px-2 py-0.5 rounded text-[10px] text-gray-300" :title="car.next_todo">
+                   <span class="text-primary-light font-bold">TODO:</span> {{ car.next_todo }}
+                </div>
                 <div v-if="car.claimed_by" class="text-[10px] text-primary-light uppercase tracking-tighter">
                   Übernommen von: {{ car.claimed_by }}
                 </div>

@@ -19,6 +19,8 @@ export interface VehicleStatus {
   radio_channel: string | null;
   claimed_by: string | null;
   active_scenario: any | null;
+  next_todo: string | null;
+  last_activity: number;
   checklist_state: {
     expanded_einsaetze: Record<string, boolean>;
     expanded_schritte: Record<string, boolean>;

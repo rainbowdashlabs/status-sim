@@ -29,7 +29,7 @@ const vehiclesWithTalkingState = computed(() => {
   return (status.value?.connections || []).map((car) => ({
     ...car,
     talking_to_sf: car.talking_to_sf || notices[car.name]?.status === 'confirmed'
-  }));
+  })).sort((a, b) => a.last_activity - b.last_activity);
 });
 
 const blitzVehicles = computed(() => vehiclesWithTalkingState.value.filter(c => c.special === '0'));

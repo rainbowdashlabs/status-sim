@@ -202,6 +202,7 @@ async def websocket_endpoint(websocket: WebSocket, code: str, name: str = None):
             name=name,
             last_update=time.time(),
             last_status_update=time.time(),
+            last_activity=time.time(),
             is_staffelfuehrer=is_staffelfuehrer,
             is_leitstelle=is_leitstelle
         )
@@ -630,6 +631,20 @@ async def update_checklist_state(code: str, request: ChecklistUpdateRequest):
         return {"status": "error", "message": "Leitstelle nicht gefunden"}
     
     ls = manager.leitstellen[admin_code]
+    
+    # Check if anything was checked to update last_activity
+    old_state = ls.checklist_states.get(request.target_name)
+    if old_state:
+        old_checked = old_state.checked_entries
+        new_checked = request.state.checked_entries
+        # If any entry in new_checked is True and was not True in old_checked
+        newly_checked = any(val and not old_checked.get(key) for key, val in new_checked.items())
+        if newly_checked:
+            for conn in ls.connections:
+                if conn.name == request.target_name:
+                    conn.last_activity = time.time()
+                    break
+
     ls.checklist_states[request.target_name] = request.state
     await manager.broadcast_status(admin_code)
     return {"status": "success"}
@@ -643,6 +658,19 @@ async def update_checklist_state_sf(code: str, request: ChecklistUpdateRequest):
     if not admin_code or admin_code not in manager.leitstellen:
         return {"status": "error", "message": "Leitstelle nicht gefunden"}
     ls = manager.leitstellen[admin_code]
+
+    # Check if anything was checked to update last_activity
+    old_state = ls.checklist_states.get(request.target_name)
+    if old_state:
+        old_checked = old_state.checked_entries
+        new_checked = request.state.checked_entries
+        newly_checked = any(val and not old_checked.get(key) for key, val in new_checked.items())
+        if newly_checked:
+            for conn in ls.connections:
+                if conn.name == request.target_name:
+                    conn.last_activity = time.time()
+                    break
+
     ls.checklist_states[request.target_name] = request.state
     await manager.broadcast_status(admin_code)
     return {"status": "success"}
@@ -670,9 +698,9 @@ async def next_scenario(code: str, request: TargetRequest):
     if not candidates:
         return {"status": "error", "message": "Keine unbenutzten Szenarien mehr verfügbar"}
 
-    # Deterministische Auswahl: alphabetisch erstes unbenutztes Szenario
-    candidates.sort()
-    chosen_name = candidates[0]
+    # Zufällige Auswahl aus den verfügbaren Kandidaten
+    import random
+    chosen_name = random.choice(candidates)
     raw = ls.scenarios[chosen_name]
 
     # Parse zu Scenario und generiere Funksprüche

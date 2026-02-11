@@ -71,6 +71,7 @@ class Connection(BaseModel):
     talking_to_sf: bool = False
     radio_channel: Optional[str] = None
     claimed_by: Optional[str] = None
+    last_activity: float
 
     class Config:
         arbitrary_types_allowed = True
@@ -93,6 +94,8 @@ class VehicleStatus(BaseModel):
     claimed_by: Optional[str] = None
     active_scenario: Optional[dict] = None
     checklist_state: Optional[ChecklistState] = None
+    next_todo: Optional[str] = None
+    last_activity: float
 
 class StatusUpdate(BaseModel):
     type: str = "status_update"

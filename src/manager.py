@@ -16,8 +16,45 @@ class ConnectionManager:
             return
         
         ls = self.leitstellen[admin_code]
-        vehicle_statuses = [
-            VehicleStatus(
+        vehicle_statuses = []
+        for c in ls.connections:
+            if c.is_staffelfuehrer or c.is_leitstelle:
+                continue
+            
+            # Find next todo
+            next_todo = None
+            active_scen = ls.active_scenarios.get(c.name)
+            checklist = ls.checklist_states.get(c.name)
+            if active_scen and checklist:
+                entries = active_scen.get("generated_entries", [])
+                checked = checklist.checked_entries
+                # ScenarioChecklist.vue logic for keys: `${eIdx}-${sIdx}-${fIdx}`
+                # entries are tagged with [[Ei]][[Sj]] in message
+                for i, entry in enumerate(entries):
+                    msg = entry.get("message", "")
+                    # Extract E and S from [[E0]][[S0]]
+                    if msg.startswith("[[E"):
+                        end_e = msg.find("]]", 3)
+                        e_part = msg[3:end_e]
+                        s_start = msg.find("[[S", end_e)
+                        end_s = msg.find("]]", s_start + 3)
+                        s_part = msg[s_start+3:end_s]
+                        
+                        # Find the index of this entry within its step
+                        # We need to find how many entries with same prefix came before
+                        prefix = msg[:end_s+2]
+                        f_idx = 0
+                        for prev_entry in entries[:i]:
+                            if prev_entry.get("message", "").startswith(prefix):
+                                f_idx += 1
+                        
+                        key = f"{e_part}-{s_part}-{f_idx}"
+                        if not checked.get(key):
+                            if entry.get("actor") in ["LS", "SF"]:
+                                next_todo = entry.get("actor")
+                            break
+
+            vehicle_statuses.append(VehicleStatus(
                 name=c.name,
                 status=c.status,
                 special=c.special,
@@ -33,10 +70,11 @@ class ConnectionManager:
                 talking_to_sf=c.talking_to_sf,
                 radio_channel=c.radio_channel,
                 claimed_by=c.claimed_by,
-                active_scenario=ls.active_scenarios.get(c.name),
-                checklist_state=ls.checklist_states.get(c.name)
-            ) for c in ls.connections if not c.is_staffelfuehrer and not c.is_leitstelle
-        ]
+                active_scenario=active_scen,
+                checklist_state=checklist,
+                next_todo=next_todo,
+                last_activity=c.last_activity
+            ))
         
         status_update = StatusUpdate(
             connections=vehicle_statuses,

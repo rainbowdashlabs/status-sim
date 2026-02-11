@@ -34,15 +34,8 @@ const clearKurzstatus = async () => {
 };
 
 const startScenario = async () => {
-  // Für die Demo wählen wir einfach das erste verfügbare Szenario
-  // In einer echten App gäbe es ein Dropdown.
-  const response = await axios.get(`/api/leitstelle/${props.adminCode}/scenarios`);
-  if (response.data.scenarios && response.data.scenarios.length > 0) {
-    await axios.post(`/api/leitstelle/${props.adminCode}/scenario/start`, {
-      target_name: props.car.name,
-      scenario_name: response.data.scenarios[0].name
-    });
-  }
+  // Nächstes unbenutztes Szenario vom Backend auswählen lassen
+  await newEinsatz();
 };
 
 const discardScenario = async () => {
@@ -75,12 +68,14 @@ const newEinsatz = async () => {
   } catch (e) {
     // Fallback unten
   }
-  // Fallback: Liste laden und erstes Szenario starten
+  // Fallback: Liste laden und zufälliges Szenario starten
   const response = await axios.get(`/api/leitstelle/${props.adminCode}/scenarios`);
   if (response.data.scenarios && response.data.scenarios.length > 0) {
+    const scenarios = response.data.scenarios;
+    const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
     await axios.post(`/api/leitstelle/${props.adminCode}/scenario/start`, {
       target_name: props.car.name,
-      scenario_name: response.data.scenarios[0].name
+      scenario_name: randomScenario.name
     });
   }
 };
@@ -101,6 +96,10 @@ const updateChecklistState = async (state: any) => {
     state: state
   });
 };
+
+const cleanNextTodo = (todo: string) => {
+  return todo.replace(/<time>/g, '');
+};
 </script>
 
 <template>
@@ -112,6 +111,10 @@ const updateChecklistState = async (state: any) => {
       <div class="flex items-center gap-2.5">
         <StatusBadge :status="car.status" />
         <span class="font-bold whitespace-nowrap overflow-hidden text-ellipsis max-w-[150px]" :title="car.name">{{ car.name }}</span>
+
+        <div v-if="car.next_todo" class="bg-gray-800 border border-gray-700 px-2 py-0.5 rounded text-xs text-gray-300 font-bold" :title="car.next_todo">
+          {{ car.next_todo }}
+        </div>
         
         <div v-if="car.kurzstatus" class="text-[0.85rem] bg-info/10 p-1.5 px-2.5 rounded flex gap-2.5 items-center whitespace-nowrap">
           <span class="font-bold text-info">K:</span>
