@@ -96,10 +96,6 @@ const updateChecklistState = async (state: any) => {
     state: state
   });
 };
-
-const cleanNextTodo = (todo: string) => {
-  return todo.replace(/<time>/g, '');
-};
 </script>
 
 <template>

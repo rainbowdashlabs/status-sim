@@ -97,10 +97,6 @@ const updateChecklistState = async (carName: string, state: any) => {
 };
 
 const getNotice = (name: string) => status.value?.notices[name];
-
-const cleanNextTodo = (todo: string) => {
-  return todo.replace(/<time>/g, '');
-};
 </script>
 
 <template>
