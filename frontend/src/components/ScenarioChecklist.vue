@@ -51,14 +51,6 @@ const progress = computed(() => {
   const entries = props.scenario.generated_entries || [];
   if (entries.length === 0) return { done: 0, total: 0, percent: 0 };
   
-  let done = 0;
-  entries.forEach((entry: any, idx: number) => {
-    // We need to reconstruct the key used in checkedEntries
-    // The keys are `${eIdx}-${sIdx}-${fIdx}`
-    // But we don't easily have eIdx, sIdx, fIdx here from the flat list.
-    // Wait, let's look at how getFunkspruecheForSchritt works.
-  });
-  
   // Re-calculating based on checkedEntries keys is easier
   const doneCount = Object.values(checkedEntries.value).filter(v => v).length;
   const totalCount = entries.length;
@@ -109,7 +101,7 @@ const markAllAsDone = (eIdx: any, sIdx: any) => {
   const funksprueche = getFunkspruecheForSchritt(eIdx, sIdx);
   const next = { ...checkedEntries.value };
   
-  funksprueche.forEach((_, fIdx) => {
+  funksprueche.forEach((_: any, fIdx: number) => {
     const key = `${e}-${s}-${fIdx}`;
     next[key] = true;
   });
@@ -167,7 +159,7 @@ const getSchrittProgress = (eIdx: any, sIdx: any) => {
   if (funksprueche.length === 0) return { done: 0, total: 0 };
   
   let done = 0;
-  funksprueche.forEach((_, fIdx) => {
+  funksprueche.forEach((_: any, fIdx: number) => {
     if (checkedEntries.value[`${e}-${s}-${fIdx}`]) {
       done++;
     }
