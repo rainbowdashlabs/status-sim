@@ -168,7 +168,7 @@ const getNotice = (name: string) => status.value?.notices[name];
                    :class="getNotice(car.name)?.status === 'confirmed' ? 'bg-success/10 border border-success text-success' : 'bg-warning/10 border border-warning text-warning'">
                 <span>{{ getNotice(car.name)?.status === 'confirmed' ? 'Spricht' : 'Angef.' }}</span>
                 <button v-if="getNotice(car.name)?.status === 'confirmed'" @click.stop="ackNotice(car.name)"
-                        class="ml-2 bg-success text-white p-0.5 px-2 rounded hover:brightness-110">OK
+                        class="ml-2 bg-success text-white p-0.5 px-2 rounded hover:brightness-110">Fertig
                 </button>
               </div>
 
