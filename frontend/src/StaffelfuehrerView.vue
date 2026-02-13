@@ -27,6 +27,7 @@ const onMessage = (data: any) => {
 const {isConnected, send} = useWebSocket(`/ws/${props.sfCode}?name=${encodeURIComponent(sfName.value)}`, onMessage);
 
 onMounted(() => {
+  document.title = `Staffelführer: ${sfName.value} - Funk Simulator`;
   if (radioChannel.value) {
     send(JSON.stringify({type: 'set_channel', value: radioChannel.value}));
   }

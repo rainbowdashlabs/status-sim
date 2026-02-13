@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import { useWebSocket } from './composables/useWebSocket';
 import type { StatusUpdate } from './composables/useWebSocket';
@@ -23,6 +23,10 @@ const onMessage = (data: any) => {
 };
 
 const { isConnected } = useWebSocket(`/ws/${props.adminCode}`, onMessage);
+
+onMounted(() => {
+  document.title = `Leitstelle: ${props.leitstelleName} - Funk Simulator`;
+});
 
 const vehiclesWithTalkingState = computed(() => {
   const notices = status.value?.notices ?? {};

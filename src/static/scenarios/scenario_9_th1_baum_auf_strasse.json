@@ -19,25 +19,16 @@
             "beschreibung": "Baum zerkleinert und von der Fahrbahn geräumt.",
             "uebergabe": "Einsatzstelle an Bauhof übergeben"
           }
-        }
-      ]
-    },
-    {
-      "stichwort": "RD1B",
-      "adresse": "Marktplatz 8",
-      "ortsteil": "Mitte",
-      "einheiten": [
+        },
         {
-          "typ": "RTW",
-          "anzahl": 1
-        }
-      ],
-      "schritte": [
-        {
-          "typ": "neue_taetigkeit_mit_fzn",
+          "typ": "neue_taetigkeit_mit_fzn_status_1",
           "fahrzeuge": [
             {
               "typ": "RTW",
+              "anzahl": 1
+            },
+            {
+              "typ": "NEF",
               "anzahl": 1
             }
           ],
@@ -45,10 +36,15 @@
           "sonderrechte": true,
           "adresse": "Marktplatz 8",
           "ortsteil": "Mitte"
-        },
-        {
-          "typ": "ankommen"
-        },
+        }
+      ]
+    },
+    {
+      "stichwort": "RD1C",
+      "adresse": "Marktplatz 8",
+      "ortsteil": "Mitte",
+      "einheiten": [],
+      "schritte": [
         {
           "typ": "ohne_lagemeldung"
         }

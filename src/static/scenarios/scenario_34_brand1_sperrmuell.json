@@ -23,6 +23,19 @@
             "beschreibung": "Ca. 5 Kubikmeter Sperrmüll gelöscht.",
             "uebergabe": "Einsatzstelle an Polizei übergeben"
           }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn_status_1",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "brennende Hecke",
+          "sonderrechte": true,
+          "adresse": "Feldweg 19",
+          "ortsteil": "Süd"
         }
       ]
     },
@@ -38,24 +51,15 @@
       ],
       "schritte": [
         {
-          "typ": "neue_taetigkeit_mit_fzn",
-          "fahrzeuge": [
-            {
-              "typ": "LHF",
-              "anzahl": 1
-            }
-          ],
-          "ereignis": "brennende Hecke",
-          "sonderrechte": true,
-          "adresse": "Feldweg 19",
-          "ortsteil": "Süd"
-        },
-        {
-          "typ": "ankommen"
-        },
-        {
-          "typ": "ohne_lagemeldung"
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr",
+            "beschreibung": "10 Meter Hecke",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
         }
+
       ]
     }
   ]

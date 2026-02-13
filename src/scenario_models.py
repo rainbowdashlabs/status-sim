@@ -59,7 +59,7 @@ class Einheit(BaseModel):
         while len(names) < max(1, self.anzahl):
             names.add(self._generate_number())
         names = list(names)
-        names[0] = f"{self.typ} {names[0]}"
+        names[0] = f"{self._type_name()} {names[0]}"
         return names
 
 
@@ -663,16 +663,16 @@ class Einsatz(BaseModel):
         for e in self.einheiten:
             einheiten_namen.extend(e.generate_names())
         relevant = [n for n in einheiten_namen if n.startswith("ELW") or n.startswith("NEF")]
-        zusatz = f" zusammen mit {', '.join(relevant)}" if relevant else ""
-        zusatz_voll = f" zusammen mit {', '.join(einheiten_namen)}"
+        zusatz = f" {', '.join(relevant)}" if relevant else ""
+        zusatz_voll = f" {', '.join(einheiten_namen)}" if einheiten_namen else ""
         enr_str = self.einsatznummer or ctx.next_enr()
         return [
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} mit Blitz, kommen."),
             FunkEntry(actor="FZ", message=f"Hier Florian {ctx.fk}, kommen."),
             FunkEntry(actor="LS",
-                      message=f"Alarm für {zusatz_voll} {self.stichwort}, {self.adresse}, {self.ortsteil} Einsatznummer {enr_str} Alarmierungszeit <time>, Quittung kommen."),
+                      message=f"Alarm für {ctx.fk} {zusatz_voll} {self.stichwort}, {self.adresse}, {self.ortsteil} Einsatznummer {enr_str} Alarmierungszeit <time>, Quittung kommen."),
             FunkEntry(actor="FZ",
-                      message=f"Einsatznummer {enr_str} {self.stichwort} in der {self.adresse} in {self.ortsteil}{zusatz}, kommen."),
+                      message=f"Einsatznummer {enr_str} {self.stichwort} in der {self.adresse} in {self.ortsteil} {zusatz}, kommen."),
             FunkEntry(actor="LS", message=f"So richtig, {ctx.ls} <time> Ende."),
             FunkEntry(actor="FZ", status="3"),
             FunkEntry(actor="FZ", message=f"Staffelführer {ctx.fk} von Melder {ctx.fk} kommen."),

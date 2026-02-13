@@ -22,6 +22,7 @@ const generateRandomFunkrufname = () => {
 };
 
 onMounted(() => {
+  document.title = 'Funk Simulator';
   userName.value = generateRandomFunkrufname();
   
   const urlParams = new URLSearchParams(window.location.search);
@@ -64,7 +65,7 @@ const joinLeitstelle = () => {
 <template>
   <div class="max-w-[1200px] min-w-[320px] mx-auto p-5 flex flex-col min-h-screen">
     <div class="flex-1">
-      <h1 class="text-primary uppercase tracking-widest text-2xl mb-8 text-center font-bold">Leitstelle Simulator</h1>
+      <h1 class="text-primary uppercase tracking-widest text-2xl mb-8 text-center font-bold">Funk Simulator</h1>
 
       <div class="bg-card rounded-lg p-5 mb-8 shadow-lg border border-gray-800 max-w-md mx-auto">
         <h2 class="text-primary uppercase tracking-widest text-lg mb-5 font-bold">Neue Leitstelle erstellen</h2>

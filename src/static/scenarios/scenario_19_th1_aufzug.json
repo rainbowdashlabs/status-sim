@@ -26,7 +26,7 @@
           }
         },
         {
-          "typ": "neue_taetigkeit_mit_fzn",
+          "typ": "neue_taetigkeit_mit_fzn_status_1",
           "fahrzeuge": [],
           "ereignis": "Ölspur auf Fahrbahn",
           "sonderrechte": true,
@@ -40,10 +40,7 @@
       "adresse": "Bahnhofstraße 15",
       "ortsteil": "Süd",
       "einheiten": [
-        {
-          "typ": "LHF",
-          "anzahl": 1
-        }
+
       ],
       "schritte": [
         {

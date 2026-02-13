@@ -25,7 +25,7 @@
           }
         },
         {
-          "typ": "neue_taetigkeit_mit_fzn",
+          "typ": "neue_taetigkeit_mit_fzn_status_1",
           "fahrzeuge": [
             {
               "typ": "RTW",
@@ -44,7 +44,6 @@
       "adresse": "Hauptstraße 88",
       "ortsteil": "Mitte",
       "einheiten": [
-
       ],
       "schritte": [
         {

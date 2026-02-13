@@ -19,22 +19,9 @@
             "beschreibung": "Haupthahn geschlossen, Wasser mittels Wassersauger aufgenommen.",
             "uebergabe": "Einsatzstelle an Mieter übergeben"
           }
-        }
-      ]
-    },
-    {
-      "stichwort": "RD1B",
-      "adresse": "Kirchplatz 3",
-      "ortsteil": "Nord",
-      "einheiten": [
+        },
         {
-          "typ": "RTW",
-          "anzahl": 1
-        }
-      ],
-      "schritte": [
-        {
-          "typ": "neue_taetigkeit_mit_fzn",
+          "typ": "neue_taetigkeit_mit_fzn_status_1",
           "fahrzeuge": [
             {
               "typ": "RTW",
@@ -45,10 +32,17 @@
           "sonderrechte": true,
           "adresse": "Kirchplatz 3",
           "ortsteil": "Nord"
-        },
-        {
-          "typ": "ankommen"
-        },
+        }
+      ]
+    },
+    {
+      "stichwort": "RD1B",
+      "adresse": "Kirchplatz 3",
+      "ortsteil": "Nord",
+      "einheiten": [
+
+      ],
+      "schritte": [
         {
           "typ": "ohne_lagemeldung"
         }

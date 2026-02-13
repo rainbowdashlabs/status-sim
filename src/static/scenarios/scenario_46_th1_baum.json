@@ -18,6 +18,19 @@
             "beschreibung": "Baum zerteilt und beiseite geräumt.",
             "uebergabe": "Einsatzstelle an Grünflächenamt übergeben"
           }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn_status_1",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "brennender Container",
+          "sonderrechte": true,
+          "adresse": "Industriestraße 77",
+          "ortsteil": "Ost"
         }
       ]
     },
@@ -33,24 +46,15 @@
       ],
       "schritte": [
         {
-          "typ": "neue_taetigkeit_mit_fzn",
-          "fahrzeuge": [
-            {
-              "typ": "LHF",
-              "anzahl": 1
-            }
-          ],
-          "ereignis": "brennender Container",
-          "sonderrechte": true,
-          "adresse": "Industriestraße 77",
-          "ortsteil": "Ost"
-        },
-        {
-          "typ": "ankommen"
-        },
-        {
-          "typ": "ohne_lagemeldung"
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, 2 PA",
+            "beschreibung": "1 Müco",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
         }
+
       ]
     }
   ]

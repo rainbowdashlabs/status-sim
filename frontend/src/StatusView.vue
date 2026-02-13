@@ -130,6 +130,7 @@ const kurzstatusOptions = [
 ];
 
 onMounted(() => {
+  document.title = `Status: ${props.name} - Funk Simulator`;
   void loadChatHistory();
 });
 </script>
