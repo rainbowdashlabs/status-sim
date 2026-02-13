@@ -23,20 +23,7 @@
             "beschreibung": "Brand im Motorraum gelöscht.",
             "uebergabe": "Einsatzstelle an Polizei übergeben"
           }
-        }
-      ]
-    },
-    {
-      "stichwort": "RD1B",
-      "adresse": "Hauptstraße 88",
-      "ortsteil": "Mitte",
-      "einheiten": [
-        {
-          "typ": "RTW",
-          "anzahl": 1
-        }
-      ],
-      "schritte": [
+        },
         {
           "typ": "neue_taetigkeit_mit_fzn",
           "fahrzeuge": [
@@ -49,10 +36,17 @@
           "sonderrechte": true,
           "adresse": "Hauptstraße 88",
           "ortsteil": "Mitte"
-        },
-        {
-          "typ": "ankommen"
-        },
+        }
+      ]
+    },
+    {
+      "stichwort": "RD1B",
+      "adresse": "Hauptstraße 88",
+      "ortsteil": "Mitte",
+      "einheiten": [
+
+      ],
+      "schritte": [
         {
           "typ": "ohne_lagemeldung"
         }

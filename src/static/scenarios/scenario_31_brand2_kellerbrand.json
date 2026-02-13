@@ -32,6 +32,15 @@
             "beschreibung": "Brand in Kellerverschlag gelöscht, Treppenraum belüftet.",
             "uebergabe": "Einsatzstelle an Hausmeister übergeben"
           }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+          ],
+          "ereignis": "Vermutete Notlage",
+          "sonderrechte": true,
+          "adresse": "Ringstraße 42",
+          "ortsteil": "Nord"
         }
       ]
     },
@@ -40,30 +49,16 @@
       "adresse": "Ringstraße 42",
       "ortsteil": "Nord",
       "einheiten": [
-        {
-          "typ": "LHF",
-          "anzahl": 1
-        }
       ],
       "schritte": [
         {
-          "typ": "neue_taetigkeit_mit_fzn",
-          "fahrzeuge": [
-            {
-              "typ": "LHF",
-              "anzahl": 1
-            }
-          ],
-          "ereignis": "Türöffnung",
-          "sonderrechte": true,
-          "adresse": "Ringstraße 42",
-          "ortsteil": "Nord"
-        },
-        {
-          "typ": "ankommen"
-        },
-        {
-          "typ": "ohne_lagemeldung"
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Ziehfix",
+            "beschreibung": "Wohnungstür mit Schaden geöffnet, keine Person angetroffen",
+            "uebergabe": "Einsatzstelle an Polizei übergeben"
+          }
         }
       ]
     }

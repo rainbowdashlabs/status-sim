@@ -28,6 +28,44 @@
             "beschreibung": "Dachstuhlbrand, Brand auf Dachstuhl begrenzt.",
             "uebergabe": "Einsatzstelle an Eigentümer übergeben"
           }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            },
+            {
+              "typ": "ELWC",
+              "anzahl": 1
+            },
+            {
+              "typ": "DLK",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "Brand 2",
+          "sonderrechte": true,
+          "adresse": "Hauptstraße 156",
+          "ortsteil": "Neukölln"
+        }
+      ]
+    },
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Hauptstraße 156",
+      "ortsteil": "Neukölln",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "2 C-Rohre, 4 PA",
+            "beschreibung": "Wohnungsbrand, Küche ausgebrannt",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
         }
       ]
     }

@@ -28,6 +28,44 @@
             "beschreibung": "Ein PKW im Motorraum ausgebrannt.",
             "uebergabe": "Einsatzstelle an Pol übergeben"
           }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            },
+            {
+              "typ": "TLF",
+              "anzahl": 1
+            },
+            {
+              "typ": "ELWC",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "Brand 2",
+          "sonderrechte": true,
+          "adresse": "Lindenallee 23",
+          "ortsteil": "Spandau"
+        }
+      ]
+    },
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Lindenallee 23",
+      "ortsteil": "Spandau",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr, 2 PA",
+            "beschreibung": "Gartenlaube vollständig ausgebrannt",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
         }
       ]
     }

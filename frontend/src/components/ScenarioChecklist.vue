@@ -131,6 +131,7 @@ const getSchrittLabel = (einsatz: any, sIdx: number) => {
     case 'neue_taetigkeit_mit_fzn': return 'Neue Tätigkeit (FZN)';
     case 'neue_taetigkeit_ohne_fzn': return 'Neue Tätigkeit';
     case 'einsatzstellenkorrektur': return 'Einsatzstellenkorrektur';
+    case 'identische_einsatzstelle_anfrage': return 'Identische Einsatzstelle Anfrage';
     case 'ankommen': return 'Ankunft am Einsatzort';
     case 'kurzlagemeldung_fms': return 'Kurzlagemeldung FMS';
     case 'kurzlagemeldung': return 'Kurzlagemeldung';

@@ -13,6 +13,30 @@
         },
         {
           "typ": "ohne_lagemeldung"
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "RTW",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "Sturz vom Fahrrad",
+          "sonderrechte": true,
+          "adresse": "Mozartstraße 56",
+          "ortsteil": "Lichtenberg"
+        }
+      ]
+    },
+    {
+      "stichwort": "RD3B",
+      "adresse": "Mozartstraße 56",
+      "ortsteil": "Lichtenberg",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ohne_lagemeldung"
         }
       ]
     }

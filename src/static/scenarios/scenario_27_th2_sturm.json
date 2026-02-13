@@ -24,6 +24,35 @@
             "verletzte": "1 leichtverletzte Person an RTW",
             "uebergabe": "Einsatzstelle an Fahrzeughalter übergeben"
           }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "Wasserschaden Keller",
+          "sonderrechte": false,
+          "adresse": "Eichenallee 67",
+          "ortsteil": "Zehlendorf"
+        }
+      ]
+    },
+    {
+      "stichwort": "TH 1",
+      "adresse": "Eichenallee 67",
+      "ortsteil": "Zehlendorf",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "beschreibung": "Keller ausgepumpt, ca. 4000 Liter Wasser",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
         }
       ]
     }

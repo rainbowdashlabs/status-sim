@@ -24,10 +24,9 @@
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "(EstuK)",
+            "lage": "EstuK",
             "geraete": "1 C-Rohr, 4 PA",
             "beschreibung": "Kellerbrand. Mehrfamilienhaus, Keller voll ausgebrannt.",
-            "verletzte": "Keine Verletzten",
             "uebergabe": "Einsatzstelle an Anwohner übergeben"
           }
         }

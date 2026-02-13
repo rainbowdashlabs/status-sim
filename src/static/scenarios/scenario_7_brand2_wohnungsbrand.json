@@ -18,10 +18,9 @@
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Einsatzstelle unter Kontrolle (EstuK)",
+            "lage": "EstuK",
             "geraete": "1 C-Rohr, 4 PA, Drucklüfter",
             "beschreibung": "Wohnungsbrand, eine Wohnung vollständig ausgebrannt, keine Ausbreitung.",
-            "verletzte": "Keine Verletzten",
             "uebergabe": "Einsatzstelle an Polizei übergeben"
           }
         }

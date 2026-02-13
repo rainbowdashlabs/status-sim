@@ -22,6 +22,30 @@
         },
         {
           "typ": "ohne_lagemeldung"
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "RTW",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "bewusstlose Person",
+          "sonderrechte": true,
+          "adresse": "Bergmannstraße 78",
+          "ortsteil": "Charlottenburg"
+        }
+      ]
+    },
+    {
+      "stichwort": "RD 1",
+      "adresse": "Bergmannstraße 78",
+      "ortsteil": "Charlottenburg",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ohne_lagemeldung"
         }
       ]
     }

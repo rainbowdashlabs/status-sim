@@ -23,10 +23,37 @@
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Einsatz beendet",
+            "lage": "EstuK",
             "geraete": "Keine",
             "beschreibung": "Angebranntes Essen auf Herd, Wohnung quergelüftet.",
             "uebergabe": "Wohnung an Mieter übergeben"
+          }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+
+          ],
+          "ereignis": "Brand Mülltonne",
+          "sonderrechte": true,
+          "adresse": "Kastanienweg 89",
+          "ortsteil": "Pankow"
+        }
+      ]
+    },
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Kastanienweg 89",
+      "ortsteil": "Pankow",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr",
+            "beschreibung": "Mülltonne ausgebrannt, keine Gebäudeschäden",
+            "uebergabe": "Einsatzstelle an Anwohner übergeben"
           }
         }
       ]

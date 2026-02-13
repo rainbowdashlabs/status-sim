@@ -23,10 +23,9 @@
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Einsatz beendet",
+            "lage": "EstuK",
             "geraete": "Wassersauger",
             "beschreibung": "Haupthahn geschlossen, Wasser im EG mit Sauger aufgenommen.",
-            "verletzte": "Keine Verletzten",
             "uebergabe": "Einsatzstelle an Hauseigentümer übergeben"
           }
         }

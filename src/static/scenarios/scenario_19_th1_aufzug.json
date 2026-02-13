@@ -19,11 +19,19 @@
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Einsatz beendet",
+            "lage": "EstuK",
             "geraete": "Aufzugsschlüssel",
             "beschreibung": "Aufzug manuell ins Erdgeschoss gefahren, Person befreit.",
             "uebergabe": "Aufzug außer Betrieb genommen, Techniker informiert"
           }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [],
+          "ereignis": "Ölspur auf Fahrbahn",
+          "sonderrechte": true,
+          "adresse": "Bahnhofstraße 15",
+          "ortsteil": "Süd"
         }
       ]
     },
@@ -39,23 +47,13 @@
       ],
       "schritte": [
         {
-          "typ": "neue_taetigkeit_mit_fzn",
-          "fahrzeuge": [
-            {
-              "typ": "LHF",
-              "anzahl": 1
-            }
-          ],
-          "ereignis": "Ölspur auf Fahrbahn",
-          "sonderrechte": true,
-          "adresse": "Bahnhofstraße 15",
-          "ortsteil": "Süd"
-        },
-        {
-          "typ": "ankommen"
-        },
-        {
-          "typ": "ohne_lagemeldung"
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Bindemittel",
+            "beschreibung": "Ölspur ca. 50m abgestreut",
+            "uebergabe": "Einsatzstelle an Straßenreinigung übergeben"
+          }
         }
       ]
     }

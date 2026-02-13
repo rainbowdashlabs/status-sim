@@ -19,11 +19,21 @@
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Einsatz beendet",
+            "lage": "EstuK",
             "geraete": "Ziehfix",
             "beschreibung": "Wohnungstür schadenfrei geöffnet, Patient an RD übergeben.",
             "uebergabe": "Einsatzstelle an Polizei übergeben"
           }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+
+          ],
+          "ereignis": "brennender Mülleimer",
+          "sonderrechte": true,
+          "adresse": "Parkstraße 33",
+          "ortsteil": "West"
         }
       ]
     },
@@ -32,30 +42,16 @@
       "adresse": "Parkstraße 33",
       "ortsteil": "West",
       "einheiten": [
-        {
-          "typ": "LHF",
-          "anzahl": 1
-        }
       ],
       "schritte": [
         {
-          "typ": "neue_taetigkeit_mit_fzn",
-          "fahrzeuge": [
-            {
-              "typ": "LHF",
-              "anzahl": 1
-            }
-          ],
-          "ereignis": "brennender Mülleimer",
-          "sonderrechte": true,
-          "adresse": "Parkstraße 33",
-          "ortsteil": "West"
-        },
-        {
-          "typ": "ankommen"
-        },
-        {
-          "typ": "ohne_lagemeldung"
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Kübelspritze",
+            "beschreibung": "Mülleimer gelöscht",
+            "uebergabe": "Einsatzstelle an Anwohner übergeben"
+          }
         }
       ]
     }

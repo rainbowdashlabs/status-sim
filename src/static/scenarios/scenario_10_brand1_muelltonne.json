@@ -26,7 +26,32 @@
             "lage": "EstuK",
             "geraete": "1 C-Rohr",
             "beschreibung": "Eine 240l Mülltonne ausgebrannt, Fassade leicht verrußt.",
-            "verletzte": "Keine Verletzten",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+          ],
+          "ereignis": "Brand 1 - Müco",
+          "sonderrechte": true,
+          "adresse": "Wilhelmstraße 45",
+          "ortsteil": "Kreuzberg"
+        }
+      ]
+    },
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Wilhelmstraße 45",
+      "ortsteil": "Kreuzberg",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr",
+            "beschreibung": "Altpapiercontainer ausgebrannt",
             "uebergabe": "Einsatzstelle an Eigentümer übergeben"
           }
         }

@@ -28,6 +28,33 @@
             "beschreibung": "Defekte Gasleitung im Keller, Schieber geschlossen, Bereich belüftet.",
             "uebergabe": "Einsatzstelle an Gasversorger übergeben"
           }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+
+          ],
+          "ereignis": "Baum auf Straße",
+          "sonderrechte": false,
+          "adresse": "Rosenweg 34",
+          "ortsteil": "Steglitz"
+        }
+      ]
+    },
+    {
+      "stichwort": "TH 1",
+      "adresse": "Rosenweg 34",
+      "ortsteil": "Steglitz",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Motorsäge",
+            "beschreibung": "Baum zerkleinert und von Fahrbahn entfernt",
+            "uebergabe": "Einsatzstelle an Straßenreinigung übergeben"
+          }
         }
       ]
     }

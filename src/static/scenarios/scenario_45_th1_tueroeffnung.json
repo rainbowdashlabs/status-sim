@@ -14,9 +14,35 @@
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Einsatz beendet",
+            "lage": "EstuK",
             "beschreibung": "Tür mit Schaden geöffnet, Person wohlauf.",
             "uebergabe": "Einsatzstelle an Mieter und Polizei übergeben"
+          }
+        },
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+          ],
+          "ereignis": "Ölspur",
+          "sonderrechte": false,
+          "adresse": "Alexanderplatz 9",
+          "ortsteil": "Prenzlauer Berg"
+        }
+      ]
+    },
+    {
+      "stichwort": "TH 1",
+      "adresse": "Alexanderplatz 9",
+      "ortsteil": "Prenzlauer Berg",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "Bindemittel",
+            "beschreibung": "Ölspur ca. 30m abgestreut",
+            "uebergabe": "Einsatzstelle an Straßenreinigung übergeben"
           }
         }
       ]

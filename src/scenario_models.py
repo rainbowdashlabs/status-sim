@@ -215,7 +215,7 @@ class EigenunfallStatus1Schritt(BaseModel):
 class NeueTaetigkeitMitFznSchritt(BaseModel):
     """Neue Tätigkeit mit Fahrzeugnennung während der Anfahrt."""
     typ: Literal["neue_taetigkeit_mit_fzn"]
-    fahrzeuge: Optional[list[Einheit]]
+    fahrzeuge: Optional[list[Einheit]] = None
     ereignis: str  # z.B. "bewusstlose Person", "Brand"
     sonderrechte: Optional[bool] = True
     adresse: str  # Neue Adresse
@@ -256,7 +256,7 @@ class NeueTaetigkeitMitFznSchritt(BaseModel):
 class NeueTaetigkeitMitFznStatus1Schritt(BaseModel):
     """Neue Tätigkeit mit Fahrzeugnennung während der Anfahrt aus Status 1."""
     typ: Literal["neue_taetigkeit_mit_fzn_status_1"]
-    fahrzeuge: Optional[list[Einheit]]
+    fahrzeuge: Optional[list[Einheit]] = None
     sonderrechte: Optional[bool] = True
     ereignis: str
     adresse: str
@@ -319,9 +319,10 @@ class NeueTaetigkeitOhneFznSchritt(BaseModel):
 
 class IdentischeAdresse(BaseModel):
     """Eine Adresse bestehend aus Straße/Hausnummer und Ortsteil."""
-    adresse: str
-    ortsteil: str
-    identisch: bool
+    typ: Optional[str] = None  # Can be "ankommen" for special case
+    adresse: Optional[str] = None
+    ortsteil: Optional[str] = None
+    identisch: Optional[bool] = None
 
 class IdentischeEinsatzstelleAnfrageSchritt(BaseModel):
     """Nachfrage nach einer identischen Einsatzstelle."""
@@ -368,9 +369,15 @@ class IdentischeEinsatzstelleAnfrageSchritt(BaseModel):
             FunkEntry(actor="FZ", message=f"Staffelführer {ctx.fk} von Melder {ctx.fk} kommen."),
             FunkEntry(actor="SF", message=f"Hier Staffelführer {ctx.fk}, kommen."),
             FunkEntry(actor="FZ", message=f"{ls_mitteilung} Frage: Sind diese Meldungen identisch? Kommen."),
+            FunkEntry(actor="SF", message=f"Schaue nach, komme neu, kommen."),
+            FunkEntry(actor="FZ", message=f"So recht, Ende."),
+
+            FunkEntry(actor="SF", message=f"Melder {ctx.fk} von Staffelführer {ctx.fk} kommen."),
+            FunkEntry(actor="FZ", message=f"Hier Melder {ctx.fk}, kommen."),
             FunkEntry(actor="SF", message=f"{sf_antwort_identisch_str}, kommen."),
-            FunkEntry(actor="FZ", message=f"{sf_antwort_identisch_str} so richtig, Ende."),
-            
+            FunkEntry(actor="FZ", message=f"{sf_antwort_identisch_str}, kommen."),
+            FunkEntry(actor="SF", message=f"So recht, Ende."),
+
             # FZ meldet an LS zurück
             FunkEntry(actor="FZ", status="0"),
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} Sprechwunsch, kommen."),
@@ -504,7 +511,7 @@ class LagemeldungSchritt(BaseModel):
             FunkEntry(actor="FZ", message="Lage ist, kommen."),
             FunkEntry(actor="SF", message=f"{', '.join(teile_sf)}, kommen."),
             FunkEntry(actor="FZ", message=f"{', '.join(teile_sf)}, kommen."),
-            FunkEntry(actor="SF", message="So richtig, Ende.", status="5"),
+            FunkEntry(actor="SF", message="So richtig, Ende."),
             FunkEntry(actor="FZ", status="5"),
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} Sprechwunsch, kommen."),
             FunkEntry(actor="FZ", message="Mit Lagemeldung, kommen."),
@@ -602,7 +609,7 @@ class FehlalarmLagemeldungSchritt(BaseModel):
             FunkEntry(actor="FZ", message="Lage ist, kommen."),
             FunkEntry(actor="SF", message="Fehlalarm BMA, kommen."),
             FunkEntry(actor="FZ", message="Fehlalarm BMA, kommen."),
-            FunkEntry(actor="SF", message="So richtig, Ende.", status="5"),
+            FunkEntry(actor="SF", message="So richtig, Ende."),
             FunkEntry(actor="FZ", status="5"),
             FunkEntry(actor="LS", message=f"Florian {ctx.fk} Sprechwunsch, kommen."),
             FunkEntry(actor="FZ", message="Mit Lagemeldung, kommen."),
@@ -613,8 +620,8 @@ class FehlalarmLagemeldungSchritt(BaseModel):
             FunkEntry(actor="FZ", message=f"Staffelführer {ctx.fk} von Melder {ctx.fk} kommen."),
             FunkEntry(actor="SF", message=f"Hier Staffelführer {ctx.fk} von Melder {ctx.fk}, kommen."),
             FunkEntry(actor="FZ", message="Lagemeldung abgegeben, kommen."),
-            FunkEntry(actor="SF", message="Verstanden, wir wieder status 1 kommen.", status="1"),
-            FunkEntry(actor="FZ", message="Status 1 verstanden, Ende.", status="1"),
+            FunkEntry(actor="SF", message="Verstanden, wir wieder status 1 kommen."),
+            FunkEntry(actor="FZ", message="Status 1 verstanden, Ende."),
             FunkEntry(actor="FZ", status="1"),
         ]
 

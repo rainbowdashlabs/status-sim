@@ -14,10 +14,9 @@
         {
           "typ": "lagemeldung",
           "lagemeldung": {
-            "lage": "Gefahr beseitigt",
+            "lage": "EstuK",
             "geraete": "Motorkettensäge",
             "beschreibung": "Baum zerkleinert und von der Fahrbahn geräumt.",
-            "verletzte": "Keine Verletzten",
             "uebergabe": "Einsatzstelle an Bauhof übergeben"
           }
         }
