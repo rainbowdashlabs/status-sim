@@ -9,6 +9,11 @@
       "einheiten": [],
       "schritte": [
         {
+          "typ": "einsatzstellenkorrektur",
+          "adresse": "Kurze Gasse 4",
+          "ortsteil": "Mitte"
+        },
+        {
           "typ": "ankommen"
         },
         {

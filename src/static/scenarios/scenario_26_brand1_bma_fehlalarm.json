@@ -6,7 +6,12 @@
       "stichwort": "Brand 1 - BMA",
       "adresse": "Klinikweg 1",
       "ortsteil": "Nordost",
-      "einheiten": [{"typ": "LHF", "anzahl": 1}],
+      "einheiten": [
+        {
+          "typ": "LHF",
+          "anzahl": 1
+        }
+      ],
       "schritte": [
         {
           "typ": "ankommen"
@@ -17,6 +22,46 @@
         },
         {
           "typ": "fehlalarm_lagemeldung"
+        }
+      ]
+    },
+    {
+      "stichwort": "RD2",
+      "adresse": "Schulweg 7",
+      "ortsteil": "Ost",
+      "einheiten": [
+        {
+          "typ": "RTW",
+          "anzahl": 1
+        },
+        {
+          "typ": "NEF",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "RTW",
+              "anzahl": 1
+            },
+            {
+              "typ": "NEF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "gestürzte Person",
+          "sonderrechte": true,
+          "adresse": "Schulweg 7",
+          "ortsteil": "Ost"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
         }
       ]
     }

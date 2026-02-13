@@ -1,0 +1,46 @@
+{
+  "name": "Brand 2 - Balkonbrand",
+  "beschreibung": "Brand auf einem Balkon im 3. OG. Nachfrage nach identischer Einsatzstelle.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 2",
+      "adresse": "Kastanienallee 67",
+      "ortsteil": "Prenzlauer Berg",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "identische_einsatzstelle_anfrage",
+          "adressen": [
+            {
+              "adresse": "Kastanienallee 65",
+              "ortsteil": "Prenzlauer Berg",
+              "identisch": true
+            },
+            {
+              "adresse": "Kastanienallee 69",
+              "ortsteil": "Prenzlauer Berg",
+              "identisch": true
+            }
+          ],
+          "stichwort_typ": "Brand"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Balkonbrand 3. OG, Flammen aus Fenster, 1 C-Rohr über DLK"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr über DLK, 2 PA",
+            "beschreibung": "Balkonbrand 3. OG, Balkonmöbel vollständig ausgebrannt.",
+            "uebergabe": "Einsatzstelle an Hausverwaltung übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

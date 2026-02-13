@@ -1,0 +1,52 @@
+{
+  "name": "Brand 2 - Werkstattbrand",
+  "beschreibung": "Brand in einer KFZ-Werkstatt. Nachfrage nach identischer Einsatzstelle, Einsatzstellenkorrektur und Nachalarmierung.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 3",
+      "adresse": "Werkstraße 88",
+      "ortsteil": "Tempelhof",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 2}, {"typ": "DLK", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "identische_einsatzstelle_anfrage",
+          "adressen": [
+            {
+              "adresse": "Werkstraße 90",
+              "ortsteil": "Tempelhof",
+              "identisch": true
+            }
+          ],
+          "stichwort_typ": "Brand"
+        },
+        {
+          "typ": "einsatzstellenkorrektur",
+          "adresse": "Werkstraße 90",
+          "ortsteil": "Tempelhof"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Werkstatt ca. 30x15m in Vollbrand, starke Rauchentwicklung, Riegelstellung"
+        },
+        {
+          "typ": "nachalarmierung",
+          "stichwort": "Brand 4",
+          "fahrzeuge": [{"typ": "LHF", "anzahl": 2}, {"typ": "DLK", "anzahl": 1}, {"typ": "ELWB", "anzahl": 1}, {"typ": "ELWC", "anzahl": 1}],
+          "begruendung": "Drohende Brandausbreitung auf Nachbargebäude, erhöhter Kräftebedarf"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "5 C-Rohre, 2 Wenderohre über DLK, 14 PA",
+            "beschreibung": "Werkstatt vollständig ausgebrannt, Brandausbreitung verhindert.",
+            "uebergabe": "Einsatzstelle an Firmeninhaber übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

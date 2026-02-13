@@ -9,6 +9,11 @@
       "einheiten": [],
       "schritte": [
         {
+          "typ": "einsatzstellenkorrektur",
+          "adresse": "Goethestraße 47",
+          "ortsteil": "Mitte"
+        },
+        {
           "typ": "ankommen"
         },
         {

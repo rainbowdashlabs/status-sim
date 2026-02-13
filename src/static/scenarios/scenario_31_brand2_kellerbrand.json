@@ -6,7 +6,16 @@
       "stichwort": "Brand 2",
       "adresse": "Schillerstraße 15",
       "ortsteil": "Ost",
-      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 2}],
+      "einheiten": [
+        {
+          "typ": "FD",
+          "anzahl": 1
+        },
+        {
+          "typ": "LHF",
+          "anzahl": 2
+        }
+      ],
       "schritte": [
         {
           "typ": "ankommen"
@@ -23,6 +32,38 @@
             "beschreibung": "Brand in Kellerverschlag gelöscht, Treppenraum belüftet.",
             "uebergabe": "Einsatzstelle an Hausmeister übergeben"
           }
+        }
+      ]
+    },
+    {
+      "stichwort": "TH 1",
+      "adresse": "Ringstraße 42",
+      "ortsteil": "Nord",
+      "einheiten": [
+        {
+          "typ": "LHF",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "Türöffnung",
+          "sonderrechte": true,
+          "adresse": "Ringstraße 42",
+          "ortsteil": "Nord"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
         }
       ]
     }

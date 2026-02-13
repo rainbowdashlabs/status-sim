@@ -1,0 +1,47 @@
+{
+  "name": "Brand 4 - Mehrfamilienhausbrand",
+  "beschreibung": "Großbrand in einem Mehrfamilienhaus. Nachfrage nach identischer Einsatzstelle.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 4",
+      "adresse": "Hauptstraße 156",
+      "ortsteil": "Schöneberg",
+      "einheiten": [{"typ": "FD", "anzahl": 2}, {"typ": "LHF", "anzahl": 3}, {"typ": "DLK", "anzahl": 3}, {"typ": "RTW", "anzahl": 2}, {"typ": "ELWB", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Mehrfamilienhaus 5 Etagen in Vollbrand, mehrere Personen auf Balkonen, Menschenrettung läuft über DLK"
+        },
+        {
+          "typ": "nachalarmierung_fahrzeuge",
+          "fahrzeuge": [{"typ": "RTW", "anzahl": 3}],
+          "begruendung": "4 Verletzte an der Einsatzstelle"
+        },
+        {
+          "typ": "identische_einsatzstelle_anfrage",
+          "adressen": [
+            {
+              "adresse": "Hauptstraße 158",
+              "ortsteil": "Schöneberg",
+              "identisch": true
+            }
+          ],
+          "stichwort_typ": "Brand"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "6 C-Rohre, 3 Wenderohre über DLK, 18 PA",
+            "beschreibung": "Mehrfamilienhaus 5 Etagen, Dachstuhl und 4. OG vollständig ausgebrannt, 8 Personen über DLK gerettet.",
+            "verletzte": "5 verletzte Person(en) an RTW übergeben",
+            "uebergabe": "Einsatzstelle an Pol übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

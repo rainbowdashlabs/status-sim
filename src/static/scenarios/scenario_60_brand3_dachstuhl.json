@@ -1,0 +1,46 @@
+{
+  "name": "Brand 3 - Dachstuhlbrand",
+  "beschreibung": "Dachstuhlbrand in einem Wohnhaus. Nachfrage nach identischer Einsatzstelle.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 3",
+      "adresse": "Rosenweg 41",
+      "ortsteil": "Pankow",
+      "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 2}, {"typ": "DLK", "anzahl": 1}],
+      "schritte": [
+        {
+          "typ": "identische_einsatzstelle_anfrage",
+          "adressen": [
+            {
+              "typ": "ankommen"
+            },
+            {
+              "adresse": "Rosenweg 39",
+              "ortsteil": "Pankow",
+              "identisch": false
+            },
+            {
+              "adresse": "Rosenweg 43",
+              "ortsteil": "Pankow",
+              "identisch": true
+            }
+          ],
+          "stichwort_typ": "Brand"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "Dachstuhl in Vollbrand, Flammen schlagen aus Dach, Riegelstellung aufgebaut"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "3 C-Rohre, 1 Wenderohre über DLK, 10 PA",
+            "beschreibung": "Dachstuhl vollständig ausgebrannt, Brandausbreitung auf Nachbargebäude verhindert.",
+            "uebergabe": "Einsatzstelle an Eigentümer übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

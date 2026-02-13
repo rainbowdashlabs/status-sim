@@ -21,6 +21,38 @@
           }
         }
       ]
+    },
+    {
+      "stichwort": "RD1B",
+      "adresse": "Kirchplatz 3",
+      "ortsteil": "Nord",
+      "einheiten": [
+        {
+          "typ": "RTW",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "RTW",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "Kreislaufprobleme",
+          "sonderrechte": true,
+          "adresse": "Kirchplatz 3",
+          "ortsteil": "Nord"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
     }
   ]
 }

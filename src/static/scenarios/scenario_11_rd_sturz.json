@@ -9,6 +9,11 @@
       "einheiten": [{"typ": "RTW", "anzahl": 1}],
       "schritte": [
         {
+          "typ": "einsatzstellenkorrektur",
+          "adresse": "Gartenweg 14",
+          "ortsteil": "Südost"
+        },
+        {
           "typ": "ankommen"
         },
         {

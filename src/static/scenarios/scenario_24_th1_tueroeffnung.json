@@ -6,7 +6,12 @@
       "stichwort": "TH M + RD2B",
       "adresse": "Kastanienallee 12",
       "ortsteil": "Nordwest",
-      "einheiten": [{"typ": "RTW", "anzahl": 1}],
+      "einheiten": [
+        {
+          "typ": "RTW",
+          "anzahl": 1
+        }
+      ],
       "schritte": [
         {
           "typ": "ankommen"
@@ -19,6 +24,38 @@
             "beschreibung": "Wohnungstür schadenfrei geöffnet, Patient an RD übergeben.",
             "uebergabe": "Einsatzstelle an Polizei übergeben"
           }
+        }
+      ]
+    },
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Parkstraße 33",
+      "ortsteil": "West",
+      "einheiten": [
+        {
+          "typ": "LHF",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "brennender Mülleimer",
+          "sonderrechte": true,
+          "adresse": "Parkstraße 33",
+          "ortsteil": "West"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
         }
       ]
     }

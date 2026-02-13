@@ -1,0 +1,41 @@
+{
+  "name": "Brand 1 - Brennende Hecke",
+  "beschreibung": "Eine brennende Hecke in einem Wohngebiet. Nachfrage nach identischer Einsatzstelle.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Gartenweg 12",
+      "ortsteil": "Steglitz",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "identische_einsatzstelle_anfrage",
+          "adressen": [
+            {
+              "adresse": "Gartenweg 16",
+              "ortsteil": "Steglitz",
+              "identisch": false
+            }
+          ],
+          "stichwort_typ": "Brand"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "EstuK, Hecke ca. 5m in Brand, 1 C-Rohr"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr",
+            "beschreibung": "Hecke auf ca. 5m Länge abgebrannt.",
+            "uebergabe": "Einsatzstelle an Anwohner übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

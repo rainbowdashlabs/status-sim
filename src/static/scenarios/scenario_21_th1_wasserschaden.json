@@ -9,6 +9,11 @@
       "einheiten": [],
       "schritte": [
         {
+          "typ": "einsatzstellenkorrektur",
+          "adresse": "Luisenstraße 12",
+          "ortsteil": "Süd"
+        },
+        {
           "typ": "ankommen"
         },
         {

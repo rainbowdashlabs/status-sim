@@ -9,6 +9,11 @@
       "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}, {"typ": "LHF", "anzahl": 1}],
       "schritte": [
         {
+          "typ": "einsatzstellenkorrektur",
+          "adresse": "Gartenstraße 10",
+          "ortsteil": "Süd"
+        },
+        {
           "typ": "ankommen"
         },
         {

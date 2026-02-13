@@ -22,6 +22,38 @@
           }
         }
       ]
+    },
+    {
+      "stichwort": "RD1B",
+      "adresse": "Marktplatz 8",
+      "ortsteil": "Mitte",
+      "einheiten": [
+        {
+          "typ": "RTW",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "RTW",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "bewusstlose Person",
+          "sonderrechte": true,
+          "adresse": "Marktplatz 8",
+          "ortsteil": "Mitte"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
     }
   ]
 }

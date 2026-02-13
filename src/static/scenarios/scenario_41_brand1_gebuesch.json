@@ -25,6 +25,38 @@
           }
         }
       ]
+    },
+    {
+      "stichwort": "TH 1",
+      "adresse": "Gartenweg 5",
+      "ortsteil": "West",
+      "einheiten": [
+        {
+          "typ": "LHF",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "Wasserschaden",
+          "sonderrechte": true,
+          "adresse": "Gartenweg 5",
+          "ortsteil": "West"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
     }
   ]
 }

@@ -9,6 +9,11 @@
       "einheiten": [],
       "schritte": [
         {
+          "typ": "einsatzstellenkorrektur",
+          "adresse": "Bahnhofstraße 4",
+          "ortsteil": "Mitte"
+        },
+        {
           "typ": "ankommen"
         },
         {
@@ -19,6 +24,38 @@
             "beschreibung": "Aufzug manuell ins Erdgeschoss gefahren, Person befreit.",
             "uebergabe": "Aufzug außer Betrieb genommen, Techniker informiert"
           }
+        }
+      ]
+    },
+    {
+      "stichwort": "TH 1",
+      "adresse": "Bahnhofstraße 15",
+      "ortsteil": "Süd",
+      "einheiten": [
+        {
+          "typ": "LHF",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "Ölspur auf Fahrbahn",
+          "sonderrechte": true,
+          "adresse": "Bahnhofstraße 15",
+          "ortsteil": "Süd"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
         }
       ]
     }

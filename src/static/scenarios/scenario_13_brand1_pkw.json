@@ -9,6 +9,11 @@
       "einheiten": [],
       "schritte": [
         {
+          "typ": "einsatzstellenkorrektur",
+          "adresse": "Parkweg 6",
+          "ortsteil": "Nord"
+        },
+        {
           "typ": "ankommen"
         },
         {

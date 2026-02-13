@@ -1,0 +1,41 @@
+{
+  "name": "Brand 1 - Brennendes Altpapier",
+  "beschreibung": "Brennender Altpapiercontainer vor einem Wohnhaus. Nachfrage nach identischer Einsatzstelle.",
+  "einsaetze": [
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Schillerstraße 34",
+      "ortsteil": "Kreuzberg",
+      "einheiten": [],
+      "schritte": [
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "identische_einsatzstelle_anfrage",
+          "adressen": [
+            {
+              "adresse": "Schillerstraße 36",
+              "ortsteil": "Kreuzberg",
+              "identisch": true
+            }
+          ],
+          "stichwort_typ": "Brand"
+        },
+        {
+          "typ": "kurzlagemeldung",
+          "text": "EstuK, Altpapiercontainer in Brand, 1 C-Rohr"
+        },
+        {
+          "typ": "lagemeldung",
+          "lagemeldung": {
+            "lage": "EstuK",
+            "geraete": "1 C-Rohr",
+            "beschreibung": "Altpapiercontainer vollständig ausgebrannt.",
+            "uebergabe": "Einsatzstelle an Hausverwaltung übergeben"
+          }
+        }
+      ]
+    }
+  ]
+}

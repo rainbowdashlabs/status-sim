@@ -20,6 +20,38 @@
           }
         }
       ]
+    },
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Industriestraße 77",
+      "ortsteil": "Ost",
+      "einheiten": [
+        {
+          "typ": "LHF",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "brennender Container",
+          "sonderrechte": true,
+          "adresse": "Industriestraße 77",
+          "ortsteil": "Ost"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
     }
   ]
 }

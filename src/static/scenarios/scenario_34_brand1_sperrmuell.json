@@ -25,6 +25,38 @@
           }
         }
       ]
+    },
+    {
+      "stichwort": "Brand 1",
+      "adresse": "Feldweg 19",
+      "ortsteil": "Süd",
+      "einheiten": [
+        {
+          "typ": "LHF",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "LHF",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "brennende Hecke",
+          "sonderrechte": true,
+          "adresse": "Feldweg 19",
+          "ortsteil": "Süd"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
     }
   ]
 }

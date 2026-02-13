@@ -9,6 +9,11 @@
       "einheiten": [],
       "schritte": [
         {
+          "typ": "einsatzstellenkorrektur",
+          "adresse": "Waldrandweg 3",
+          "ortsteil": "Nord"
+        },
+        {
           "typ": "ankommen"
         },
         {

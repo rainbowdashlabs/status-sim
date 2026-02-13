@@ -25,6 +25,38 @@
           }
         }
       ]
+    },
+    {
+      "stichwort": "RD1B",
+      "adresse": "Hauptstraße 88",
+      "ortsteil": "Mitte",
+      "einheiten": [
+        {
+          "typ": "RTW",
+          "anzahl": 1
+        }
+      ],
+      "schritte": [
+        {
+          "typ": "neue_taetigkeit_mit_fzn",
+          "fahrzeuge": [
+            {
+              "typ": "RTW",
+              "anzahl": 1
+            }
+          ],
+          "ereignis": "Atemnot",
+          "sonderrechte": true,
+          "adresse": "Hauptstraße 88",
+          "ortsteil": "Mitte"
+        },
+        {
+          "typ": "ankommen"
+        },
+        {
+          "typ": "ohne_lagemeldung"
+        }
+      ]
     }
   ]
 }
