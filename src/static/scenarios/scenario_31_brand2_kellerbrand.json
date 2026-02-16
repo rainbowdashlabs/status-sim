@@ -5,7 +5,7 @@
     {
       "stichwort": "Brand 2",
       "adresse": "Schillerstraße 15",
-      "ortsteil": "Ost",
+      "ortsteil": "Friedrichshain",
       "einheiten": [
         {
           "typ": "FD",
@@ -40,14 +40,14 @@
           "ereignis": "Vermutete Notlage",
           "sonderrechte": true,
           "adresse": "Ringstraße 42",
-          "ortsteil": "Nord"
+          "ortsteil": "Wedding"
         }
       ]
     },
     {
       "stichwort": "TH 1",
       "adresse": "Ringstraße 42",
-      "ortsteil": "Nord",
+      "ortsteil": "Wedding",
       "einheiten": [
       ],
       "schritte": [

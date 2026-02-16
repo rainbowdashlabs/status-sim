@@ -5,13 +5,13 @@
     {
       "stichwort": "TH 1",
       "adresse": "Luisenstraße 10",
-      "ortsteil": "Süd",
+      "ortsteil": "Britz",
       "einheiten": [],
       "schritte": [
         {
           "typ": "einsatzstellenkorrektur",
           "adresse": "Luisenstraße 12",
-          "ortsteil": "Süd"
+          "ortsteil": "Britz"
         },
         {
           "typ": "ankommen"

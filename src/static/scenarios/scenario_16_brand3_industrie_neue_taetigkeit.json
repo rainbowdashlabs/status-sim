@@ -5,21 +5,21 @@
     {
       "stichwort": "Brand 1",
       "adresse": "Gewerbestraße 10",
-      "ortsteil": "Ost",
+      "ortsteil": "Friedrichshain",
       "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}, {"typ": "LHF", "anzahl": 2}],
       "schritte": [
         {
           "typ": "neue_taetigkeit_mit_fzn",
           "ereignis": "Vollbrand einer Gartenlaube",
           "adresse": "Waldweg 2",
-          "ortsteil": "Ost"
+          "ortsteil": "Friedrichshain"
         }
       ]
     },
     {
       "stichwort": "Brand 1",
       "adresse": "Waldweg 2",
-      "ortsteil": "Ost",
+      "ortsteil": "Friedrichshain",
       "einheiten": [],
       "schritte": [
         {

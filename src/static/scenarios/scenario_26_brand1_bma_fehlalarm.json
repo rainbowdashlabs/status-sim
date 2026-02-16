@@ -5,7 +5,7 @@
     {
       "stichwort": "Brand 1 - BMA",
       "adresse": "Klinikweg 1",
-      "ortsteil": "Nordost",
+      "ortsteil": "Weißensee",
       "einheiten": [
         {
           "typ": "LHF",
@@ -38,14 +38,14 @@
           "ereignis": "gestürzte Person",
           "sonderrechte": true,
           "adresse": "Schulweg 7",
-          "ortsteil": "Ost"
+          "ortsteil": "Friedrichshain"
         }
       ]
     },
     {
       "stichwort": "RD2",
       "adresse": "Schulweg 7",
-      "ortsteil": "Ost",
+      "ortsteil": "Friedrichshain",
       "einheiten": [
         {
           "typ": "RTW",

@@ -5,14 +5,14 @@
     {
       "stichwort": "Brand 4",
       "adresse": "Hauptstraße 12",
-      "ortsteil": "Süd",
+      "ortsteil": "Britz",
       "einheiten": [{"typ": "FD", "anzahl": 1}],
       "schritte": [
         {
           "typ": "eigenunfall",
           "mit_personenschaden": false,
           "adresse": "Hauptstraße 8",
-          "ortsteil": "Süd"
+          "ortsteil": "Britz"
         },
         {
           "typ": "ohne_lagemeldung"

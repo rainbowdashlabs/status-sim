@@ -5,13 +5,13 @@
     {
       "stichwort": "TH 2",
       "adresse": "Bachstraße 22",
-      "ortsteil": "West",
+      "ortsteil": "Wilmersdorf",
       "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 1}, {"typ": "GW-Mess", "anzahl": 1}],
       "schritte": [
         {
           "typ": "einsatzstellenkorrektur",
           "adresse": "Bachstraße 20",
-          "ortsteil": "West"
+          "ortsteil": "Wilmersdorf"
         },
         {
           "typ": "ankommen"

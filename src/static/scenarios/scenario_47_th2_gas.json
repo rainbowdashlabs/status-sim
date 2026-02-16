@@ -5,7 +5,7 @@
     {
       "stichwort": "TH 2",
       "adresse": "Bachstraße 12",
-      "ortsteil": "West",
+      "ortsteil": "Wilmersdorf",
       "einheiten": [{"typ": "LHF", "anzahl": 1}, {"typ": "FD", "anzahl": 1}],
       "schritte": [
         {

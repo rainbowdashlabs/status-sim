@@ -5,7 +5,7 @@
     {
       "stichwort": "Brand 1",
       "adresse": "Gleisdreieck",
-      "ortsteil": "Ost",
+      "ortsteil": "Friedrichshain",
       "einheiten": [],
       "schritte": [
         {
@@ -32,14 +32,14 @@
           "ereignis": "Wasserschaden",
           "sonderrechte": true,
           "adresse": "Gartenweg 5",
-          "ortsteil": "West"
+          "ortsteil": "Wilmersdorf"
         }
       ]
     },
     {
       "stichwort": "TH 1",
       "adresse": "Gartenweg 5",
-      "ortsteil": "West",
+      "ortsteil": "Wilmersdorf",
       "einheiten": [
       ],
       "schritte": [

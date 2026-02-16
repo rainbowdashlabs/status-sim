@@ -5,7 +5,7 @@
     {
       "stichwort": "TH 1",
       "adresse": "Waldstraße 15",
-      "ortsteil": "Nord",
+      "ortsteil": "Wedding",
       "einheiten": [{"typ": "LHF", "anzahl": 1}],
       "schritte": [
         {
@@ -13,7 +13,7 @@
           "mit_personenschaden": true,
           "verletzte": 2,
           "adresse": "Hauptstraße / Kreuzweg",
-          "ortsteil": "Nord"
+          "ortsteil": "Wedding"
         },
         {
           "typ": "ohne_lagemeldung"

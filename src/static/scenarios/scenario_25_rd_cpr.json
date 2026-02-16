@@ -5,7 +5,7 @@
     {
       "stichwort": "RD2NC - Rea",
       "adresse": "Marktplatz",
-      "ortsteil": "Zentrum",
+      "ortsteil": "Mitte",
       "einheiten": [{"typ": "RTW", "anzahl": 1}, {"typ": "NEF", "anzahl": 1}],
       "schritte": [
         {

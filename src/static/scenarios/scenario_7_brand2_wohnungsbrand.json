@@ -5,7 +5,7 @@
     {
       "stichwort": "Brand 2",
       "adresse": "Hauptstraße 15",
-      "ortsteil": "West",
+      "ortsteil": "Wilmersdorf",
       "einheiten": [{"typ": "FD", "anzahl": 1}],
       "schritte": [
         {

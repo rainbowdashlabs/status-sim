@@ -5,7 +5,7 @@
     {
       "stichwort": "Brand 3",
       "adresse": "Eichenweg 5",
-      "ortsteil": "West",
+      "ortsteil": "Wilmersdorf",
       "einheiten": [{"typ": "LHF", "anzahl": 2}, {"typ": "DLK", "anzahl": 1}, {"typ": "FD", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}],
       "schritte": [
         {

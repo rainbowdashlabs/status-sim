@@ -5,7 +5,7 @@
     {
       "stichwort": "Brand 2",
       "adresse": "Gartenstraße 12",
-      "ortsteil": "Nord",
+      "ortsteil": "Wedding",
       "einheiten": [{"typ": "LHF", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "FD", "anzahl": 1}],
       "schritte": [
         {

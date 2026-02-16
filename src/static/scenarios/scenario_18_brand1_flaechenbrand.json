@@ -5,13 +5,13 @@
     {
       "stichwort": "Brand 1",
       "adresse": "Waldrandweg 1",
-      "ortsteil": "Nord",
+      "ortsteil": "Wedding",
       "einheiten": [],
       "schritte": [
         {
           "typ": "einsatzstellenkorrektur",
           "adresse": "Waldrandweg 3",
-          "ortsteil": "Nord"
+          "ortsteil": "Wedding"
         },
         {
           "typ": "ankommen"

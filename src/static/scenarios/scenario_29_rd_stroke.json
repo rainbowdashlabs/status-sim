@@ -5,7 +5,7 @@
     {
       "stichwort": "RD1C",
       "adresse": "Goethestraße 5",
-      "ortsteil": "West",
+      "ortsteil": "Wilmersdorf",
       "einheiten": [{"typ": "RTW", "anzahl": 1}],
       "schritte": [
         {

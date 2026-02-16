@@ -5,7 +5,7 @@
     {
       "stichwort": "RD2NC FR",
       "adresse": "Lindenweg 4",
-      "ortsteil": "Süd",
+      "ortsteil": "Britz",
       "einheiten": [{"typ": "NEF", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}],
       "schritte": [
         {

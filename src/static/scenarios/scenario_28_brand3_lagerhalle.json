@@ -5,7 +5,7 @@
     {
       "stichwort": "Brand 3",
       "adresse": "Industriestraße 100",
-      "ortsteil": "Industrie",
+      "ortsteil": "Oberschöneweide",
       "einheiten": [{"typ": "FD", "anzahl": 2}, {"typ": "LHF", "anzahl": 4}, {"typ": "DLK", "anzahl": 2}],
       "schritte": [
         {

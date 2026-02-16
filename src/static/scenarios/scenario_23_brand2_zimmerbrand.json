@@ -5,7 +5,7 @@
     {
       "stichwort": "Brand 2",
       "adresse": "Lindenweg 4",
-      "ortsteil": "Süd",
+      "ortsteil": "Britz",
       "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "LHF", "anzahl": 2}, {"typ": "DLK", "anzahl": 1}],
       "schritte": [
         {

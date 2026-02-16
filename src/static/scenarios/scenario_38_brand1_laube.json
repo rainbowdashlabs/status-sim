@@ -5,7 +5,7 @@
     {
       "stichwort": "Brand 1",
       "adresse": "Kolonie Sonnenschein, Weg 4",
-      "ortsteil": "Ost",
+      "ortsteil": "Friedrichshain",
       "einheiten": [{"typ": "LHF", "anzahl": 1}],
       "schritte": [
         {

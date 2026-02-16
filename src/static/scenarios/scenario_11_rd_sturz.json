@@ -5,13 +5,13 @@
     {
       "stichwort": "RD 1",
       "adresse": "Gartenweg 12",
-      "ortsteil": "Südost",
+      "ortsteil": "Köpenick",
       "einheiten": [{"typ": "RTW", "anzahl": 1}],
       "schritte": [
         {
           "typ": "einsatzstellenkorrektur",
           "adresse": "Gartenweg 14",
-          "ortsteil": "Südost"
+          "ortsteil": "Köpenick"
         },
         {
           "typ": "ankommen"

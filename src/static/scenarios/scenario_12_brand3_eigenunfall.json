@@ -5,14 +5,14 @@
     {
       "stichwort": "Brand 3",
       "adresse": "Bachstraße 10",
-      "ortsteil": "West",
+      "ortsteil": "Wilmersdorf",
       "einheiten": [{"typ": "FD", "anzahl": 1}, {"typ": "DLK", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}, {"typ": "LHF", "anzahl": 3}],
       "schritte": [
         {
           "typ": "eigenunfall",
           "mit_personenschaden": false,
           "adresse": "Hauptkreuzung",
-          "ortsteil": "West"
+          "ortsteil": "Wilmersdorf"
         },
         {
           "typ": "ohne_lagemeldung"

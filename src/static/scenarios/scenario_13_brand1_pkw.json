@@ -5,13 +5,13 @@
     {
       "stichwort": "Brand 1",
       "adresse": "Parkweg 4",
-      "ortsteil": "Nord",
+      "ortsteil": "Wedding",
       "einheiten": [],
       "schritte": [
         {
           "typ": "einsatzstellenkorrektur",
           "adresse": "Parkweg 6",
-          "ortsteil": "Nord"
+          "ortsteil": "Wedding"
         },
         {
           "typ": "ankommen"

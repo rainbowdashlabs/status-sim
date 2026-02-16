@@ -5,14 +5,14 @@
     {
       "stichwort": "TH 1",
       "adresse": "Schillerstraße 22",
-      "ortsteil": "Nord",
+      "ortsteil": "Wedding",
       "einheiten": [],
       "schritte": [
         {
           "typ": "neue_taetigkeit_mit_fzn",
           "ereignis": "bewusstlose Person",
           "adresse": "Goethestraße 8",
-          "ortsteil": "Nord"
+          "ortsteil": "Wedding"
         }
       ]
     },
@@ -20,7 +20,7 @@
       "einsatznummer": "6",
       "stichwort": "RD2NC",
       "adresse": "Goethestraße 8",
-      "ortsteil": "Nord",
+      "ortsteil": "Wedding",
       "einheiten": [{"typ": "RTW"}],
       "schritte": [
         {

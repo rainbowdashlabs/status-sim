@@ -5,7 +5,7 @@
     {
       "stichwort": "TH 2",
       "adresse": "B96, km 12.5",
-      "ortsteil": "Süd",
+      "ortsteil": "Britz",
       "einheiten": [{"typ": "LHF", "anzahl": 1}, {"typ": "RW", "anzahl": 1}, {"typ": "FD", "anzahl": 1}, {"typ": "RTW", "anzahl": 1}, {"typ": "NEF", "anzahl": 1}],
       "schritte": [
         {

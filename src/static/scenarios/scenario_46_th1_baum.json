@@ -5,7 +5,7 @@
     {
       "stichwort": "TH 1",
       "adresse": "Forstweg",
-      "ortsteil": "Nord",
+      "ortsteil": "Wedding",
       "einheiten": [],
       "schritte": [
         {
@@ -30,14 +30,14 @@
           "ereignis": "brennender Container",
           "sonderrechte": true,
           "adresse": "Industriestraße 77",
-          "ortsteil": "Ost"
+          "ortsteil": "Friedrichshain"
         }
       ]
     },
     {
       "stichwort": "Brand 1",
       "adresse": "Industriestraße 77",
-      "ortsteil": "Ost",
+      "ortsteil": "Friedrichshain",
       "einheiten": [
         {
           "typ": "LHF",
