@@ -49,7 +49,7 @@ export function useWebSocket(url: string, onMessage?: (data: any) => void) {
     },
     heartbeat: {
       message: 'heartbeat',
-      interval: 20000,
+      interval: 5000,
       pongTimeout: 5000,
     },
   });
