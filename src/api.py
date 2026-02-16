@@ -590,7 +590,7 @@ async def start_scenario(code: str, request: ScenarioStartRequest):
 
     # Wir generieren die Funksprüche und speichern sie im aktiven Szenario
     # Wir übergeben ls=ls.name und fk=target_name
-    funksprueche = scenario_obj.generate_funksprueche(fk=request.target_name, ls=ls.name, start_enr=1)
+    funksprueche = scenario_obj.generate_funksprueche(fk=request.target_name, ls=ls.name, start_enr=ls.next_enr())
     
     scenario_data = scenario_obj.model_dump()
     # Wir fügen die generierten Funksprüche hinzu, damit das Frontend sie anzeigen kann
@@ -711,7 +711,7 @@ async def next_scenario(code: str, request: TargetRequest):
         return {"status": "error", "message": f"Szenario fehlerhaft: {chosen_name}"}
 
     # Kontext: Fahrzeugkennung = angefragtes Fahrzeug, LS Name aus Leitstellen-Daten
-    funke = scenario.generate_funksprueche(fk=vehicle_name, ls=ls.name, start_enr=1)
+    funke = scenario.generate_funksprueche(fk=vehicle_name, ls=ls.name, start_enr=ls.next_enr())
 
     # Als benutzt markieren
     ls.used_scenarios.setdefault(vehicle_name, []).append(chosen_name)

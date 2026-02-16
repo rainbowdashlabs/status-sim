@@ -1,3 +1,5 @@
+import random
+
 from pydantic import BaseModel, Field
 from typing import List, Dict, Optional
 from fastapi import WebSocket
@@ -118,6 +120,11 @@ class LeitstelleData(BaseModel):
     scenarios: Dict[str, dict] = Field(default_factory=dict)
     # Track which scenarios have been used per vehicle (vehicle name -> list of scenario names)
     used_scenarios: Dict[str, List[str]] = Field(default_factory=dict)
+    enr_counter: int = 1
 
     class Config:
         arbitrary_types_allowed = True
+
+    def next_enr(self) -> str:
+        self.enr_counter += random.randint(5, 15)
+        return str(self.enr_counter)
