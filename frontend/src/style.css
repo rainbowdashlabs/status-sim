@@ -4,6 +4,15 @@
   --bg-color: #121212;
   --card-bg: #1e1e1e;
   --text-color: #e0e0e0;
+  --text-muted: #9ca3af;
+  --text-faint: #6b7280;
+  --border-color: #374151;
+  --input-bg: #1f2937;
+  --input-bg-deep: #111827;
+  --surface-color: #1a1a1a;
+  --surface-hover: #333333;
+  --surface-alt: #252525;
+  --overlay-bg: #000000;
   --primary-color: #d32f2f;
   --secondary-color: #424242;
   --accent-color: #ff9800;
@@ -11,8 +20,28 @@
   --info-color: #0288d1;
   --warning-color: #fbc02d;
   --danger-color: #c62828;
-  --border-radius: 8px;
-  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+html.light {
+  --bg-color: #f3f4f6;
+  --card-bg: #ffffff;
+  --text-color: #1f2937;
+  --text-muted: #6b7280;
+  --text-faint: #9ca3af;
+  --border-color: #d1d5db;
+  --input-bg: #f9fafb;
+  --input-bg-deep: #f3f4f6;
+  --surface-color: #f9fafb;
+  --surface-hover: #e5e7eb;
+  --surface-alt: #f3f4f6;
+  --overlay-bg: #ffffff;
+  --primary-color: #c62828;
+  --secondary-color: #757575;
+  --accent-color: #e65100;
+  --success-color: #2e7d32;
+  --info-color: #0277bd;
+  --warning-color: #f9a825;
+  --danger-color: #b71c1c;
 }
 
 body {
@@ -26,6 +55,7 @@ body {
 
 @theme {
   --color-primary: var(--primary-color);
+  --color-primary-light: #ef5350;
   --color-secondary: var(--secondary-color);
   --color-accent: var(--accent-color);
   --color-success: var(--success-color);
@@ -34,3 +64,132 @@ body {
   --color-danger: var(--danger-color);
   --color-card: var(--card-bg);
 }
+
+/* Layout */
+.page {
+  max-width: 1200px;
+  min-width: 320px;
+  @apply mx-auto p-5 flex flex-col min-h-screen;
+}
+
+/* Cards */
+.card {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  @apply rounded-lg shadow-lg border;
+}
+
+/* Typography */
+.section-title {
+  @apply text-primary uppercase tracking-widest font-bold;
+}
+
+/* Forms */
+.input {
+  background-color: var(--input-bg);
+  border-color: var(--border-color);
+  color: var(--text-color);
+  @apply p-3 border rounded w-full outline-none focus:border-primary;
+}
+
+.input-sm {
+  background-color: var(--input-bg-deep);
+  border-color: var(--border-color);
+  color: var(--text-color);
+  @apply p-1.5 px-2.5 text-sm border rounded outline-none focus:border-primary;
+}
+
+.label {
+  color: var(--text-muted);
+  @apply block mb-1 font-bold text-sm;
+}
+
+/* Buttons */
+.btn {
+  @apply rounded font-bold transition-all hover:brightness-110;
+}
+
+.btn-press {
+  @apply active:translate-y-0.5;
+}
+
+.btn-primary { @apply bg-primary text-white; }
+.btn-success { @apply bg-success text-white; }
+.btn-danger { @apply bg-danger text-white; }
+.btn-secondary { @apply bg-secondary text-white; }
+.btn-info { @apply bg-info text-white; }
+.btn-warning { @apply bg-warning text-black; }
+
+/* Vehicle groups */
+.vehicle-group {
+  background-color: var(--surface-color);
+  border-color: var(--border-color);
+  @apply border rounded-lg p-4;
+}
+
+.vehicle-group-title {
+  border-color: var(--border-color);
+  @apply uppercase tracking-widest text-sm mb-4 font-bold border-b pb-2;
+}
+
+/* Chat */
+.chat-log {
+  background-color: var(--overlay-bg);
+  border-color: var(--border-color);
+  @apply border rounded-lg overflow-y-auto flex flex-col;
+}
+
+.chat-empty {
+  color: var(--text-faint);
+  @apply flex-1 flex items-center justify-center italic;
+}
+
+.chat-message {
+  border-color: var(--input-bg-deep);
+  @apply p-2 px-3 border-b flex gap-2.5 items-start;
+}
+
+.chat-message:last-child {
+  @apply border-0;
+}
+
+.chat-sender {
+  min-width: 25px;
+  @apply p-0.5 px-1.5 rounded text-xs font-bold text-white uppercase text-center mt-0.5;
+}
+
+.chat-time {
+  min-width: 65px;
+  color: var(--text-faint);
+  @apply text-xs whitespace-nowrap flex items-center mt-0.5;
+}
+
+/* Status badge */
+.status-badge {
+  @apply size-10 rounded-lg font-extrabold text-white uppercase text-lg flex items-center justify-center;
+}
+
+/* Disconnected */
+.disconnected {
+  @apply text-warning font-bold mt-2;
+}
+
+/* Keypad */
+.keypad-idle {
+  background-color: var(--surface-alt);
+  border-color: var(--border-color);
+  color: var(--text-muted);
+}
+.keypad-idle:hover {
+  background-color: var(--surface-hover);
+}
+
+/* Themed text helpers */
+.text-themed { color: var(--text-color); }
+.text-themed-muted { color: var(--text-muted); }
+.text-themed-faint { color: var(--text-faint); }
+.bg-themed-surface { background-color: var(--surface-color); }
+.bg-themed-alt { background-color: var(--surface-alt); }
+.bg-themed-overlay { background-color: var(--overlay-bg); }
+.bg-themed-input { background-color: var(--input-bg); }
+.border-themed { border-color: var(--border-color); }

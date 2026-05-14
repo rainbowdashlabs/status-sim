@@ -171,46 +171,41 @@ const getSchrittProgress = (eIdx: any, sIdx: any) => {
 </script>
 
 <template>
-  <div class="mt-4 border border-gray-700 rounded overflow-hidden bg-gray-900/50">
-    <div class="bg-gray-800 p-2 px-3 font-bold text-base uppercase tracking-wider border-b border-gray-700 flex justify-between items-center">
+  <div class="mt-4 border border-themed rounded overflow-hidden bg-themed-input">
+    <div class="bg-themed-alt p-2 px-3 font-bold text-base uppercase tracking-wider border-b border-themed flex justify-between items-center">
       <span>Szenario: {{ scenario.name }}</span>
-      <span class="text-xs font-mono bg-gray-900 px-2 py-0.5 rounded border border-gray-700">
+      <span class="text-xs font-mono bg-themed-overlay px-2 py-0.5 rounded border border-themed">
         {{ progress.done }}/{{ progress.total }} ({{ progress.percent }}%)
       </span>
     </div>
     <div class="p-3">
-      <p class="text-sm text-gray-400 mb-3 italic">{{ scenario.beschreibung }}</p>
-      
+      <p class="text-sm text-themed-muted mb-3 italic">{{ scenario.beschreibung }}</p>
+
       <div v-for="(einsatz, eIdx) in scenario.einsaetze" :key="eIdx" class="mb-4 last:mb-0">
-        <!-- Einsatz Header -->
-        <div 
+        <div
           @click="toggleEinsatz(eIdx)"
-          class="bg-gray-800 p-2 rounded cursor-pointer hover:bg-gray-700 transition-colors flex justify-between items-center border border-gray-600 shadow-sm"
+          class="bg-themed-alt p-2 rounded cursor-pointer hover:brightness-110 transition-colors flex justify-between items-center border border-themed shadow-sm"
         >
           <div class="flex flex-col">
             <span class="font-bold text-base text-primary">{{ einsatz.stichwort }}</span>
-            <span class="text-sm text-gray-300">{{ einsatz.adresse }}, {{ einsatz.ortsteil }}</span>
+            <span class="text-sm text-themed-muted">{{ einsatz.adresse }}, {{ einsatz.ortsteil }}</span>
           </div>
           <span class="text-xs">{{ expandedEinsaetze[eIdx.toString()] ? '▲' : '▼' }}</span>
         </div>
-        
-        <!-- Einsatz Content (Schritte) -->
-        <div v-if="expandedEinsaetze[eIdx.toString()]" class="mt-2 ml-3 pl-3 border-l-2 border-gray-700 flex flex-col gap-2">
+
+        <div v-if="expandedEinsaetze[eIdx.toString()]" class="mt-2 ml-3 pl-3 border-l-2 border-themed flex flex-col gap-2">
           <div v-for="sIdx in (einsatz.schritte.length + 1)" :key="sIdx-1" class="flex flex-col">
-            <!-- Schritt Header -->
-            <div 
-              class="bg-gray-800/60 p-2 rounded flex justify-between items-center border border-gray-700/50"
-            >
+            <div class="bg-themed-alt/60 p-2 rounded flex justify-between items-center border border-themed/50">
               <div class="flex-1 cursor-pointer flex justify-between items-center mr-2" @click="toggleSchritt(eIdx, sIdx-1)">
                 <div class="flex items-center gap-2">
-                  <span class="text-sm font-bold text-gray-200">{{ getSchrittLabel(einsatz, sIdx-1) }}</span>
-                  <span class="text-[10px] font-mono bg-gray-900/80 px-1.5 py-0.5 rounded text-gray-400 border border-gray-700">
+                  <span class="text-sm font-bold">{{ getSchrittLabel(einsatz, sIdx-1) }}</span>
+                  <span class="text-[10px] font-mono bg-themed-overlay/80 px-1.5 py-0.5 rounded text-themed-muted border border-themed">
                     {{ getSchrittProgress(eIdx, sIdx-1).done }}/{{ getSchrittProgress(eIdx, sIdx-1).total }}
                   </span>
                 </div>
                 <span class="text-xs ml-2">{{ expandedSchritte[`${eIdx}-${sIdx-1}`] ? '▲' : '▼' }}</span>
               </div>
-              <button 
+              <button
                 @click.stop="markAllAsDone(eIdx, sIdx-1)"
                 class="text-[10px] bg-primary/20 hover:bg-primary/40 text-primary-light px-2 py-0.5 rounded border border-primary/30 transition-colors"
               >
@@ -218,31 +213,30 @@ const getSchrittProgress = (eIdx: any, sIdx: any) => {
               </button>
             </div>
 
-            <!-- Schritt Content (Funksprüche) -->
             <div v-if="expandedSchritte[`${eIdx}-${sIdx-1}`]" class="mt-1 ml-2 flex flex-col gap-1">
-              <div 
-                v-for="(entry, fIdx) in getFunkspruecheForSchritt(eIdx, sIdx-1)" 
+              <div
+                v-for="(entry, fIdx) in getFunkspruecheForSchritt(eIdx, sIdx-1)"
                 :key="fIdx"
-                class="flex items-start gap-2 p-1.5 rounded bg-black/20 border border-gray-800/50 hover:bg-black/30 transition-colors group"
+                class="flex items-start gap-2 p-1.5 rounded bg-themed-overlay/20 border border-themed/50 hover:bg-themed-overlay/30 transition-colors group"
                 @click="toggleEntry(eIdx, sIdx-1, fIdx)"
               >
                 <div class="mt-0.5">
-                  <input 
-                    type="checkbox" 
-                    :checked="checkedEntries[`${eIdx}-${sIdx-1}-${fIdx}`]" 
+                  <input
+                    type="checkbox"
+                    :checked="checkedEntries[`${eIdx}-${sIdx-1}-${fIdx}`]"
                     @click.stop="toggleEntry(eIdx, sIdx-1, fIdx)"
                     class="accent-primary w-3.5 h-3.5"
                   >
                 </div>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 mb-0.5">
-                    <span class="text-xs font-mono text-gray-500">#{{ entry.enr }}</span>
+                    <span class="text-xs font-mono text-themed-faint">#{{ entry.enr }}</span>
                     <span class="text-sm font-bold" :class="getActorColor(entry.actor)">{{ entry.actor }}</span>
-                    <span v-if="entry.status" class="text-[10px] bg-gray-700 px-1 rounded text-white border border-gray-600">Status {{ entry.status }}</span>
+                    <span v-if="entry.status" class="text-[10px] bg-secondary px-1 rounded text-white border border-themed">Status {{ entry.status }}</span>
                   </div>
                   <div
-                    class="text-sm leading-relaxed transition-all" 
-                    :class="checkedEntries[`${eIdx}-${sIdx-1}-${fIdx}`] ? 'line-through text-gray-600' : 'text-gray-200'"
+                    class="text-sm leading-relaxed transition-all"
+                    :class="checkedEntries[`${eIdx}-${sIdx-1}-${fIdx}`] ? 'line-through text-themed-faint' : 'text-themed'"
                   >
                     {{ entry.message }}
                   </div>

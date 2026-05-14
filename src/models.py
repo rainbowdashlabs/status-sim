@@ -2,63 +2,86 @@ import random
 
 from pydantic import BaseModel, Field
 from typing import List, Dict, Optional
-from fastapi import WebSocket
 
-class ClaimRequest(BaseModel):
+
+# --- Request models ---
+
+class LeitstelleCreateRequest(BaseModel):
+    name: str
+
+
+class TargetRequest(BaseModel):
     target_name: str
-    sf_name: str
 
-class ChannelRequest(BaseModel):
-    channel: str
 
 class MessageRequest(BaseModel):
     message: str
     target_name: Optional[str] = None
 
-class TargetRequest(BaseModel):
-    target_name: str
 
 class NoticeRequest(BaseModel):
     target_name: str
     text: str
     sf_name: Optional[str] = None
 
+
 class NoteRequest(BaseModel):
     target_name: str
     note: str
+
 
 class StatusRequest(BaseModel):
     target_name: str
     status: str
 
-class LeitstelleCreateRequest(BaseModel):
-    name: str
+
+class ClaimRequest(BaseModel):
+    target_name: str
+    sf_name: str
+
 
 class ScenarioStartRequest(BaseModel):
     target_name: str
     scenario_name: str
+
 
 class ChecklistState(BaseModel):
     expanded_einsaetze: Dict[str, bool] = Field(default_factory=dict)
     expanded_schritte: Dict[str, bool] = Field(default_factory=dict)
     checked_entries: Dict[str, bool] = Field(default_factory=dict)
 
+
 class ChecklistUpdateRequest(BaseModel):
     target_name: str
     state: ChecklistState
 
+
+class VehicleActionRequest(BaseModel):
+    name: str
+    action: str
+    value: Optional[str] = None
+
+
+class SfChannelRequest(BaseModel):
+    name: str
+    channel: str
+
+
+# --- Domain models ---
+
 class Notice(BaseModel):
     text: str
-    status: str  # 'pending'|'confirmed'
+    status: str
     confirmed_at: Optional[float] = None
+
 
 class ChatMessage(BaseModel):
     sender: str
     text: str
     timestamp: float
 
+
 class Connection(BaseModel):
-    ws: Optional[WebSocket] = None
     name: str
     status: str = "2"
     special: Optional[str] = None
@@ -69,14 +92,13 @@ class Connection(BaseModel):
     last_sprechwunsch_update: Optional[float] = None
     is_staffelfuehrer: bool = False
     is_leitstelle: bool = False
-    disconnected_at: Optional[float] = None
     talking_to_sf: bool = False
+    talking_to_sf_since: Optional[float] = None
     radio_channel: Optional[str] = None
     claimed_by: Optional[str] = None
+    ls_claimed_by: Optional[str] = None
     last_activity: float
 
-    class Config:
-        arbitrary_types_allowed = True
 
 class VehicleStatus(BaseModel):
     name: str
@@ -92,38 +114,38 @@ class VehicleStatus(BaseModel):
     sf_note: str = ""
     is_online: bool = True
     talking_to_sf: bool = False
+    talking_to_sf_since: Optional[float] = None
     radio_channel: Optional[str] = None
     claimed_by: Optional[str] = None
+    ls_claimed_by: Optional[str] = None
+    ls_radio_channel: Optional[str] = None
+    sf_radio_channel: Optional[str] = None
     active_scenario: Optional[dict] = None
     checklist_state: Optional[ChecklistState] = None
     next_todo: Optional[str] = None
     last_activity: float
+
 
 class StatusUpdate(BaseModel):
     type: str = "status_update"
     connections: List[VehicleStatus]
     notices: Dict[str, Notice]
 
+
 class LeitstelleData(BaseModel):
     name: str
     vehicle_code: str
     staffelfuehrer_code: str
     connections: List[Connection] = Field(default_factory=list)
-    messages: List[str] = Field(default_factory=list)
     notices: Dict[str, Notice] = Field(default_factory=dict)
     notes: Dict[str, str] = Field(default_factory=dict)
     sf_notes: Dict[str, str] = Field(default_factory=dict)
     chat_history: Dict[str, List[ChatMessage]] = Field(default_factory=dict)
-    active_scenarios: Dict[str, dict] = Field(default_factory=dict) # vehicle_name -> scenario_data
-    checklist_states: Dict[str, ChecklistState] = Field(default_factory=dict) # vehicle_name -> checklist_state
-    # Map of scenario name -> raw Scenario JSON path or object cache (lazy loaded in API)
+    active_scenarios: Dict[str, dict] = Field(default_factory=dict)
+    checklist_states: Dict[str, ChecklistState] = Field(default_factory=dict)
     scenarios: Dict[str, dict] = Field(default_factory=dict)
-    # Track which scenarios have been used per vehicle (vehicle name -> list of scenario names)
     used_scenarios: Dict[str, List[str]] = Field(default_factory=dict)
     enr_counter: int = 1
-
-    class Config:
-        arbitrary_types_allowed = True
 
     def next_enr(self) -> str:
         self.enr_counter += random.randint(5, 15)

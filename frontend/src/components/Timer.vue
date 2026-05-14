@@ -32,7 +32,7 @@ const formattedTime = computed(() => {
 });
 
 const timerClass = computed(() => {
-  if (!props.active) return 'text-gray-500';
+  if (!props.active) return 'text-themed-faint';
   if (diff.value < 60) return 'text-success';
   if (diff.value < 180) return 'text-warning';
   if (diff.value < 300) return 'text-accent';

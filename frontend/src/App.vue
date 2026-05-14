@@ -5,12 +5,14 @@ import LandingPage from './LandingPage.vue';
 import LeitstelleView from './LeitstelleView.vue';
 import StatusView from './StatusView.vue';
 import StaffelfuehrerView from './StaffelfuehrerView.vue';
+import HelpCenter from './HelpCenter.vue';
 
 type View =
     | { type: 'landing' }
     | { type: 'leitstelle', adminCode: string, leitstelleName: string, vehicleCode: string, staffelfuehrerCode: string }
     | { type: 'status', code: string, name: string, leitstelleName: string }
-    | { type: 'staffelfuehrer', sfCode: string, name: string };
+    | { type: 'staffelfuehrer', sfCode: string, name: string }
+    | { type: 'hilfe' };
 
 const currentView = ref<View>({type: 'landing'});
 
@@ -62,7 +64,9 @@ onMounted(async () => {
   const path = window.location.pathname;
   const params = new URLSearchParams(window.location.search);
 
-  if (path === '/') {
+  if (path === '/hilfe') {
+    currentView.value = {type: 'hilfe'};
+  } else if (path === '/') {
     currentView.value = {type: 'landing'};
   } else if (path.startsWith('/leitstelle/')) {
     const adminCode = path.split('/').pop()!;
@@ -112,4 +116,5 @@ onMounted(async () => {
   <LeitstelleView v-else-if="currentView.type === 'leitstelle'" v-bind="currentView"/>
   <StatusView v-else-if="currentView.type === 'status'" v-bind="currentView"/>
   <StaffelfuehrerView v-else-if="currentView.type === 'staffelfuehrer'" v-bind="currentView"/>
+  <HelpCenter v-else-if="currentView.type === 'hilfe'" />
 </template>

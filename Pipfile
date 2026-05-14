@@ -9,6 +9,7 @@ uvicorn = {extras = ["standard"], version = "*"}
 jinja2 = "*"
 python-multipart = "*"
 pydantic = "*"
+redis = "*"
 
 [dev-packages]
 httpx = "*"

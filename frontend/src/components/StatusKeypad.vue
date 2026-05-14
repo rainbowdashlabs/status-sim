@@ -18,7 +18,7 @@ const pressKey = (key: string) => {
 const keyClass = (key: string) => [
   (props.status === key || props.special === key || (props.lastPressed === key && props.status !== key && props.special !== key))
     ? ''
-    : 'bg-[#333] border-[#444] text-[#bbb] hover:bg-[#444] hover:border-[#666]',
+    : 'keypad-idle',
   {
     'bg-success text-white border-success shadow-[0_0_20px_rgba(46,125,50,0.5)] hover:bg-success hover:border-success': props.status === key,
     'bg-accent text-black border-accent shadow-[0_0_20px_rgba(255,152,0,0.5)] hover:bg-accent hover:border-accent': props.special === key,
@@ -36,7 +36,7 @@ const keyClass = (key: string) => [
     >
       {{ n }}
     </div>
-    <div class="aspect-square flex items-center justify-center text-lg font-extrabold rounded-xl border-2 bg-[#333] border-[#444] text-[#bbb]">*</div>
+    <div class="aspect-square flex items-center justify-center text-lg font-extrabold rounded-xl border-2 keypad-idle">*</div>
     <div
       @click="pressKey('0')"
       class="aspect-square flex flex-col items-center justify-center text-lg font-extrabold rounded-xl border-2 cursor-pointer transition-all"
@@ -44,6 +44,6 @@ const keyClass = (key: string) => [
     >
       0
     </div>
-    <div class="aspect-square flex items-center justify-center text-lg font-extrabold rounded-xl border-2 bg-[#333] border-[#444] text-[#bbb]">#</div>
+    <div class="aspect-square flex items-center justify-center text-lg font-extrabold rounded-xl border-2 keypad-idle">#</div>
   </div>
 </template>

@@ -45,9 +45,9 @@ const copyToClipboard = async () => {
 
 <template>
   <div class="text-center">
-    <label v-if="label" class="block mb-0.5 font-bold text-gray-400 text-[0.7rem] uppercase">{{ label }}</label>
-    <div 
-      class="relative overflow-visible font-mono font-bold p-1.5 px-2.5 rounded border border-gray-800 cursor-pointer select-none transition-all hover:border-gray-600 bg-black text-lg"
+    <label v-if="label" class="block mb-0.5 font-bold text-themed-muted text-[0.7rem] uppercase">{{ label }}</label>
+    <div
+      class="relative overflow-visible font-mono font-bold p-1.5 px-2.5 rounded border border-themed cursor-pointer select-none transition-all hover:brightness-110 bg-themed-overlay text-lg"
       :class="[
         visible ? (successClass || 'text-primary') : 'text-transparent',
         copied ? 'after:content-[\'Kopiert!\'] after:absolute after:bg-success after:text-white after:text-[0.7rem] after:px-1.5 after:py-0.5 after:rounded after:-top-6 after:left-1/2 after:-translate-x-1/2 after:animate-fade-out after:z-10 after:whitespace-nowrap after:pointer-events-none' : ''
