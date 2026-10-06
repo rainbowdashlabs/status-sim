@@ -18,6 +18,7 @@ WORKDIR /app
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 ENV PIPENV_VENV_IN_PROJECT=true
+ENV LOG_FORMAT=json
 
 COPY Pipfile Pipfile.lock /app/
 
